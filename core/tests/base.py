@@ -140,8 +140,12 @@ class TestApp(TestAppBase):
         self.sfield = link_gui(self.mw.search_field)
         self.drsel = link_gui(self.mw.daterange_selector)
         make_gui('csvopt', CSVOptions, parent=self.doc)
-        self.iwin = link_gui(ImportWindow(self.doc))
-        self.itable = link_gui(self.iwin.import_table)
+        iwin = ImportWindow(self.doc) # We have to link the import table's gui before we link iwin's
+        # The order in which the gui is linked in linked_gui causes a crash in pref_test.
+        # import_table.columns has to be linked first.
+        link_gui(iwin.import_table.columns)
+        self.itable = link_gui(iwin.import_table)
+        self.iwin = link_gui(iwin)
         self.alookup = link_gui(self.mw.account_lookup)
         self.clookup = link_gui(self.mw.completion_lookup)
         self.doc.connect()

@@ -7,7 +7,6 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyProfitView.h"
 #import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGIncomeStatement.h"
@@ -17,12 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 @interface MGProfitView : MGAccountSheetView
 {
     MGIncomeStatement *incomeStatement;
-    MGChart *pieChart;
-    MGBarGraph *profitGraph;
 }
-- (id)initWithPyRef:(PyObject *)aPyRef;
-- (PyProfitView *)model;
-
 /* Public */
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;

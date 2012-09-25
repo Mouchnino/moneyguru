@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/bsd_license
     tableView = [[MGTableView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
     [self setupTableView:tableView];
     mainResponder = tableView;
-    wholeView = [[tableView wrapInScrollView] retain];
+    self.view = [tableView wrapInScrollView];
     scheduleTable = [[MGScheduleTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     [tableView release];
     return self;
@@ -27,7 +27,6 @@ http://www.hardcoded.net/licenses/bsd_license
         
 - (void)dealloc
 {
-    [wholeView release];
     [scheduleTable release];
     [super dealloc];
 }

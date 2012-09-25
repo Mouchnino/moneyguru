@@ -823,6 +823,9 @@ class PyLookup(PyGUIObject):
     
 
 #--- Views
+class BaseViewView:
+    def updateVisibility(self): pass
+
 class PyBaseView(PyGUIObject):
     def mainwindow(self) -> pyref:
         return self.model.mainwindow
@@ -830,40 +833,32 @@ class PyBaseView(PyGUIObject):
     def hiddenAreas(self) -> list:
         return list(self.model.mainwindow.hidden_areas)
     
-
-class ViewWithGraphView:
-    def updateVisibility(self): pass
-
-class PyNetWorthView(PyBaseView):
-    def sheet(self) -> pyref:
-        return self.model.bsheet
+    #--- Python --> Cocoa
+    @dontwrap
+    def restore_subviews_size(self):
+        # Under Cocoa, we don't use this because all views are created after the document opening.
+        pass
     
-    def nwgraph(self) -> pyref:
-        return self.model.nwgraph
-    
-    def pie(self) -> pyref:
-        return self.model.pie
-    
-    #Python --> Cocoa
     @dontwrap
     def update_visibility(self):
         self.callback.updateVisibility()
     
 
-class PyProfitView(PyBaseView):
+class PyAccountSheetView(PyBaseView):
     def sheet(self) -> pyref:
-        return self.model.istatement
+        return self.model.sheet
     
-    def pgraph(self) -> pyref:
-        return self.model.pgraph
+    def graph(self) -> pyref:
+        return self.model.graph
     
     def pie(self) -> pyref:
         return self.model.pie
     
-    #Python --> Cocoa
-    @dontwrap
-    def update_visibility(self):
-        self.callback.updateVisibility()
+    def graphHeightToRestore(self) -> float:
+        return self.model.graph_height_to_restore
+    
+    def pieWidthToRestore(self) -> float:
+        return self.model.pie_width_to_restore
     
 
 class PyTransactionView(PyBaseView):
@@ -874,7 +869,7 @@ class PyTransactionView(PyBaseView):
         return self.model.ttable
     
 
-class AccountViewView(ViewWithGraphView):
+class AccountViewView(BaseViewView):
     def refreshReconciliationButton(self): pass
     def showBarGraph(self): pass
     def showLineGraph(self): pass
@@ -892,6 +887,9 @@ class PyAccountView(PyBaseView):
     def barGraph(self) -> pyref:
         return self.model.bargraph
     
+    def graphHeightToRestore(self) -> float:
+        return self.model.graph_height_to_restore
+    
     def canToggleReconciliationMode(self) -> bool:
         return self.model.can_toggle_reconciliation_mode
     
@@ -902,10 +900,6 @@ class PyAccountView(PyBaseView):
         self.model.toggle_reconciliation_mode()
     
     #Python --> Cocoa
-    @dontwrap
-    def update_visibility(self):
-        self.callback.updateVisibility()
-    
     @dontwrap
     def refresh_reconciliation_button(self):
         self.callback.refreshReconciliationButton()

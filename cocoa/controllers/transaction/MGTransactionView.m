@@ -21,7 +21,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyTransactionView *m = [[PyTransactionView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    self.wholeView = createMGTransactionView_UI(self);
+    self.view = createMGTransactionView_UI(self);
     transactionTable = [[MGTransactionTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:NO];
     return self;

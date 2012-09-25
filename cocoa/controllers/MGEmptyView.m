@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyEmptyView *m = [[PyEmptyView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    self.wholeView = createMGEmptyView_UI(self);
+    self.view = createMGEmptyView_UI(self);
     pluginList = [[HSSelectableList alloc] initWithPyRef:[[self model] pluginList] tableView:pluginTableView];
     [pluginTableView setTarget:self];
     [pluginTableView setDoubleAction:@selector(selectPluginView)];

@@ -419,6 +419,7 @@ class MainWindow(QMainWindow):
             view = PANETYPE2VIEWCLASS[pane_type](model=pane_view)
             self.model2view[pane_view] = view
             self.mainView.addWidget(view)
+            view.restoreSubviewsSize()
         return view
     
     def _setTabIndex(self, index):

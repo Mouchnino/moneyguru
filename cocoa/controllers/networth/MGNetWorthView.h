@@ -7,22 +7,15 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyNetWorthView.h"
 #import "MGAccountSheetView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
-#import "MGChart.h"
 #import "MGBalanceGraph.h"
 
 @interface MGNetWorthView : MGAccountSheetView
 {
     MGBalanceSheet *balanceSheet;
-    MGChart *pieChart;
-    MGBalanceGraph *netWorthGraph;
 }
-- (id)initWithPyRef:(PyObject *)aPyRef;
-- (PyNetWorthView *)model;
-
 /* Public */
 - (BOOL)canShowSelectedAccount;
 - (void)toggleExcluded;

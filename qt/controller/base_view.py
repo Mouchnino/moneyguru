@@ -22,3 +22,13 @@ class BaseView(QWidget):
     def fitViewsForPrint(self, viewPrinter):
         viewPrinter.fit(self, 42, 42, expandH=True, expandV=True)
     
+    def restoreSubviewsSize(self):
+        # This is called by the main window just after the base view has been added to the widget
+        # stack. This means that its size has just been adjusted and now is the time to restore,
+        # if needed, the sizes of the subviews. It is also called by the model callback
+        # restore_subviews_size() which happens when a document is loaded.
+        pass
+    
+    #--- model --> view
+    def restore_subviews_size(self):
+        self.restoreSubviewsSize()

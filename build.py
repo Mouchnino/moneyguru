@@ -258,10 +258,10 @@ def build_cocoa_bridging_interfaces():
         PyAccountPanel, PyMassEditionPanel, PyBudgetPanel, BudgetPanelView, PyCustomDateRangePanel,
         PyAccountReassignPanel, PyExportPanel, ExportPanelView, PyPanelWithTransaction,
         PanelWithTransactionView, PyTransactionPanel, PySchedulePanel, SchedulePanelView,
-        ViewWithGraphView, PyNetWorthView, PyProfitView, PyTransactionView, PyAccountView,
-        AccountViewView, PyScheduleView, PyBudgetView, PyCashculatorView, PyGeneralLedgerView,
-        PyDocPropsView, PyEmptyView, PyReadOnlyPluginView, PyMainWindow, MainWindowView, PyDocument,
-        DocumentView, PyMoneyGuruApp)
+        BaseViewView, PyAccountSheetView, PyTransactionView,
+        PyAccountView, AccountViewView, PyScheduleView, PyBudgetView, PyCashculatorView,
+        PyGeneralLedgerView, PyDocPropsView, PyEmptyView, PyReadOnlyPluginView, PyMainWindow,
+        MainWindowView, PyDocument, DocumentView, PyMoneyGuruApp)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject, PyTextField, PyTable, PyColumns, PyOutline, PySelectableList,
         PyFairware, PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget,
@@ -269,8 +269,8 @@ def build_cocoa_bridging_interfaces():
         PyImportWindow, PyFilterBar, PyReport, PyScheduleTable, PyBudgetTable,
         PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, PyAccountPanel,
         PyMassEditionPanel, PyBudgetPanel, PyCustomDateRangePanel, PyAccountReassignPanel,
-        PyExportPanel, PyPanelWithTransaction, PyTransactionPanel, PySchedulePanel, PyNetWorthView,
-        PyProfitView, PyTransactionView, PyAccountView, PyScheduleView, PyBudgetView,
+        PyExportPanel, PyPanelWithTransaction, PyTransactionPanel, PySchedulePanel,
+        PyAccountSheetView, PyTransactionView, PyAccountView, PyScheduleView, PyBudgetView,
         PyCashculatorView, PyGeneralLedgerView, PyDocPropsView, PyEmptyView, PyReadOnlyPluginView,
         PyMainWindow, PyDocument, PyMoneyGuruApp]
     proxy.destroyPool()
@@ -280,8 +280,8 @@ def build_cocoa_bridging_interfaces():
     allclasses = [GUIObjectView, TableView, ColumnsView, SelectableListView, FairwareView, 
         PanelView, CSVImportOptionsView, LookupView, DateRangeSelectorView, ImportWindowView,
         FilterBarView, ReportView, BudgetPanelView, ExportPanelView, PanelWithTransactionView,
-        SchedulePanelView, ViewWithGraphView, AccountViewView, MainWindowView, DocumentView,
-        ChartView]
+        SchedulePanelView, BaseViewView, AccountViewView, MainWindowView,
+        DocumentView, ChartView]
     clsspecs = [objp.o2p.spec_from_python_class(class_) for class_ in allclasses]
     objp.p2o.generate_python_proxy_code_from_clsspec(clsspecs, 'build/CocoaViews.m')
     py_folder = op.join(cocoa_app().resources, 'py')

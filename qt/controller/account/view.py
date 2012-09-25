@@ -84,6 +84,8 @@ class EntryView(BaseView):
         self.graphView.addWidget(self.barGraphView)
         self.splitterView.addWidget(self.graphView)
         self.graphView.setCurrentIndex(1)
+        self.splitterView.setStretchFactor(0, 1)
+        self.splitterView.setStretchFactor(1, 0)
         self.verticalLayout.addWidget(self.splitterView)
     
     def _setupColumns(self):
@@ -100,6 +102,13 @@ class EntryView(BaseView):
         viewPrinter.fitTable(self.etable)
         if PaneArea.BottomGraph not in hidden:
             viewPrinter.fit(self.graphView.currentWidget(), 300, 150, expandH=True, expandV=True)
+    
+    def restoreSubviewsSize(self):
+        graphHeight = self.model.graph_height_to_restore
+        if graphHeight:
+            splitterHeight = self.splitterView.height()
+            sizes = [splitterHeight-graphHeight, graphHeight]
+            self.splitterView.setSizes(sizes)
     
     #--- model --> view
     def refresh_reconciliation_button(self):

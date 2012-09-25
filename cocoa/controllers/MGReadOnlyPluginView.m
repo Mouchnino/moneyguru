@@ -20,7 +20,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [self setupTableView:tableView];
     [tableView setAllowsMultipleSelection:YES];
     mainResponder = tableView;
-    wholeView = [[tableView wrapInScrollView] retain];
+    self.view = [tableView wrapInScrollView];
     table = [[MGTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     HSColumnDef columnModel = {nil, 100, 20, 0, YES, nil};
     [[table columns] initializeColumnsFromModel:columnModel];
@@ -31,7 +31,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)dealloc
 {
     [table release];
-    [wholeView release];
     [super dealloc];
 }
 

@@ -67,6 +67,12 @@ class AccountView(BaseView):
         self.filter_bar.refresh()
         self.view.update_visibility()
     
+    def restore_subviews_size(self):
+        if self.balgraph.view_size[1]:
+            # Was already restored
+            return
+        self.graph_height_to_restore = self.document.get_default('AccountView.GraphHeight', 0)
+    
     def show(self):
         self.etable.columns.restore_columns()
         BaseView.show(self)
@@ -80,7 +86,11 @@ class AccountView(BaseView):
         # on pane swapping. We do this because AccountView columns are shared between multiple
         # instances and changing a column in a pane should result in the same change being done
         # in other tabs. That's why we save/restore in hide()/show().
-        pass
+        # ... Except for graph size. We don't keep separate graph size prefs for each account.
+        height = self._shown_graph.view_size[1]
+        # It's possible that set_view_size() has never been called. In this case, we have (0, 0).
+        if height: 
+            self.document.set_default('AccountView.GraphHeight', height)
     
     #--- Public
     def delete_item(self):

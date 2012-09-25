@@ -9,20 +9,18 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QVBoxLayout, QFrame, QAbstractItemView, QSplitter
 
-from core.const import PaneArea
-
 from ...support.item_view import TreeView
 from ...support.pie_chart_view import PieChartView
 from ...support.line_graph_view import LineGraphView
-from ..base_view import BaseView
+from ..account_sheet_view import AccountSheetView
 from ..chart import Chart
 from .sheet import NetWorthSheet
 
-class NetWorthView(BaseView):
+class NetWorthView(AccountSheetView):
     def _setup(self):
         self._setupUi()
-        self.nwsheet = NetWorthSheet(self.model.bsheet, view=self.treeView)
-        self.nwgraph = Chart(self.model.nwgraph, view=self.graphView)
+        self.sheet = self.nwsheet = NetWorthSheet(self.model.bsheet, view=self.treeView)
+        self.graph = self.nwgraph = Chart(self.model.nwgraph, view=self.graphView)
         self.piechart = Chart(self.model.pie, view=self.pieChart)
     
     def _setupUi(self):
@@ -59,23 +57,4 @@ class NetWorthView(BaseView):
         self.subSplitterView.setStretchFactor(0, 1)
         self.subSplitterView.setStretchFactor(1, 0)
         self.mainLayout.addWidget(self.splitterView)
-    
-    #--- QWidget override
-    def setFocus(self):
-        self.nwsheet.view.setFocus()
-    
-    #--- Public
-    def fitViewsForPrint(self, viewPrinter):
-        hidden = self.model.mainwindow.hidden_areas
-        viewPrinter.fitTree(self.nwsheet)
-        if PaneArea.RightChart not in hidden:
-            viewPrinter.fit(self.piechart.view, 150, 300, expandH=True)
-        if PaneArea.BottomGraph not in hidden:
-            viewPrinter.fit(self.nwgraph.view, 300, 150, expandH=True, expandV=True)
-    
-    #--- model --> view
-    def update_visibility(self):
-        hidden = self.model.mainwindow.hidden_areas
-        self.graphView.setHidden(PaneArea.BottomGraph in hidden)
-        self.pieChart.setHidden(PaneArea.RightChart in hidden)
     

@@ -14,14 +14,15 @@ from .net_worth_graph import NetWorthGraph
 from .account_pie_chart import BalancePieChart
 
 class NetWorthView(AccountSheetView):
+    SAVENAME = 'NetWorthView'
     VIEW_TYPE = PaneType.NetWorth
     PRINT_TITLE_FORMAT = tr("Net Worth at {end_date}, starting from {start_date}")
     
     def __init__(self, mainwindow):
         AccountSheetView.__init__(self, mainwindow)
-        self.bsheet = BalanceSheet(self)
+        self.sheet = self.bsheet = BalanceSheet(self)
         self.columns = self.bsheet.columns
-        self.nwgraph = NetWorthGraph(self)
+        self.graph = self.nwgraph = NetWorthGraph(self)
         self.pie = BalancePieChart(self)
         self.set_children([self.bsheet, self.nwgraph, self.pie])
     

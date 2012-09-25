@@ -306,6 +306,11 @@ class MainWindow(Repeater, GUIObject):
         self.daterange_selector.refresh()
         self.daterange_selector.refresh_custom_ranges()
         self.document_restoring_preferences()
+        if self.document.can_restore_from_prefs():
+            # Under Cocoa, document.load_from_xml() is called before the creation of our main
+            # window, which means that all our view children don't receive the
+            # document_restoring_preferences notification. Force it here.
+            self.notify('document_restoring_preferences')
         if not self.panes:
             self._restore_default_panes()
     

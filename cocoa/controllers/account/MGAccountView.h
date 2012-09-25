@@ -48,7 +48,6 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)toggleReconciled;
 
 /* model --> view */
-- (void)updateVisibility;
 - (void)refreshReconciliationButton;
 - (void)showLineGraph;
 - (void)showBarGraph;

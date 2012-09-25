@@ -25,7 +25,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     PyAccountView *m = [[PyAccountView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
-    self.wholeView = createMGAccountView_UI(self);
+    self.view = createMGAccountView_UI(self);
     entryTable = [[MGEntryTable alloc] initWithPyRef:[[self model] table] tableView:tableView];
     filterBar = [[MGFilterBar alloc] initWithPyRef:[[self model] filterBar] view:filterBarView forEntryTable:YES];
     balanceGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] balGraph]];
@@ -45,6 +45,7 @@ http://www.hardcoded.net/licenses/bsd_license
     [super dealloc];
 }
 
+/* Overrides */
 - (PyAccountView *)model
 {
     return (PyAccountView *)model;
@@ -63,6 +64,14 @@ http://www.hardcoded.net/licenses/bsd_license
     return @"entry_table_16";
 }
 
+- (void)applySubviewsSizeRestoration
+{
+    if ([self.model graphHeightToRestore] > 0) {
+        [splitView setPosition:NSHeight([splitView frame])-[self.model graphHeightToRestore] ofDividerAtIndex:0];
+    }
+}
+
+/* Private */
 - (void)showGraph:(HSGUIController *)graph
 {
     graphView = [graph view];

@@ -22,7 +22,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyDocPropsView *m = [[PyDocPropsView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    self.wholeView = createMGDocPropsView_UI(self);
+    self.view = createMGDocPropsView_UI(self);
     currencyComboBox = [[HSComboBox alloc] initWithPyRef:[[self model] currencyList] view:currencyComboBoxView];
     firstWeekdayPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] firstWeekdayList] popupView:firstWeekdayPopUpView];
     aheadMonthsPopUp = [[HSPopUpList alloc] initWithPyRef:[[self model] aheadMonthsList] popupView:aheadMonthsPopUpView];

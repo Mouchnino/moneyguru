@@ -19,7 +19,7 @@ http://www.hardcoded.net/licenses/bsd_license
     PyCashculatorView *m = [[PyCashculatorView alloc] initWithModel:aPyRef];
     self = [super initWithModel:m];
     [m release];
-    self.wholeView = createMGCashculatorView_UI(self);
+    self.view = createMGCashculatorView_UI(self);
     accountTable = [[MGCashculatorAccountTable alloc] initWithPyRef:[[self model] table] view:accountTableView];
     return self;
 }

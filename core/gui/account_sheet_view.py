@@ -10,23 +10,38 @@ from .base import BaseView
 
 class AccountSheetView(BaseView):
     INVALIDATING_MESSAGES = BaseView.INVALIDATING_MESSAGES | {'area_visibility_changed'}
+    SAVENAME = ''
     
     def __init__(self, mainwindow):
         BaseView.__init__(self, mainwindow)
         self.bind_messages(self.INVALIDATING_MESSAGES, self._revalidate)
-    
-    # subclasses of this class must put their sheet gui element first in the children list
-    def set_children(self, children):
-        BaseView.set_children(self, children)
-        self.sheet = children[0]
+        # Set self.sheet, self.graph and self.pie in subclasses init
     
     #--- Overrides
     def _revalidate(self):
         BaseView._revalidate(self)
         self.view.update_visibility()
     
+    def restore_subviews_size(self):
+        if self.graph.view_size[1]:
+            # Was already restored
+            return
+        prefname = '{}.GraphHeight'.format(self.SAVENAME)
+        self.graph_height_to_restore = self.document.get_default(prefname, 0)
+        prefname = '{}.PieWidth'.format(self.SAVENAME)
+        self.pie_width_to_restore = self.document.get_default(prefname, 0)
+    
     def save_preferences(self):
         self.sheet.save_preferences()
+        height = self.graph.view_size[1]
+        # It's possible that set_view_size() has never been called. In this case, we have (0, 0).
+        if height: 
+            prefname = '{}.GraphHeight'.format(self.SAVENAME)
+            self.document.set_default(prefname, height)
+        width = self.pie.view_size[0]
+        if width:
+            prefname = '{}.PieWidth'.format(self.SAVENAME)
+            self.document.set_default(prefname, width)
     
     #--- Public
     def collapse_group(self, group):

@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGAccountSheetView.h"
 #import "MGConst.h"
+#import "HSPyUtil.h"
 #import "Utils.h"
 
 @implementation MGAccountSheetView
@@ -16,6 +17,31 @@ http://www.hardcoded.net/licenses/bsd_license
 @synthesize subSplitView;
 @synthesize outlineView;
 @synthesize pieChartsView;
+
+- (id)initWithPyRef:(PyObject *)aPyRef
+{
+    PyAccountSheetView *m = [[PyAccountSheetView alloc] initWithModel:aPyRef];
+    self = [super initWithModel:m];
+    [m bindCallback:createCallback(@"BaseViewView", self)];
+    [m release];
+    return self;
+}
+
+/* Override */
+- (PyAccountSheetView *)model
+{
+    return (PyAccountSheetView *)model;
+}
+
+- (void)applySubviewsSizeRestoration
+{
+    if ([self.model graphHeightToRestore] > 0) {
+        [mainSplitView setPosition:NSHeight([mainSplitView frame])-[self.model graphHeightToRestore] ofDividerAtIndex:0];
+    }
+    if ([self.model pieWidthToRestore] > 0) {
+        [subSplitView setPosition:NSWidth([subSplitView frame])-[self.model pieWidthToRestore] ofDividerAtIndex:0];
+    }
+}
 
 /* Delegate */
 

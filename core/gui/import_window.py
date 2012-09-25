@@ -242,6 +242,9 @@ class ImportWindow(DocumentGUIObject):
     #--- Override
     def _view_updated(self):
         self.connect()
+        if self.document.can_restore_from_prefs():
+            # See MainWindow._view_updated() comment.
+            self.document_restoring_preferences()
     
     #--- Public
     def can_perform_swap(self):

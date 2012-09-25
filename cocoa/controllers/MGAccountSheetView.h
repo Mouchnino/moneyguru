@@ -7,12 +7,13 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PyNetWorthView.h"
+#import "PyAccountSheetView.h"
 #import "MGBaseView.h"
 #import "HSOutlineView.h"
 #import "MGBalanceSheet.h"
 #import "MGBalanceGraph.h"
 #import "MGPieChartView.h"
+#import "MGChart.h"
 
 /* This base class is to share the pie/graph visibility logic between netwroth and profit views
 */
@@ -25,6 +26,8 @@ http://www.hardcoded.net/licenses/bsd_license
     
     /* Set this during initialization */
     NSView *graphView;
+    MGChart *pieChart;
+    MGChart *graph;
     
     BOOL graphCollapsed;
     BOOL pieCollapsed;
@@ -37,6 +40,6 @@ http://www.hardcoded.net/licenses/bsd_license
 @property (readwrite, retain) HSOutlineView *outlineView;
 @property (readwrite, retain) MGPieChartView *pieChartsView;
 
-/* model --> view */
-- (void)updateVisibility;
+- (id)initWithPyRef:(PyObject *)aPyRef;
+- (PyAccountSheetView *)model;
 @end

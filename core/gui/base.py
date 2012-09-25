@@ -228,6 +228,10 @@ def _raise_notimplemented(self):
     raise NotImplementedError()
     
 class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, MainWindowNotificationsMixin):
+    #--- model -> view calls:
+    # restore_subviews_size()
+    #
+    
     VIEW_TYPE = -1
     
     def __init__(self, mainwindow):
@@ -263,6 +267,7 @@ class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, 
         self._children = children
         for child in children:
             child.connect()
+        self.restore_subviews_size()
     
     def show(self):
         HideableObject.show(self)
@@ -287,6 +292,9 @@ class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, 
         assert mymethod is not None
         return mymethod is not getattr(BaseView, action_name, None)
     
+    def restore_subviews_size(self):
+        pass # Virtual
+    
     def save_preferences(self):
         pass # Virtual
     
@@ -300,6 +308,12 @@ class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, 
         self._status_line = value
         if not self._hidden:
             self.mainwindow.update_status_line()
+    
+    #--- Notifications
+    def document_restoring_preferences(self):
+        self.restore_subviews_size()
+        if self.view: # Some BaseView don't have a view
+            self.view.restore_subviews_size()
     
 
 class LinkedSelectableList(GUISelectableList):

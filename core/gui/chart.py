@@ -20,6 +20,10 @@ class Chart(ViewChild):
     
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'accounts_excluded', 'date_range_changed'}
     
+    def __init__(self, parent_view):
+        ViewChild.__init__(self, parent_view)
+        self.view_size = (0, 0)
+    
     #--- Override
     def _revalidate(self):
         self.compute()

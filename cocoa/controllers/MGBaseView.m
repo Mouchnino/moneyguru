@@ -10,19 +10,25 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @implementation MGBaseView
 
-@synthesize wholeView;
 @synthesize mainResponder;
 
+/* Overrides */
 - (PyBaseView *)model
 {
     return (PyBaseView *)model;
 }
 
-- (NSView *)view
+- (void)setView:(NSView *)aView
 {
-    return wholeView;
+    [super setView:aView];
+    if (aView != nil) {
+        [self.view setPostsFrameChangedNotifications:YES];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewFrameChanged:)
+            name:NSViewFrameDidChangeNotification object:self.view];
+    }
 }
 
+/* Public */
 - (MGPrintView *)viewToPrint
 {
     return nil;
@@ -33,6 +39,11 @@ http://www.hardcoded.net/licenses/bsd_license
     return nil;
 }
 
+/* This is called once, the first time that self.view's frame is changed (thus indicating that we
+   have our "real" size now and that it's safe to restore subviews size).
+*/
+- (void)applySubviewsSizeRestoration {}
+
 - (void)setupTableView:(MGTableView *)aTableView
 {
     /* Setup a MGTableView programatically with correct bindings and stuff. */
@@ -42,4 +53,16 @@ http://www.hardcoded.net/licenses/bsd_license
     NSDictionary *options = [NSDictionary dictionaryWithObject:@"vtRowHeightOffset" forKey:NSValueTransformerNameBindingOption];
     [aTableView bind:@"rowHeight" toObject:udc withKeyPath:@"values.TableFontSize" options:options];
 }
+
+/* Notifications */
+- (void)viewFrameChanged:(NSNotification *)aNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification
+        object:self.view];
+    [self.view setPostsFrameChangedNotifications:NO];
+    [self applySubviewsSizeRestoration];
+}
+
+/* model --> view */
+- (void)updateVisibility {}
 @end

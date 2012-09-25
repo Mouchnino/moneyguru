@@ -14,15 +14,20 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @interface MGBaseView : HSGUIController
 {
-    IBOutlet NSView *wholeView;
-    IBOutlet NSResponder *mainResponder;
+    NSResponder *mainResponder;
 }
 
-@property (readwrite, retain) NSView *wholeView;
 @property (readwrite, retain) NSResponder *mainResponder;
 
 - (PyBaseView *)model;
 - (MGPrintView *)viewToPrint;
 - (NSString *)tabIconName;
+- (void)applySubviewsSizeRestoration;
 - (void)setupTableView:(MGTableView *)aTableView;
+
+/* Notifications */
+- (void)viewFrameChanged:(NSNotification *)aNotification;
+
+/* model --> view */
+- (void)updateVisibility;
 @end

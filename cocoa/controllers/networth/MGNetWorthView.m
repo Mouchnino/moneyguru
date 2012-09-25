@@ -10,26 +10,22 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGAccountSheetView_UI.h"
 #import "MGBalancePrint.h"
 #import "MGConst.h"
-#import "HSPyUtil.h"
 #import "Utils.h"
 #import "PyMainWindow.h"
 
 @implementation MGNetWorthView
 - (id)initWithPyRef:(PyObject *)aPyRef
 {
-    PyNetWorthView *m = [[PyNetWorthView alloc] initWithModel:aPyRef];
-    self = [super initWithModel:m];
-    [m bindCallback:createCallback(@"ViewWithGraphView", self)];
-    [m release];
-    self.wholeView = createMGAccountSheetView_UI(self);
+    self = [super initWithPyRef:aPyRef];
+    self.view = createMGAccountSheetView_UI(self);
     balanceSheet = [[MGBalanceSheet alloc] initWithPyRef:[[self model] sheet] view:outlineView];
     pieChart = [[MGChart alloc] initWithPyRef:[[self model] pie] view:pieChartsView];
-    netWorthGraph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] nwgraph]];
-    graphView = [netWorthGraph view];
+    graph = [[MGBalanceGraph alloc] initWithPyRef:[[self model] graph]];
+    graphView = [graph view];
     [graphView setFrame:NSMakeRect(0, 0, 1, 258)];
-    [wholeView addSubview:graphView];
-    [(NSSplitView *)wholeView adjustSubviews];
-    [(NSSplitView *)wholeView setDelegate:self];
+    [self.view addSubview:graphView];
+    [(NSSplitView *)self.view adjustSubviews];
+    [(NSSplitView *)self.view setDelegate:self];
     [subSplitView setDelegate:self];
     return self;
 }
@@ -37,14 +33,9 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)dealloc
 {
     [balanceSheet release];
-    [netWorthGraph release];
+    [graph release];
     [pieChart release];
     [super dealloc];
-}
-
-- (PyNetWorthView *)model
-{
-    return (PyNetWorthView *)model;
 }
 
 - (MGPrintView *)viewToPrint
