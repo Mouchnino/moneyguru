@@ -20,7 +20,7 @@ localScopeButton.keyEquivalent = '\\r'
 cancelButton.action = Action(owner, 'cancel')
 localScopeButton.action = Action(owner, 'chooseLocalScope')
 globalScopeButton.action = Action(owner, 'chooseGlobalScope')
-showNextTimeBox.bind('value', defaults, 'values.ShowRecurrenceScopeDialog')
+showNextTimeBox.bind('value', owner, 'showDialogNextTime')
 
 promptLabel.height *= 2 # 2 lines
 subLabel.height *= 2 # 2 lines

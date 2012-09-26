@@ -16,7 +16,7 @@ from hscommon.path import Path
 from hscommon.testutil import eq_, CallLogger, TestApp as TestAppBase, with_app, TestData
 from hscommon.gui.base import GUIObject
 
-from ..app import Application, AUTOSAVE_INTERVAL_PREFERENCE
+from ..app import Application, PreferenceNames
 from ..document import Document, ScheduleScope
 from ..exception import FileFormatError
 from ..const import PaneType
@@ -42,7 +42,7 @@ class ApplicationGUI(CallLogger):
     def __init__(self):
         CallLogger.__init__(self)
         # We don't want the autosave thread to mess up with testunits
-        self.defaults = {AUTOSAVE_INTERVAL_PREFERENCE: 0}
+        self.defaults = {PreferenceNames.AutoSaveInterval: 0}
     
     def get_default(self, key): # We don't want to log this one. It disturbs other test and is pointless to log
         return self.defaults.get(key)

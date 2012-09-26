@@ -30,10 +30,12 @@ from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
 from .plugin import Plugin
 
-HAD_FIRST_LAUNCH_PREFERENCE = 'HadFirstLaunch'
-AUTOSAVE_INTERVAL_PREFERENCE = 'AutoSaveInterval'
-AUTO_DECIMAL_PLACE_PREFERENCE = 'AutoDecimalPlace'
-CUSTOM_RANGES_PREFERENCE = 'CustomRanges'
+class PreferenceNames:
+    HadFirstLaunch = 'HadFirstLaunch'
+    AutoSaveInterval = 'AutoSaveInterval'
+    AutoDecimalPlace = 'AutoDecimalPlace'
+    CustomRanges = 'CustomRanges'
+    ShowScheduleScopeDialog = 'ShowScheduleScopeDialog'
 
 SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
@@ -63,16 +65,17 @@ class Application(Broadcaster, RegistrableApplication):
             db_path = ':memory:'
         self.appdata_path = appdata_path
         currency.initialize_db(db_path)
-        self.is_first_run = not self.get_default(HAD_FIRST_LAUNCH_PREFERENCE, False)
+        self.is_first_run = not self.get_default(PreferenceNames.HadFirstLaunch, False)
         if self.is_first_run:
-            self.set_default(HAD_FIRST_LAUNCH_PREFERENCE, True)
+            self.set_default(PreferenceNames.HadFirstLaunch, True)
         self._default_currency = default_currency
         self._date_format = date_format
         self._decimal_sep = decimal_sep
         self._grouping_sep = grouping_sep
         self._autosave_timer = None
-        self._autosave_interval = self.get_default(AUTOSAVE_INTERVAL_PREFERENCE, 10)
-        self._auto_decimal_place = self.get_default(AUTO_DECIMAL_PLACE_PREFERENCE, False)
+        self._autosave_interval = self.get_default(PreferenceNames.AutoSaveInterval, 10)
+        self._auto_decimal_place = self.get_default(PreferenceNames.AutoDecimalPlace, False)
+        self._show_schedule_scope_dialog = self.get_default(PreferenceNames.ShowScheduleScopeDialog, True)
         self.saved_custom_ranges = [None] * 3
         self._load_custom_ranges()
         self._load_plugins(plugin_model_path)
@@ -95,7 +98,7 @@ class Application(Broadcaster, RegistrableApplication):
             self._autosave_timer = None
     
     def _load_custom_ranges(self):
-        custom_ranges = self.get_default(CUSTOM_RANGES_PREFERENCE)
+        custom_ranges = self.get_default(PreferenceNames.CustomRanges)
         if not custom_ranges:
             return
         for index, custom_range in enumerate(custom_ranges):
@@ -139,7 +142,7 @@ class Application(Broadcaster, RegistrableApplication):
             else:
                 # We can't insert None in arrays for preferences
                 custom_ranges.append([])
-        self.set_default(CUSTOM_RANGES_PREFERENCE, custom_ranges)
+        self.set_default(PreferenceNames.CustomRanges, custom_ranges)
     
     #--- Public
     def format_amount(self, amount, **kw):
@@ -223,7 +226,7 @@ class Application(Broadcaster, RegistrableApplication):
         if value == self._autosave_interval:
             return
         self._autosave_interval = value
-        self.set_default(AUTOSAVE_INTERVAL_PREFERENCE, value)
+        self.set_default(PreferenceNames.AutoSaveInterval, value)
         self._update_autosave_timer()
     
     @property
@@ -235,5 +238,16 @@ class Application(Broadcaster, RegistrableApplication):
         if value == self._auto_decimal_place:
             return
         self._auto_decimal_place = value
-        self.set_default(AUTO_DECIMAL_PLACE_PREFERENCE, value)
+        self.set_default(PreferenceNames.AutoDecimalPlace, value)
+    
+    @property
+    def show_schedule_scope_dialog(self):
+        return self._show_schedule_scope_dialog
+    
+    @show_schedule_scope_dialog.setter
+    def show_schedule_scope_dialog(self, value):
+        if value == self._show_schedule_scope_dialog:
+            return
+        self._show_schedule_scope_dialog = value
+        self.set_default(PreferenceNames.ShowScheduleScopeDialog, value)
     

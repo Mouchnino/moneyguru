@@ -35,7 +35,6 @@ http://www.hardcoded.net/licenses/bsd_license
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *d = [NSMutableDictionary dictionary];
     // Others
-    [d setObject:b2n(YES) forKey:ShowRecurrenceScopeDialog];
     [d setObject:i2n(11) forKey:TableFontSize];
     [d setObject:i2n(11) forKey:PrintFontSize];
     

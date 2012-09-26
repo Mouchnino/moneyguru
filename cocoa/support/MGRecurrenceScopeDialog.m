@@ -11,16 +11,21 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGRecurrenceScopeDialog_UI.h"
 
 @implementation MGRecurrenceScopeDialog
-+ (NSInteger)shouldUseGlobalScope
+
+@synthesize showDialogNextTime;
+
+- (id)init
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if (![ud boolForKey:ShowRecurrenceScopeDialog])
-        return ScheduleScopeLocal;
-    MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] initWithWindow:nil];
-    [dialog setWindow:createMGRecurrenceScopeDialog_UI(dialog)];
-    NSInteger result = [NSApp runModalForWindow:[dialog window]];
-    [[dialog window] close];
-    [dialog release];
+    self = [super initWithWindow:nil];
+    self.showDialogNextTime = YES; // If we're showing this, it means that our pref is set to true
+    [self setWindow:createMGRecurrenceScopeDialog_UI(self)];
+    return self;
+}
+
+- (NSInteger)run
+{
+    NSInteger result = [NSApp runModalForWindow:[self window]];
+    [[self window] close];
     return result;
 }
 

@@ -55,6 +55,7 @@ def test_close_document():
     app.drsel.select_year_range()
     app.app.autosave_interval = 8
     app.app.auto_decimal_place = True
+    app.app.show_schedule_scope_dialog = False
     app.doc.close()
     newapp = Application(app.app_gui)
     newdoc = Document(newapp)
@@ -63,6 +64,7 @@ def test_close_document():
     assert isinstance(newdoc.date_range, YearRange)
     eq_(newapp.app.autosave_interval, 8)
     eq_(newapp.app.auto_decimal_place, True)
+    eq_(newapp.app.show_schedule_scope_dialog, False)
 
 def test_graph_yaxis():
     app = TestApp()

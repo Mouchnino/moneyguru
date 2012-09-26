@@ -30,7 +30,7 @@ autosaveIntervalField.formatter = NumberFormatter(NumberStyle.Decimal)
 autosaveIntervalField.formatter.maximumFractionDigits = 0
 fontSizeCombo.bind('value', defaults, 'values.TableFontSize')
 printFontSizeCombo.bind('value', defaults, 'values.PrintFontSize')
-scopeDialogBox.bind('value', defaults, 'values.ShowRecurrenceScopeDialog')
+scopeDialogBox.bind('value', owner, 'model.showScheduleScopeDialog')
 updatesBox.bind('value', defaults, 'values.SUEnableAutomaticChecks')
 debugBox.bind('value', defaults, 'values.DebugMode')
 

@@ -38,7 +38,6 @@ http://www.hardcoded.net/licenses/bsd_license
 /* Preferences */
 
 // Others
-#define ShowRecurrenceScopeDialog @"ShowRecurrenceScopeDialog"
 #define TableFontSize @"TableFontSize"
 #define PrintFontSize @"PrintFontSize"
 

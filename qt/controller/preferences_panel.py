@@ -79,7 +79,7 @@ class PreferencesPanel(QDialog):
         appm = self.app.model
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
-        self.scopeDialogCheckBox.setChecked(self.app.prefs.showScheduleScopeDialog)
+        self.scopeDialogCheckBox.setChecked(appm.show_schedule_scope_dialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
         self.debugModeCheckBox.setChecked(QSettings().value('DebugMode'))
         try:
@@ -95,7 +95,7 @@ class PreferencesPanel(QDialog):
         if self.dateFormatEdit.text() != self.app.prefs.dateFormat:
             restartRequired = True
         self.app.prefs.dateFormat = self.dateFormatEdit.text()
-        self.app.prefs.showScheduleScopeDialog = self.scopeDialogCheckBox.isChecked()
+        appm.show_schedule_scope_dialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
         QSettings().setValue('DebugMode', self.debugModeCheckBox.isChecked())
         lang = SUPPORTED_LANGUAGES[self.languageComboBox.currentIndex()]

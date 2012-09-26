@@ -134,10 +134,20 @@ http://www.hardcoded.net/licenses/bsd_license
 // Returns ScheduleScope* const
 - (NSInteger)queryForScheduleScope
 {
-    if (([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask)
+    MGAppDelegate *app = [NSApp delegate];
+    if (([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask) {
         return ScheduleScopeGlobal;
-    else
-        return [MGRecurrenceScopeDialog shouldUseGlobalScope];
+    }
+    else if (!app.model.showScheduleScopeDialog) {
+        return ScheduleScopeLocal;
+    }
+    else {
+        MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] init];
+        NSInteger result = [dialog run];
+        [app.model setShowScheduleScopeDialog:dialog.showDialogNextTime];
+        [dialog release];
+        return result;
+    }
 }
 
 @end

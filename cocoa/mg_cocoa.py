@@ -87,6 +87,12 @@ class PyMoneyGuruApp(PyFairware):
     def setAutoDecimalPlace_(self, value: bool):
         self.model.auto_decimal_place = value
     
+    def showScheduleScopeDialog(self) -> bool:
+        return self.model.show_schedule_scope_dialog
+    
+    def setShowScheduleScopeDialog_(self, value: bool):
+        self.model.show_schedule_scope_dialog = value
+    
     #--- model --> view
     @dontwrap
     def reveal_path(self, path):

@@ -8,9 +8,14 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 
-@interface MGRecurrenceScopeDialog : NSWindowController {}
-+ (NSInteger)shouldUseGlobalScope;
+@interface MGRecurrenceScopeDialog : NSWindowController
+{
+    BOOL showDialogNextTime;
+}
 
+@property BOOL showDialogNextTime;
+
+- (NSInteger)run;
 - (void)cancel;
 - (void)chooseGlobalScope;
 - (void)chooseLocalScope;

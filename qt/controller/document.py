@@ -125,7 +125,7 @@ class Document(QObject):
     def query_for_schedule_scope(self):
         if QApplication.keyboardModifiers() & Qt.ShiftModifier:
             return ScheduleScope.Global
-        if not self.app.prefs.showScheduleScopeDialog:
+        if not self.app.model.show_schedule_scope_dialog:
             return ScheduleScope.Local
         dialog = ScheduleScopeDialog(self.app.mainWindow)
         return dialog.queryForScope()
