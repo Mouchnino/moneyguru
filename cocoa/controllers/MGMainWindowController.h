@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "MGConst.h"
 #import "PSMTabBarControl.h"
 #import "MGAccountProperties.h"
 #import "MGTransactionInspector.h"
@@ -62,7 +63,7 @@ http://www.hardcoded.net/licenses/bsd_license
 - (PyMainWindow *)model;
 /* Private */
 - (BOOL)validateAction:(SEL)action;
-- (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef;
+- (MGBaseView *)viewFromPaneType:(MGPaneType)paneType modelRef:(PyObject *)modelRef;
 
 /* Actions */
 - (void)columnMenuClick:(id)sender;

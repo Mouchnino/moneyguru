@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGMainWindowController.h"
 #import "MGMainWindowController_UI.h"
-#import "MGConst.h"
 #import "MGAccountView.h"
 #import "MGNetWorthView.h"
 #import "MGProfitView.h"
@@ -161,7 +160,7 @@ http://www.hardcoded.net/licenses/bsd_license
     return [m autorelease];
 }
 
-- (MGBaseView *)viewFromPaneType:(NSInteger)paneType modelRef:(PyObject *)modelRef
+- (MGBaseView *)viewFromPaneType:(MGPaneType)paneType modelRef:(PyObject *)modelRef
 {
     if (paneType == MGPaneTypeNetWorth) {
         return [[[MGNetWorthView alloc] initWithPyRef:modelRef] autorelease];

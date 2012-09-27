@@ -6,6 +6,8 @@ which should be included with this package. The terms are also available at
 http://www.hardcoded.net/licenses/bsd_license
 */
 
+#import "PyConst.h"
+
 /* Pasteboard types */
 
 #define MGEntryPasteboardType @"MGEntryPasteboardType"
@@ -40,27 +42,3 @@ http://www.hardcoded.net/licenses/bsd_license
 // Others
 #define TableFontSize @"TableFontSize"
 #define PrintFontSize @"PrintFontSize"
-
-// ScheduleScope **Synced with the core**
-#define ScheduleScopeLocal 0
-#define ScheduleScopeGlobal 1
-#define ScheduleScopeCancel 2
-
-// Synced with the core
-#define MGPaneTypeNetWorth 0
-#define MGPaneTypeProfit 1
-#define MGPaneTypeTransaction 2
-#define MGPaneTypeAccount 3
-#define MGPaneTypeSchedule 4
-#define MGPaneTypeBudget 5
-#define MGPaneTypeCashculator 6
-#define MGPaneTypeGeneralLedger 7
-#define MGPaneTypeDocProps 8
-#define MGPaneTypeEmpty 100
-#define MGPaneTypePlugin 1000
-#define MGPaneTypeReadOnlyTablePlugin 1001
-
-// Synced with the core
-#define MGPaneAreaMain 1
-#define MGPaneAreaBottomGraph 2
-#define MGPaneAreaRightChart 3

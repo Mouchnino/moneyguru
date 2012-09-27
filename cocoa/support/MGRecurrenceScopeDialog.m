@@ -22,9 +22,9 @@ http://www.hardcoded.net/licenses/bsd_license
     return self;
 }
 
-- (NSInteger)run
+- (ScheduleScope)run
 {
-    NSInteger result = [NSApp runModalForWindow:[self window]];
+    ScheduleScope result = [NSApp runModalForWindow:[self window]];
     [[self window] close];
     return result;
 }

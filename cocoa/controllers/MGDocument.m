@@ -8,7 +8,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import "MGDocument.h"
 #import "MGMainWindowController.h"
-#import "MGConst.h"
 #import "Dialogs.h"
 #import "MGUndoManager.h"
 #import "MGRecurrenceScopeDialog.h"
@@ -132,7 +131,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 /* Python -> Cocoa */
 // Returns ScheduleScope* const
-- (NSInteger)queryForScheduleScope
+- (ScheduleScope)queryForScheduleScope
 {
     MGAppDelegate *app = [NSApp delegate];
     if (([[NSApp currentEvent] modifierFlags] & NSShiftKeyMask) == NSShiftKeyMask) {
@@ -143,7 +142,7 @@ http://www.hardcoded.net/licenses/bsd_license
     }
     else {
         MGRecurrenceScopeDialog *dialog = [[MGRecurrenceScopeDialog alloc] init];
-        NSInteger result = [dialog run];
+        ScheduleScope result = [dialog run];
         [app.model setShowScheduleScopeDialog:dialog.showDialogNextTime];
         [dialog release];
         return result;

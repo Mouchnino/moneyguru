@@ -8,6 +8,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 #import <Cocoa/Cocoa.h>
 #import "PyDocument.h"
+#import "MGConst.h"
 
 @interface MGDocument : NSDocument
 {
@@ -23,5 +24,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)stopEdition;
 
 /* Python -> Cocoa */
-- (NSInteger)queryForScheduleScope;
+- (ScheduleScope)queryForScheduleScope;
 @end

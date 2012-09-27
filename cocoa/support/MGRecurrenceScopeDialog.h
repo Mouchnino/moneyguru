@@ -7,6 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import "PyConst.h"
 
 @interface MGRecurrenceScopeDialog : NSWindowController
 {
@@ -15,7 +16,7 @@ http://www.hardcoded.net/licenses/bsd_license
 
 @property BOOL showDialogNextTime;
 
-- (NSInteger)run;
+- (ScheduleScope)run;
 - (void)cancel;
 - (void)chooseGlobalScope;
 - (void)chooseLocalScope;

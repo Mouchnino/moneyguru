@@ -240,6 +240,7 @@ def build_cocoa_bridging_interfaces():
     print("Building Cocoa Bridging Interfaces")
     import objp.o2p
     import objp.p2o
+    import objp.const
     add_to_pythonpath('cocoa')
     add_to_pythonpath('cocoalib')
     from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, TableView, PyColumns,
@@ -287,6 +288,8 @@ def build_cocoa_bridging_interfaces():
     py_folder = op.join(cocoa_app().resources, 'py')
     ensure_folder(py_folder)
     build_cocoa_ext('CocoaViews', py_folder, ['build/CocoaViews.m', 'build/ObjP.m'])
+    import mg_const
+    objp.const.generate_objc_code(mg_const, 'cocoa/autogen/PyConst.h')
 
 def build_normal(ui, dev):
     build_help(dev)
