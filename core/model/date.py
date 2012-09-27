@@ -54,6 +54,11 @@ class DateRange:
     def __hash__(self):
         return hash((self.start, self.end))
     
+    def adjusted(self, new_date):
+        # Some date ranges change when new transactions are beind added or changed. This is where
+        # it happens. Returns a new adjusted date range or None.
+        return None
+    
     def around(self, date):
         return self
 
@@ -95,6 +100,12 @@ class DateRange:
     
 
 class NavigableDateRange(DateRange):
+    def adjusted(self, new_date):
+        result = self.around(new_date)
+        if result == self:
+            result = None
+        return result
+    
     def around(self, date):
         return type(self)(date)
     
@@ -217,9 +228,20 @@ class RunningYearRange(DateRange):
     
 
 class AllTransactionsRange(DateRange):
-    def __init__(self, start, ahead_months):
-        end = compute_ahead_months(ahead_months)
+    def __init__(self, first_date, last_date, ahead_months):
+        start = first_date
+        end = max(last_date, compute_ahead_months(ahead_months))
         DateRange.__init__(self, start, end)
+        self.ahead_months = ahead_months
+    
+    def adjusted(self, new_date):
+        first_date = min(self.start, new_date)
+        last_date = max(self.end, new_date)
+        result = AllTransactionsRange(first_date=first_date, last_date=last_date,
+            ahead_months=self.ahead_months)
+        if result == self:
+            result = None
+        return result
     
     def prev(self): # for income statement's Last column
         start = self.start - ONE_DAY

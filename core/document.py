@@ -101,15 +101,8 @@ class Document(Repeater, GUIObject):
     
     #--- Private
     def _adjust_date_range(self, new_date):
-        if self.date_range.can_navigate:
-            new_date_range = self.date_range.around(new_date)
-            if new_date_range == self.date_range:
-                return False
-        elif isinstance(self.date_range, AllTransactionsRange):
-            if new_date >= self.date_range.start:
-                return False
-            new_date_range = AllTransactionsRange(start=new_date, ahead_months=self.ahead_months)
-        else:
+        new_date_range = self.date_range.adjusted(new_date)
+        if new_date_range is None:
             return False
         # We have to manually set the date range and send notifications because ENTRY_CHANGED
         # must happen between DATE_RANGE_WILL_CHANGE and DATE_RANGE_CHANGED
@@ -872,8 +865,10 @@ class Document(Repeater, GUIObject):
     def select_all_transactions_range(self):
         if not self.transactions:
             return
-        start_date = self.transactions[0].date
-        self.date_range = AllTransactionsRange(start=start_date, ahead_months=self.ahead_months)
+        first_date = self.transactions[0].date
+        last_date = self.transactions[-1].date
+        self.date_range = AllTransactionsRange(first_date=first_date, last_date=last_date,
+            ahead_months=self.ahead_months)
     
     def select_custom_date_range(self, start_date=None, end_date=None):
         if start_date is not None and end_date is not None:

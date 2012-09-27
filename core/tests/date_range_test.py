@@ -410,14 +410,10 @@ def test_add_earlier_transaction(app):
     eq_(app.ttable.row_count, 3)
 
 @with_app(app_all_txns_range_with_one_txn_far_in_the_past)
-def test_includes_ahead_months(app):
-    # All Transactions range end_date is computed using the ahead_months pref
-    dpview = app.show_dpview()
-    dpview.ahead_months_list.select(4) # triggers a date range update
-    app.add_txn('30/04/2010')
-    eq_(app.ttable.row_count, 3)
-    # but not further...
-    app.add_txn('01/05/2010')
+def test_includes_all_future_txns(app):
+    # All Transactions range end_date is computed dynamically using the txn furthest away in the
+    # future.
+    app.add_txn('01/10/2042')
     eq_(app.ttable.row_count, 3)
 
 @with_app(app_all_txns_range_with_one_txn_far_in_the_past)
@@ -438,4 +434,3 @@ def test_save_and_load_restores_all_txns_range(app):
 def test_transactions_are_shown(app):
     # When under All Transactions range, the range is big enough to contain all txns.
     eq_(app.ttable.row_count, 2)
-
