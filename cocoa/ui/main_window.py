@@ -19,7 +19,6 @@ tabBar.delegate = owner
 tabView.delegate = tabBar
 
 result.minSize = Size(600, 300)
-result.autosaveName = 'MainWindow'
 tabView.tabViewType = const.NSNoTabsNoBorder
 actionSegments.segmentStyle = visibilitySegments.segmentStyle = const.NSSegmentStyleCapsule
 actionSegments.trackingMode = const.NSSegmentSwitchTrackingMomentary

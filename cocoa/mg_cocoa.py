@@ -981,9 +981,11 @@ class PyReadOnlyPluginView(PyBaseView):
 class MainWindowView(GUIObjectView):
     def changeSelectedPane(self): pass
     def refreshPanes(self): pass
-    def refreshUndoActions(self): pass
-    def showCustomDateRangePanel(self): pass
     def refreshStatusLine(self): pass
+    def refreshUndoActions(self): pass
+    def restoreWindowFrame_(self, frame: nsrect): pass
+    def saveWindowFrame(self) -> nsrect: pass
+    def showCustomDateRangePanel(self): pass
     def showMessage_(self, message: str): pass
     def updateAreaVisibility(self): pass
     def viewClosedAtIndex_(self, index: int): pass
@@ -1133,16 +1135,24 @@ class PyMainWindow(PyGUIObject):
         self.callback.refreshPanes()
     
     @dontwrap
+    def refresh_status_line(self):
+        self.callback.refreshStatusLine()
+    
+    @dontwrap
     def refresh_undo_actions(self):
         self.callback.refreshUndoActions()
     
     @dontwrap
-    def show_custom_date_range_panel(self):
-        self.callback.showCustomDateRangePanel()
+    def restore_window_frame(self, frame):
+        self.callback.restoreWindowFrame_(frame)
+
+    @dontwrap
+    def save_window_frame(self):
+        return self.callback.saveWindowFrame()
     
     @dontwrap
-    def refresh_status_line(self):
-        self.callback.refreshStatusLine()
+    def show_custom_date_range_panel(self):
+        self.callback.showCustomDateRangePanel()
     
     @dontwrap
     def show_message(self, message):

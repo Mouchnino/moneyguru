@@ -8,8 +8,8 @@
 
 import os.path as op
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import QProcess, QUrl
+from PyQt4 import QtGui
+from PyQt4.QtCore import Qt, QProcess, QUrl, QRect, QSize
 from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
     QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction, QMenuBar)
 
@@ -119,16 +119,16 @@ class MainWindow(QMainWindow):
         spacerItem = QtGui.QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
         self.dateRangeSelectorView = DateRangeSelectorView(self.topBar)
-        self.dateRangeSelectorView.setMinimumSize(QtCore.QSize(220, 0))
+        self.dateRangeSelectorView.setMinimumSize(QSize(220, 0))
         self.horizontalLayout_2.addWidget(self.dateRangeSelectorView)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.searchLineEdit = SearchEdit(self.topBar)
-        self.searchLineEdit.setMaximumSize(QtCore.QSize(240, 16777215))
+        self.searchLineEdit.setMaximumSize(QSize(240, 16777215))
         self.horizontalLayout_2.addWidget(self.searchLineEdit)
         self.verticalLayout.addWidget(self.topBar)
         self.tabBar = QTabBar(self.centralwidget)
-        self.tabBar.setMinimumSize(QtCore.QSize(0, 20))
+        self.tabBar.setMinimumSize(QSize(0, 20))
         self.verticalLayout.addWidget(self.tabBar)
         self.mainView = QtGui.QStackedWidget(self.centralwidget)
         self.verticalLayout.addWidget(self.mainView)
@@ -169,14 +169,14 @@ class MainWindow(QMainWindow):
         self.horizontalLayout.addWidget(self.columnsVisibilityButton)
         
         self.statusLabel = QtGui.QLabel(tr("Status"))
-        self.statusLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.statusLabel.setAlignment(Qt.AlignCenter)
         self.horizontalLayout.addWidget(self.statusLabel)
         self.verticalLayout.addWidget(self.bottomBar)
         
         
         self.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 700, 20))
+        self.menubar.setGeometry(QRect(0, 0, 700, 20))
         self.menuFile = QMenu(tr("File"))
         self.menuOpenRecent = QMenu(tr("Open Recent"))
         self.menuView = QMenu(tr("View"))
@@ -646,6 +646,13 @@ class MainWindow(QMainWindow):
     
     def refresh_undo_actions(self):
         self._updateUndoActions()
+    
+    def restore_window_frame(self, frame):
+        self.setGeometry(*frame)
+    
+    def save_window_frame(self):
+        r = self.geometry()
+        return (r.x(), r.y(), r.width(), r.height())
     
     def show_message(self, msg):
         title = tr("Warning")

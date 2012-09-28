@@ -58,6 +58,7 @@ class Preference:
     OpenedPanes = 'OpenedPanes'
     SelectedPane = 'SelectedPane'
     HiddenAreas = 'HiddenAreas'
+    WindowFrame = 'WindowFrame'
 
 class ViewPane:
     def __init__(self, view, label):
@@ -79,9 +80,11 @@ class MainWindow(Repeater, GUIObject):
     #--- model -> view calls:
     # change_current_pane()
     # refresh_panes()
-    # refresh_undo_actions()
-    # show_custom_date_range_panel()
     # refresh_status_line()
+    # refresh_undo_actions()
+    # restore_window_frame(frame)
+    # save_window_frame() -> frame
+    # show_custom_date_range_panel()
     # show_message(message)
     # view_closed(index)
     # update_area_visibility()
@@ -240,6 +243,8 @@ class MainWindow(Repeater, GUIObject):
         self.document.set_default(Preference.OpenedPanes, opened_panes)
         self.document.set_default(Preference.SelectedPane, self._current_pane_index)
         self.document.set_default(Preference.HiddenAreas, list(self.hidden_areas))
+        window_frame = self.view.save_window_frame()
+        self.document.set_default(Preference.WindowFrame, list(window_frame))
     
     def _set_panes(self, pane_data):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, arg)]
@@ -598,6 +603,9 @@ class MainWindow(Repeater, GUIObject):
             self._current_pane.view.hide()
     
     def document_restoring_preferences(self):
+        window_frame = self.document.get_default(Preference.WindowFrame)
+        if window_frame:
+            self.view.restore_window_frame(tuple(window_frame))
         self._restore_opened_panes()
         self.hidden_areas = set(self.document.get_default(Preference.HiddenAreas, fallback_value=[]))
         self._update_area_visibility()

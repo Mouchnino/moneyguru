@@ -637,6 +637,16 @@ http://www.hardcoded.net/licenses/bsd_license
     [[self window] setDocumentEdited:[[self document] isDocumentEdited]];
 }
 
+- (void)restoreWindowFrame:(NSRect)aFrame
+{
+    [self.window setFrame:aFrame display:YES];
+}
+
+- (NSRect)saveWindowFrame
+{
+    return self.window.frame;
+}
+
 - (void)showMessage:(NSString *)aMessage
 {
     NSAlert *a = [NSAlert alertWithMessageText:aMessage defaultButton:nil alternateButton:nil
