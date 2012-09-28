@@ -140,9 +140,6 @@ class Recurrence:
             self.rtype2desc[RepeatType.WeekdayLast] = ''
     
     #--- Public
-    def add_exception(self, spawn):
-        self.date2exception[spawn.recurrence_date] = spawn
-    
     def affected_accounts(self):
         result = self.ref.affected_accounts()
         for exception in self._all_exceptions():
@@ -158,7 +155,6 @@ class Recurrence:
             if exception is not None and date >= spawn.recurrence_date:
                 del self.date2exception[date]
         self.date2globalchange[spawn.recurrence_date] = spawn
-        self.date2exception[spawn.recurrence_date] = spawn
         self._update_ref()
     
     def delete(self, spawn):

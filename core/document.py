@@ -141,7 +141,9 @@ class Document(Repeater, GUIObject):
             if global_scope:
                 transaction.recurrence.change_globally(transaction)
             else:
-                transaction.recurrence.add_exception(transaction)
+                transaction.recurrence.delete(transaction)
+                materialized = transaction.replicate()
+                self.transactions.add(materialized)
         else:
             if transaction not in self.transactions:
                 self.transactions.add(transaction)

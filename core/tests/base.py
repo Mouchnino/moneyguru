@@ -683,3 +683,16 @@ def compare_apps(first, second, qif_mode=False):
         eq_(budget1.start_date, budget2.start_date)
         eq_(budget1.stop_date, budget2.stop_date)
         eq_(budget1.repeat_every, budget2.repeat_every)
+
+def print_table(table, extra_attrs=[]):
+    def getval(row, attrname):
+        try:
+            return str(row.get_cell_value(attrname))
+        except AttributeError:
+            return 'N/A'
+    
+    attrs = table.columns.colnames + extra_attrs
+    print('|'.join(attrs))
+    for row in table:
+        print('|'.join(getval(row, attrname) for attrname in attrs))
+    print("--- Row Count: {} ---".format(len(table)))

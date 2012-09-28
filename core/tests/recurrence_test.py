@@ -80,14 +80,14 @@ def test_change_schedule_transaction(app):
     eq_(app.ttable[1].description, 'foobaz')
 
 @with_app(app_daily_schedule)
-def test_change_spawn(app):
-    # changing a spawn adds an exception to the recurrence (even if the date is changed)
+def test_change_spawn_materializes_it(app):
+    # changing a spawn deletes the spawn and adds a new normal transaction instead.
     app.ttable.select([1])
     app.ttable[1].date = '17/09/2008'
     app.ttable[1].description = 'changed'
     app.ttable.save_edits()
-    eq_(app.ttable.row_count, 6) # the spawn wasn't added to the tlist as a normal txn
-    assert app.ttable[1].recurrent
+    eq_(app.ttable.row_count, 6)
+    assert not app.ttable[1].recurrent
     eq_(app.ttable[1].date, '17/09/2008')
     eq_(app.ttable[1].description, 'changed')
     # change again
@@ -116,6 +116,9 @@ def test_change_spawn_then_delete_it(app):
     app.ttable.select([1])
     app.ttable[1].date = '17/09/2008'
     app.ttable.save_edits()
+    # XXX The line below could eventually be removed. It's only there because there's a glitch
+    # causing our selection to be lost on spawn materialization.
+    app.ttable.select([1])
     app.ttable.delete()
     eq_(app.ttable.row_count, 5)
     eq_(app.ttable[1].date, '19/09/2008')
@@ -230,17 +233,6 @@ def test_delete_spawn_with_global_scope(app):
     app.ttable.delete()
     eq_(app.ttable.row_count, 2)
     eq_(app.ttable[1].date, '16/09/2008')
-
-@with_app(app_daily_schedule)
-def test_delete_spawn_with_global_scope_after_change(app):
-    # A bug would cause the stop_date to be ineffective if a change had been made at a later date
-    app.ttable.select([3])
-    app.ttable[3].description = 'changed'
-    app.ttable.save_edits()
-    app.ttable.select([2])
-    app.doc_gui.query_for_schedule_scope_result = ScheduleScope.Global
-    app.ttable.delete()
-    eq_(app.ttable.row_count, 2)
 
 @with_app(app_daily_schedule)
 def test_etable_attrs(app):
@@ -398,6 +390,8 @@ def test_schedule_exceptions_are_correctly_reassigned(app):
     app.show_tview()
     app.ttable.select([3])
     app.ttable[3].to = 'account2'
+    # We set a 'from' to avoid have the transaction deleted from the reassignment.
+    app.ttable[3].from_ = 'account'
     app.ttable.save_edits()
     eq_(app.ttable[3].to, 'account2')
     app.show_nwview()
@@ -431,11 +425,10 @@ def test_exceptions_still_hold_the_correct_recurrent_date_after_load(app):
 
 @with_app(app_schedule_with_local_change)
 def test_save_load_schedule_with_local_changes(app):
-    # Previously, exceptions would lose their recurrent status after a reload
-    # Also, later, local changes would be lost at reload
+    # Ensure that save_and_load preserves correct status.
     newapp = app.save_and_load()
     newapp.show_tview()
-    assert newapp.ttable[2].recurrent
+    assert not newapp.ttable[2].recurrent
     eq_(newapp.ttable[2].description, 'changed')
 
 #--- Schedule with global change
