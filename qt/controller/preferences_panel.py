@@ -7,12 +7,12 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QSize, QSettings
-from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
-    QComboBox, QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox, QSizePolicy)
+from PyQt4.QtGui import (QDialog, QMessageBox, QVBoxLayout, QFormLayout, QLabel, QComboBox,
+    QSpinBox, QCheckBox, QLineEdit, QDialogButtonBox)
 
 from hscommon.trans import trget
 from qtlib.preferences import LANGNAMES
-from qtlib.util import verticalSpacer
+from qtlib.util import verticalSpacer, horizontalWrap
 from core.model.date import clean_format
 
 tr = trget('ui')
@@ -36,30 +36,25 @@ class PreferencesPanel(QDialog):
         self.verticalLayout = QVBoxLayout(self)
         self.formLayout = QFormLayout()
         
-        self.horizontalLayout = QHBoxLayout()
         self.autoSaveIntervalSpinBox = QSpinBox(self)
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.autoSaveIntervalSpinBox.sizePolicy().hasHeightForWidth())
-        self.autoSaveIntervalSpinBox.setSizePolicy(sizePolicy)
-        self.horizontalLayout.addWidget(self.autoSaveIntervalSpinBox)
+        self.autoSaveIntervalSpinBox.setMaximumSize(QSize(70, 0xffffff))
         self.label_5 = QLabel(tr("minute(s) (0 for none)"), self)
-        self.horizontalLayout.addWidget(self.label_5)
-        self.formLayout.addRow(tr("Auto-save interval:"), self.horizontalLayout)
+        self.formLayout.addRow(tr("Auto-save interval:"),
+            horizontalWrap([self.autoSaveIntervalSpinBox, self.label_5]))
         
         self.dateFormatEdit = QLineEdit(self)
         self.dateFormatEdit.setMaximumSize(QSize(140, 0xffffff))
-        self.formLayout.addRow(tr("Date Format:"), self.dateFormatEdit)
+        self.formLayout.addRow(tr("Date format:"), self.dateFormatEdit)
+
+        self.fontSizeSpinBox = QSpinBox()
+        self.fontSizeSpinBox.setMinimum(5)
+        self.fontSizeSpinBox.setMaximumSize(QSize(70, 0xffffff))
+        self.formLayout.addRow(tr("Font size:"), self.fontSizeSpinBox)
         
         self.languageComboBox = QComboBox(self)
         for lang in SUPPORTED_LANGUAGES:
             self.languageComboBox.addItem(LANGNAMES[lang])
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.languageComboBox.sizePolicy().hasHeightForWidth())
-        self.languageComboBox.setSizePolicy(sizePolicy)
+        self.languageComboBox.setMaximumSize(QSize(140, 0xffffff))
         self.formLayout.addRow(tr("Language:"), self.languageComboBox)
         self.verticalLayout.addLayout(self.formLayout)
         
@@ -79,9 +74,10 @@ class PreferencesPanel(QDialog):
         appm = self.app.model
         self.autoSaveIntervalSpinBox.setValue(appm.autosave_interval)
         self.dateFormatEdit.setText(self.app.prefs.dateFormat)
+        self.fontSizeSpinBox.setValue(self.app.prefs.tableFontSize)
         self.scopeDialogCheckBox.setChecked(appm.show_schedule_scope_dialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
-        self.debugModeCheckBox.setChecked(QSettings().value('DebugMode'))
+        self.debugModeCheckBox.setChecked(bool(QSettings().value('DebugMode')))
         try:
             langindex = SUPPORTED_LANGUAGES.index(self.app.prefs.language)
         except ValueError:
@@ -95,6 +91,7 @@ class PreferencesPanel(QDialog):
         if self.dateFormatEdit.text() != self.app.prefs.dateFormat:
             restartRequired = True
         self.app.prefs.dateFormat = self.dateFormatEdit.text()
+        self.app.prefs.tableFontSize = self.fontSizeSpinBox.value()
         appm.show_schedule_scope_dialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
         QSettings().setValue('DebugMode', self.debugModeCheckBox.isChecked())

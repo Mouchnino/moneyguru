@@ -7,7 +7,7 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from PyQt4.QtCore import Qt, QMimeData, QByteArray
-from PyQt4.QtGui import QPixmap, QPalette, QFont, QItemSelection
+from PyQt4.QtGui import QPixmap, QPalette, QFont, QItemSelection, QFontMetrics
 
 from hscommon.util import nonone
 from qtlib.column import Columns
@@ -104,6 +104,8 @@ class AccountSheet(TreeModel):
         self.view.expanded.connect(self.nodeExpanded)
         self.view.deletePressed.connect(self.model.delete)
         self.view.doubleClicked.connect(self.model.show_selected_account)
+        from ..app import APP_INSTANCE
+        APP_INSTANCE.prefsChanged.connect(self.appPrefsChanged)
     
     #--- TreeModel overrides
     def _createNode(self, ref, row):
@@ -243,6 +245,11 @@ class AccountSheet(TreeModel):
         return Qt.MoveAction
     
     #--- Events
+    def appPrefsChanged(self, prefs):
+        font = self.view.font()
+        font.setPointSize(prefs.tableFontSize)
+        self.view.setFont(font)
+
     def selectionChanged(self, selected, deselected):
         newNodes = [modelIndex.internalPointer().ref for modelIndex in self.view.selectionModel().selectedRows()]
         self.model.selected_nodes = newNodes

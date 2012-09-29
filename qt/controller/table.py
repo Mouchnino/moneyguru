@@ -6,6 +6,8 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from PyQt4.QtGui import QFontMetrics
+
 from qtlib.table import Table as TableBase
 
 from ..support.completable_edit import DescriptionEdit, PayeeEdit, AccountEdit
@@ -44,3 +46,13 @@ class Table(TableBase):
         TableBase.__init__(self, model, view)
         self.tableDelegate = TableDelegate(self.model)
         self.view.setItemDelegate(self.tableDelegate)
+        from ..app import APP_INSTANCE
+        APP_INSTANCE.prefsChanged.connect(self.appPrefsChanged)
+
+    def appPrefsChanged(self, prefs):
+        font = self.view.font()
+        font.setPointSize(prefs.tableFontSize)
+        self.view.setFont(font)
+        fm = QFontMetrics(font)
+        self.view.verticalHeader().setDefaultSectionSize(fm.height()+2)
+    

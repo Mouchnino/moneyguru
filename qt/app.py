@@ -34,6 +34,8 @@ class MoneyGuru(ApplicationBase):
     
     def __init__(self):
         ApplicationBase.__init__(self)
+        global APP_INSTANCE
+        APP_INSTANCE = self
         self.prefs = Preferences()
         self.prefs.load()
         locale = QLocale.system()
@@ -62,6 +64,8 @@ class MoneyGuru(ApplicationBase):
         
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
         QCoreApplication.instance().aboutToQuit.connect(self.applicationWillTerminate)
+
+        self.prefsChanged.emit(self.prefs)
     
     #--- Public
     def askForRegCode(self):
@@ -78,7 +82,8 @@ class MoneyGuru(ApplicationBase):
     def showPreferences(self):
         self.preferencesPanel.load()
         if self.preferencesPanel.exec_() == QDialog.Accepted:
-            self.preferencesPanel.save()    
+            self.preferencesPanel.save()
+            self.prefsChanged.emit(self.prefs)
     
     #--- Event Handling
     def applicationFinishedLaunching(self):
@@ -96,6 +101,7 @@ class MoneyGuru(ApplicationBase):
         self.model.shutdown()
     
     #--- Signals
+    prefsChanged = pyqtSignal(object)
     willSavePrefs = pyqtSignal()
     
     #--- model --> view

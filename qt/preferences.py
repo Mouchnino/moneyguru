@@ -9,6 +9,7 @@
 import os.path as op
 
 from PyQt4.QtCore import QLocale
+from PyQt4.QtGui import QApplication
 
 from core.model.date import clean_format
 from qtlib.preferences import Preferences as PreferencesBase
@@ -19,6 +20,7 @@ class Preferences(PreferencesBase):
         self.recentDocuments = get('RecentDocuments', self.recentDocuments)
         self.recentDocuments = list(filter(op.exists, self.recentDocuments))
         self.dateFormat = get('DateFormat', self.dateFormat)
+        self.tableFontSize = get('TableFontSize', self.tableFontSize)
         self.language = get('Language', self.language)
         
     def reset(self):
@@ -27,11 +29,13 @@ class Preferences(PreferencesBase):
         dateFormat = str(locale.dateFormat(QLocale.ShortFormat))
         dateFormat = clean_format(dateFormat)
         self.dateFormat = dateFormat
+        self.tableFontSize = QApplication.font().pointSize()
         self.language = ''
         
     def _save_values(self, settings):
         set_ = self.set_value
         set_('RecentDocuments', self.recentDocuments)
         set_('DateFormat', self.dateFormat)
+        set_('TableFontSize', self.tableFontSize)
         set_('Language', self.language)
     
