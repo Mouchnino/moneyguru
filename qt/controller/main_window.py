@@ -11,7 +11,8 @@ import os.path as op
 from PyQt4 import QtGui
 from PyQt4.QtCore import Qt, QProcess, QUrl, QRect, QSize
 from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
-    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction, QMenuBar)
+    QDesktopServices, QTabBar, QSizePolicy, QHBoxLayout, QPushButton, QMenu, QAction, QMenuBar,
+    QShortcut, QKeySequence)
 
 from qtlib.recent import Recent
 from qtlib.search_edit import SearchEdit
@@ -324,6 +325,11 @@ class MainWindow(QMainWindow):
         self.tabBar.setMovable(True)
         self.tabBar.setTabsClosable(True)
         
+        seq = QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Right)
+        self._shortcutNextTab = QShortcut(seq, self)
+        seq = QKeySequence(Qt.CTRL + Qt.SHIFT + Qt.Key_Left)
+        self._shortcutPrevTab = QShortcut(seq, self)
+        
         # Linux setup
         if ISLINUX:
             self.actionCheckForUpdate.setVisible(False) # This only works on Windows
@@ -393,6 +399,10 @@ class MainWindow(QMainWindow):
         self.actionAbout.triggered.connect(self.aboutTriggered)
         self.actionOpenDebugLog.triggered.connect(self.openDebugLogTriggered)
         self.actionQuit.triggered.connect(self.close)
+        
+        # Extra Shortcuts
+        self._shortcutNextTab.activated.connect(self.showNextViewTriggered)
+        self._shortcutPrevTab.activated.connect(self.showPreviousViewTriggered)
     
     #--- QWidget overrides
     def closeEvent(self, event):
