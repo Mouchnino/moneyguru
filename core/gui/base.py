@@ -8,6 +8,8 @@ from hscommon.notify import Listener, Repeater
 from hscommon.gui.base import GUIObject
 from hscommon.gui.selectable_list import GUISelectableList
 
+from .print_view import PrintView
+
 class DocumentNotificationsMixin:
     def account_added(self):
         pass
@@ -233,6 +235,7 @@ class BaseView(Repeater, GUIObject, HideableObject, DocumentNotificationsMixin, 
     #
     
     VIEW_TYPE = -1
+    PRINT_VIEW_CLASS = PrintView
     
     def __init__(self, mainwindow):
         Repeater.__init__(self, mainwindow)

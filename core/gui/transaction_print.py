@@ -6,8 +6,12 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
+from collections import namedtuple
+
 from hscommon.trans import tr
 from .print_view import PrintView
+
+SplitValues = namedtuple('SplitValues', 'account memo amount')
 
 class TransactionPrintBase(PrintView):
     #--- Virtual
@@ -22,7 +26,7 @@ class TransactionPrintBase(PrintView):
         splits = self._get_splits_at_row(row_index)
         split = splits[split_row_index]
         account_name = split.account.name if split.account is not None else tr('Unassigned')
-        return [account_name, split.memo, self.document.format_amount(split.amount)]
+        return SplitValues(account_name, split.memo, self.document.format_amount(split.amount))
     
 
 class TransactionPrint(TransactionPrintBase):

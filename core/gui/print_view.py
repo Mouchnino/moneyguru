@@ -6,7 +6,7 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-from .account_view import AccountView
+from ..const import PaneType
 
 class PrintView:
     def __init__(self, parent):
@@ -18,7 +18,7 @@ class PrintView:
     def title(self):
         if not hasattr(self.parent, 'PRINT_TITLE_FORMAT'):
             return ''
-        if isinstance(self.parent, AccountView):
+        if self.parent.VIEW_TYPE == PaneType.Account:
             account_name = self.parent.account.name
         title_format = self.parent.PRINT_TITLE_FORMAT
         start_date = self.app.format_date(self.document.date_range.start)

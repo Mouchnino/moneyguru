@@ -10,10 +10,12 @@ from hscommon.trans import tr
 from ..const import PaneType
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 from .general_ledger_table import GeneralLedgerTable
+from .transaction_print import EntryPrint
 
 class GeneralLedgerView(BaseView):
     VIEW_TYPE = PaneType.GeneralLedger
     PRINT_TITLE_FORMAT = tr('General Ledger from {start_date} to {end_date}')
+    PRINT_VIEW_CLASS = EntryPrint
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed',
         'transactions_selected'}
     

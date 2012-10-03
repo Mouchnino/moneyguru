@@ -14,10 +14,12 @@ from ..model.amount import convert_amount
 from .base import BaseView, MESSAGES_DOCUMENT_CHANGED
 from .filter_bar import FilterBar
 from .transaction_table import TransactionTable
+from .transaction_print import TransactionPrint
 
 class TransactionView(BaseView):
     VIEW_TYPE = PaneType.Transaction
     PRINT_TITLE_FORMAT = tr('Transactions from {start_date} to {end_date}')
+    PRINT_VIEW_CLASS = TransactionPrint
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied', 'date_range_changed'}
     
     def __init__(self, mainwindow):

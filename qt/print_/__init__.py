@@ -9,7 +9,6 @@
 from PyQt4.QtCore import QRect
 from PyQt4.QtGui import QPainter
 
-from core.gui.print_view import PrintView as PrintViewModel
 from .layout import LayoutPage, LayoutViewElement
 from .item_view import (ItemViewLayoutElement, ItemViewPrintStats, TablePrintDatasource,
     TreePrintDatasource)
@@ -25,7 +24,7 @@ class ViewPrinter:
     def __init__(self, printer, baseView):
         self.document = baseView.model.document
         self.app = self.document.app
-        self.model = PrintViewModel(baseView.model)
+        self.model = baseView.model.PRINT_VIEW_CLASS(baseView.model)
         self.title = self.model.title
         self.printer = printer
         self.pageSize = printer.pageRect().size()
@@ -60,10 +59,10 @@ class ViewPrinter:
             self.layoutPages.append(page)
     
     def fitTable(self, table):
-        self._fitItemView(TablePrintDatasource(table))
+        self._fitItemView(TablePrintDatasource(self.model, table))
     
     def fitTree(self, tree):
-        self._fitItemView(TreePrintDatasource(tree))
+        self._fitItemView(TreePrintDatasource(self.model, tree))
     
     def render(self):
         painter = QPainter(self.printer)

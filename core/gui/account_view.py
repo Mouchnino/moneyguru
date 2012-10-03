@@ -13,10 +13,12 @@ from .filter_bar import EntryFilterBar
 from .entry_table import EntryTable
 from .account_balance_graph import AccountBalanceGraph
 from .account_flow_graph import AccountFlowGraph
+from .transaction_print import EntryPrint
 
 class AccountView(BaseView):
     VIEW_TYPE = PaneType.Account
     PRINT_TITLE_FORMAT = tr('{account_name}\nEntries from {start_date} to {end_date}')
+    PRINT_VIEW_CLASS = EntryPrint
     INVALIDATING_MESSAGES = MESSAGES_DOCUMENT_CHANGED | {'filter_applied',
         'date_range_changed', 'transactions_selected', 'area_visibility_changed'}
     
