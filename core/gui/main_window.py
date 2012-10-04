@@ -244,7 +244,8 @@ class MainWindow(Repeater, GUIObject):
         self.document.set_default(Preference.SelectedPane, self._current_pane_index)
         self.document.set_default(Preference.HiddenAreas, list(self.hidden_areas))
         window_frame = self.view.save_window_frame()
-        self.document.set_default(Preference.WindowFrame, list(window_frame))
+        if window_frame:
+            self.document.set_default(Preference.WindowFrame, list(window_frame))
     
     def _set_panes(self, pane_data):
         # Replace opened panes with new panes from `pane_data`, which is a [(pane_type, arg)]

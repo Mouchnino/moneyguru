@@ -35,6 +35,6 @@ def test_split_count(app):
 
 @with_app(app_split_transaction)
 def test_split_values(app):
-    eq_(app.pv.split_values(0, 2), ['split1', 'some memo', '10.00'])
-    eq_(app.pv.split_values(0, 4), ['Unassigned', '', '-9.00'])
+    eq_(app.pv.split_values(0, 2), ('split1', 'some memo', '10.00'))
+    eq_(app.pv.split_values(0, 4), ('Unassigned', '', '-9.00'))
 

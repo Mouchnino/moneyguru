@@ -48,16 +48,16 @@ def test_split_count(app):
 
 @with_app(app_split_transaction)
 def test_split_values(app):
-    eq_(app.pv.split_values(0, 0), ['foo', 'foo memo', '100.00'])
-    eq_(app.pv.split_values(0, 2), ['split1', 'some memo', '10.00'])
-    eq_(app.pv.split_values(0, 4), ['Unassigned', '', '-9.00'])
+    eq_(app.pv.split_values(0, 0), ('foo', 'foo memo', '100.00'))
+    eq_(app.pv.split_values(0, 2), ('split1', 'some memo', '10.00'))
+    eq_(app.pv.split_values(0, 4), ('Unassigned', '', '-9.00'))
 
 @with_app(app_split_transaction)
 def test_main_split_always_first(app):
     # Always show the "main" split (the one represented by the entry) first.
     aview = app.show_account('bar')
     pv = EntryPrint(aview)
-    eq_(pv.split_values(0, 0), ['bar', '', '-100.00'])
+    eq_(pv.split_values(0, 0), ('bar', '', '-100.00'))
 
 #--- Entry in previous range
 def app_entry_in_previous_range():
