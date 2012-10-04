@@ -7,9 +7,11 @@
 # http://www.hardcoded.net/licenses/bsd_license
 
 from math import radians, sin
+from itertools import combinations
 
 from hscommon.trans import tr
 from hscommon.geometry import Rect, Point
+from hscommon.util import extract
 from .chart import Chart
 
 # A pie chart's data is a list of (name, (float)amount). The name part is ready for display. It
@@ -66,6 +68,32 @@ def pull_rect_in(rect, container):
         rect.left = container.left
     elif rect.right > container.right:
         rect.right = container.right
+
+def legends_intersect(legends):
+    for legend1, legend2 in combinations(legends, 2):
+        rect1, rect2 = legend1.label_rect, legend2.label_rect
+        if rect1.intersects(rect2):
+            return True
+    return False
+
+def spread_vertically(legends, circle_bounds):
+    circle_size = min(circle_bounds.w, circle_bounds.h)
+    legends.sort(key=lambda l: l.base_point.y)
+    # It's possible that our pie chart is higher than wide, giving us a lot of screen estate
+    # vertically. If we actually need it, great, use it. Otherwise, spread it over a height
+    # equivalent to the circle's diameter (circle_size)
+    # The "*1.2" part is to give us a little margin between legends
+    needed_height = sum(l.label_rect.height for l in legends) * 1.2
+    if circle_size > needed_height:
+        # don't pack all labels in the center, use at least the circle's diameter.
+        needed_height = circle_size
+    interval = needed_height / len(legends)
+    current_y = circle_bounds.center().y - (needed_height / 2) + (interval / 2)
+    for legend in legends:
+        # current_y represents where the label's center is supposed to be, that's why we
+        # remove haslf the height
+        legend.label_rect.y = current_y - (legend.label_rect.height / 2)
+        current_y += interval
 
 class FontID:
     Title = 1
@@ -171,24 +199,18 @@ class PieChart(Chart):
         for legend in legends:
             pull_rect_in(legend.label_rect, circle_bounds)
         
-        # send to the sides of the chart
-        for legend in legends:
-            if legend.base_point.x < center.x:
+        left, right = extract(lambda l: l.base_point.x < center.x, legends)
+        # If any legend intersect, we start by sending everyone to their horizontal circle bounds.
+        # Then, on each side, if anyone intersect, we go in "Spread mode", spreading all legends
+        # vertically in a regular manner.
+        if legends_intersect(legends):
+            for legend in left:
                 legend.label_rect.left = circle_bounds.left
-            else:
+            for legend in right:
                 legend.label_rect.right = circle_bounds.right
-        
-        # Make sure the labels are not one over another
-        for legend1, legend2 in zip(legends, legends[1:]):
-            rect1, rect2 = legend1.label_rect, legend2.label_rect
-            if not rect1.intersects(rect2):
-                continue
-            # Here, we use legend.base_point.y() rather than rect.top() to determine which rect is
-            # the highest because rect1 might already have been pushed up earlier, and end up being
-            # the highest, when in fact it's rect2 that "deserves" to be the highest.
-            p1, p2 = legend1.base_point, legend2.base_point
-            highest, lowest = (rect1, rect2) if p1.y < p2.y else (rect2, rect1)
-            highest.bottom = lowest.top - 1
+        for side in (left, right):
+            if legends_intersect(side):
+                spread_vertically(side, circle_bounds)
         
         # draw legends
         # draw lines before legends because we don't want them being drawn over other legends
