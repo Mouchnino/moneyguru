@@ -31,8 +31,8 @@ def configure(conf):
     conf.env.FRAMEWORK_COCOA = 'Cocoa'
     conf.env.ARCH_COCOA = ['i386', 'x86_64']
     # Add cocoalib dir to the framework search path so we can find Sparkle.
-    conf.env.CFLAGS = ['-F'+op.abspath('../cocoalib')]
-    conf.env.LINKFLAGS = ['-F'+op.abspath('../cocoalib')]
+    conf.env.CFLAGS = ['-F'+op.abspath('../cocoalib'), '-F'+op.abspath('../psmtabbarcontrol')]
+    conf.env.LINKFLAGS = ['-F'+op.abspath('../cocoalib'), '-F'+op.abspath('../psmtabbarcontrol')]
 
 def build(ctx):
     # What do we compile?
@@ -55,7 +55,6 @@ def build(ctx):
         if path:
             project_folders.append(path)
     project_folders.append(ctx.srcnode.find_dir('..').find_dir('ambuttonbar'))
-    project_folders.append(ctx.srcnode.find_dir('..').find_dir('psmtabbarcontrol'))
     project_src = sum([folder.ant_glob('*.m' % folder) for folder in project_folders], [])
     
     # Compile
@@ -69,7 +68,7 @@ def build(ctx):
         # Because our python lib's install name is "@rpath/Python", we need to set the executable's
         # rpath. Fortunately, WAF supports it and we just need to supply the "rpath" argument.
         rpath         = '@executable_path/../Frameworks',
-        framework     = ['Sparkle', 'Quartz'],
+        framework     = ['PSMTabBarControl', 'Sparkle', 'Quartz'],
     )
 
 from waflib import TaskGen

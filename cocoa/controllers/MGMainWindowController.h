@@ -7,8 +7,8 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
+#import <PSMTabBarControl/PSMTabBarControl.h>
 #import "MGConst.h"
-#import "PSMTabBarControl.h"
 #import "MGAccountProperties.h"
 #import "MGTransactionInspector.h"
 #import "MGMassEditionPanel.h"

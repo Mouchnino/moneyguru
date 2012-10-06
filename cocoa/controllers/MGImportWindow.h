@@ -7,7 +7,7 @@ http://www.hardcoded.net/licenses/bsd_license
 */
 
 #import <Cocoa/Cocoa.h>
-#import "PSMTabBarControl.h"
+#import <PSMTabBarControl/PSMTabBarControl.h>
 #import "PyDocument.h"
 #import "MGTableView.h"
 #import "MGImportTable.h"
