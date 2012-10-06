@@ -75,7 +75,7 @@ def package_debian(source_pkg):
         'moneyguru', from_version='1.8.0')
     shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
     shutil.copytree(op.join('build', 'locale'), op.join(srcpath, 'locale'))
-    shutil.copy(op.join('images', 'logo_small.png'), srcpath)
+    shutil.copy(op.join('images', 'logo_big.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
     cmd = "dpkg-buildpackage"
