@@ -627,15 +627,6 @@ class MainWindow(QMainWindow):
         self._setTabIndex(self.model.current_pane_index)
     
     def refresh_panes(self):
-        if self.tabBar.currentIndex() < self.model.pane_count:
-            # Normally, we don't touch the tabBar index here and wait for change_current_pane,
-            # but when we remove tabs, it's possible that currentTabChanged end up being called and
-            # then the tab selection is bugged. I tried disconnecting/reconnecting the signal, but
-            # this is buggy. So when a selected tab is about to be removed, we change the selection
-            # to the model's one immediately.
-            self.tabBar.setCurrentIndex(self.model.current_pane_index)
-        while self.tabBar.count() > self.model.pane_count:
-            self.tabBar.removeTab(self.tabBar.count()-1)
         while self.tabBar.count() < self.model.pane_count:
             self.tabBar.addTab('')
         for i in range(self.model.pane_count):
@@ -649,6 +640,21 @@ class MainWindow(QMainWindow):
             iconname = PANETYPE2ICON.get(pane_type)
             icon = QIcon(QPixmap(':/{0}'.format(iconname))) if iconname else QIcon()
             self.tabBar.setTabIcon(i, icon)
+        # It's important that we proceed with tab removal *after* we've completed tab initialization.
+        # We're walking on eggshells here. refresh_panes() can be called in multiple situations, one
+        # of them is during the opening of a document. When that happens when another document was
+        # previously opened, all views' model are uninitalized and don't have their "view" attribute
+        # set yet. If we proceed with the setCurrentIndex() call below before _getViewforPane()
+        # could be called above, we get a crash.
+        if self.tabBar.currentIndex() < self.model.pane_count:
+            # Normally, we don't touch the tabBar index here and wait for change_current_pane,
+            # but when we remove tabs, it's possible that currentTabChanged end up being called and
+            # then the tab selection is bugged. I tried disconnecting/reconnecting the signal, but
+            # this is buggy. So when a selected tab is about to be removed, we change the selection
+            # to the model's one immediately.
+            self.tabBar.setCurrentIndex(self.model.current_pane_index)
+        while self.tabBar.count() > self.model.pane_count:
+            self.tabBar.removeTab(self.tabBar.count()-1)
         self.tabBar.setTabsClosable(self.model.pane_count > 1)
     
     def refresh_status_line(self):
