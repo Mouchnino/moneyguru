@@ -169,7 +169,12 @@ http://www.hardcoded.net/licenses/bsd_license
         }
     }
     else {
-        [dc openFirstDocument];
+        // When Lion's window restoration feature is enabled, all previous documents are
+        // automatically restored and it conflicts with our own attempt to do this, so don't do it.
+        BOOL lionRestorationEnabled = n2b([[NSUserDefaults standardUserDefaults] objectForKey:@"NSQuitAlwaysKeepsWindows"]);
+        if (!lionRestorationEnabled) {
+            [dc openFirstDocument];
+        }
     }
     // For some messed up reason, simply notifying of a 'model' change here crashes the app, so the 
     // binding cannot be done in the NIB, it has to be done manually here.
