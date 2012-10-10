@@ -1,3 +1,23 @@
+=== 2.6.0 (2012-10-10)
+
+* Improved pie chart drawing. (#339)
+* Improved the date swapping mechanism in the import window. (#325)
+* Improved date format guessing. (#324)
+* Chart sizes are now remembered in between sessions.
+* Window frame restoration in between sessions is now document-based. (#345)
+* Display all transactions in "All Transactions" date range even when they go beyond the
+  "Ahead Months" preference. (#322)
+* Modified schedule spawns are now directly materialized. (#317)
+* Added support for the Saudi riyal (SAR). (#334)
+* Fixed crash on currency rates fetching. (#341)
+* Fixed amount mis-parsings. (#336)
+* Made various minor UI improvements. [Linux, Windows] (#346)
+* Fixed a crash on New Document. [Linux, Windows] (#331)
+* Fixed crash on startup due to corrupted preferences. [Linux] (#343)
+* Fixed a bug where the "Balance" column visibility in the Account view would become glitchy. (#347)
+* Fixed a conflict between automatic document re-opening and OS X Lion's restoration feature. [Mac]
+* The minimum version for Ubuntu is now 12.04. [Linux]
+
 === 2.5.5 (2012-07-17)
 
 * Fixed CSV parsing in cases where there are delimiters in quoted strings. (#338)

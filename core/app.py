@@ -47,7 +47,7 @@ class Application(Broadcaster, RegistrableApplication):
     APP_NAME = "moneyGuru"
     PROMPT_NAME = APP_NAME
     NAME = APP_NAME
-    VERSION = '2.5.5'
+    VERSION = '2.6.0'
     DEMO_LIMITATION = tr("will show this dialog on startup")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
