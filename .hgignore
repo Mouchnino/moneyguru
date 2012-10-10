@@ -5,6 +5,7 @@ syntax: glob
 *.so
 *.pyd
 *.mo
+*.dmg
 *.back.aip
 build
 _build

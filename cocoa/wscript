@@ -30,6 +30,7 @@ def configure(conf):
     conf.check_python_headers()
     conf.env.FRAMEWORK_COCOA = 'Cocoa'
     conf.env.ARCH_COCOA = ['i386', 'x86_64']
+    conf.env.MACOSX_DEPLOYMENT_TARGET = '10.6'
     # Add cocoalib dir to the framework search path so we can find Sparkle.
     conf.env.CFLAGS = ['-F'+op.abspath('../cocoalib'), '-F'+op.abspath('../psmtabbarcontrol')]
     conf.env.LINKFLAGS = ['-F'+op.abspath('../cocoalib'), '-F'+op.abspath('../psmtabbarcontrol')]
