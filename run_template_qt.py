@@ -19,6 +19,7 @@ import hscommon.trans
 from hscommon.plat import ISLINUX
 from qtlib.error_report_dialog import install_excepthook
 from qtlib.util import setupQtLogging
+from qtlib.preferences import adjust_after_deserialization
 import qt.mg_rc
 from qt.plat import BASE_PATH
 
@@ -28,7 +29,7 @@ def main(argv):
     app.setOrganizationName('Hardcoded Software')
     app.setApplicationName('moneyGuru')
     settings = QSettings()
-    LOGGING_LEVEL = logging.DEBUG if settings.value('DebugMode') else logging.WARNING
+    LOGGING_LEVEL = logging.DEBUG if adjust_after_deserialization(settings.value('DebugMode')) else logging.WARNING
     setupQtLogging(level=LOGGING_LEVEL)
     logging.debug('started in debug mode')
     if ISLINUX:

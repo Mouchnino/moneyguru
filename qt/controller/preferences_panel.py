@@ -77,7 +77,7 @@ class PreferencesPanel(QDialog):
         self.fontSizeSpinBox.setValue(self.app.prefs.tableFontSize)
         self.scopeDialogCheckBox.setChecked(appm.show_schedule_scope_dialog)
         self.autoDecimalPlaceCheckBox.setChecked(appm.auto_decimal_place)
-        self.debugModeCheckBox.setChecked(bool(QSettings().value('DebugMode')))
+        self.debugModeCheckBox.setChecked(self.app.prefs.debugMode)
         try:
             langindex = SUPPORTED_LANGUAGES.index(self.app.prefs.language)
         except ValueError:
@@ -94,7 +94,7 @@ class PreferencesPanel(QDialog):
         self.app.prefs.tableFontSize = self.fontSizeSpinBox.value()
         appm.show_schedule_scope_dialog = self.scopeDialogCheckBox.isChecked()
         appm.auto_decimal_place = self.autoDecimalPlaceCheckBox.isChecked()
-        QSettings().setValue('DebugMode', self.debugModeCheckBox.isChecked())
+        self.app.prefs.debugMode = self.debugModeCheckBox.isChecked()
         lang = SUPPORTED_LANGUAGES[self.languageComboBox.currentIndex()]
         oldlang = self.app.prefs.language
         if oldlang not in SUPPORTED_LANGUAGES:

@@ -22,6 +22,7 @@ class Preferences(PreferencesBase):
         self.dateFormat = get('DateFormat', self.dateFormat)
         self.tableFontSize = get('TableFontSize', self.tableFontSize)
         self.language = get('Language', self.language)
+        self.debugMode = get('DebugMode', self.debugMode)
         
     def reset(self):
         locale = QLocale.system()
@@ -31,6 +32,7 @@ class Preferences(PreferencesBase):
         self.dateFormat = dateFormat
         self.tableFontSize = QApplication.font().pointSize()
         self.language = ''
+        self.debugMode = False
         
     def _save_values(self, settings):
         set_ = self.set_value
@@ -38,4 +40,5 @@ class Preferences(PreferencesBase):
         set_('DateFormat', self.dateFormat)
         set_('TableFontSize', self.tableFontSize)
         set_('Language', self.language)
+        set_('DebugMode', self.debugMode)
     
