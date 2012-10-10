@@ -226,21 +226,22 @@ def test_table_column_prefs_is_at_document_level():
     app1.show_tview()
     app1.ttable.columns.move_column('date', 5)
     app1.ttable.columns.resize_column('date', 42)
-    app1.ttable.columns.set_column_visible('date', False)
+    # We use description here because only optional columns can be made invisible
+    app1.ttable.columns.set_column_visible('description', False)
     filename = app1.save_file()
     app1.doc.close()
     app2 = TestApp(app=app1.app)
     app2.show_tview()
     app2.ttable.columns.move_column('date', 4)
     app2.ttable.columns.resize_column('date', 41)
-    app2.ttable.columns.set_column_visible('date', True)
+    app2.ttable.columns.set_column_visible('description', True)
     app2.doc.close()
     newapp = TestApp(app=app1.app)
     newapp.doc.load_from_xml(filename)
     newapp.show_tview()
     eq_(newapp.ttable.columns.colnames[5], 'date')
     eq_(newapp.ttable.columns.column_width('date'), 42)
-    assert not newapp.ttable.columns.column_is_visible('date')
+    assert not newapp.ttable.columns.column_is_visible('description')
 
 def test_account_exclusion_prefs_is_at_document_level():
     # account exclusion preferences are at the document level
