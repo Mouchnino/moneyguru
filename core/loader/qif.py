@@ -59,6 +59,7 @@ class Block:
 
 class Loader(base.Loader):
     NATIVE_DATE_FORMAT = '%m/%d/%y'
+    EXTRA_DATE_FORMATS = ['%m/%d/%Y'] # Also try the YYYY version of the date format in priority
     
     def _parse(self, infile):
         content = infile.read()

@@ -31,7 +31,7 @@ def save(filename, accounts, daterange=None):
             if entry.transaction in txns_seen:
                 continue
             txns_seen.add(entry.transaction)
-            lines.append('D%s' % format_date(entry.date, 'MM/dd/yy'))
+            lines.append('D%s' % format_date(entry.date, 'MM/dd/yyyy'))
             lines.append('T%s' % format_amount_for_qif(entry.amount))
             if entry.description:
                 lines.append('M%s' % entry.description)

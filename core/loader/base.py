@@ -61,6 +61,8 @@ class Loader:
     # (before the default date format). If guessing never occurs, it will be the parsing date format.
     # This format is a sys format (%-based)
     NATIVE_DATE_FORMAT = None
+    # Some extra date formats to try before standard date guessing order
+    EXTRA_DATE_FORMATS = None
     
     def __init__(self, default_currency, default_date_format=None):
         self.default_currency = default_currency
@@ -119,11 +121,14 @@ class Loader:
     
     def guess_date_format(self, str_dates):
         totry = DATE_FORMATS[:]
-        if self.default_date_format:
-            totry.insert(0, self.default_date_format)
+        extra = []
         if self.NATIVE_DATE_FORMAT:
-            totry.insert(0, self.NATIVE_DATE_FORMAT)
-        for format in dedupe(totry):
+            extra.append(self.NATIVE_DATE_FORMAT)
+        if self.EXTRA_DATE_FORMATS:
+            extra += self.EXTRA_DATE_FORMATS
+        if self.default_date_format:
+            extra.append(self.default_date_format)
+        for format in dedupe(extra + totry):
             found_at_least_one = False
             for str_date in str_dates:
                 try:
