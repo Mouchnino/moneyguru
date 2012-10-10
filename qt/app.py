@@ -65,7 +65,7 @@ class MoneyGuru(ApplicationBase):
         self.connect(self, SIGNAL('applicationFinishedLaunching()'), self.applicationFinishedLaunching)
         QCoreApplication.instance().aboutToQuit.connect(self.applicationWillTerminate)
 
-        self.prefsChanged.emit(self.prefs)
+        self.prefsChanged.emit()
     
     #--- Public
     def askForRegCode(self):
@@ -83,7 +83,7 @@ class MoneyGuru(ApplicationBase):
         self.preferencesPanel.load()
         if self.preferencesPanel.exec_() == QDialog.Accepted:
             self.preferencesPanel.save()
-            self.prefsChanged.emit(self.prefs)
+            self.prefsChanged.emit()
     
     #--- Event Handling
     def applicationFinishedLaunching(self):
@@ -101,7 +101,7 @@ class MoneyGuru(ApplicationBase):
         self.model.shutdown()
     
     #--- Signals
-    prefsChanged = pyqtSignal(object)
+    prefsChanged = pyqtSignal()
     willSavePrefs = pyqtSignal()
     
     #--- model --> view

@@ -46,13 +46,18 @@ class Table(TableBase):
         TableBase.__init__(self, model, view)
         self.tableDelegate = TableDelegate(self.model)
         self.view.setItemDelegate(self.tableDelegate)
+        self._updateFontSize()
         from ..app import APP_INSTANCE
         APP_INSTANCE.prefsChanged.connect(self.appPrefsChanged)
 
-    def appPrefsChanged(self, prefs):
+    def _updateFontSize(self):
+        from ..app import APP_INSTANCE
         font = self.view.font()
-        font.setPointSize(prefs.tableFontSize)
+        font.setPointSize(APP_INSTANCE.prefs.tableFontSize)
         self.view.setFont(font)
         fm = QFontMetrics(font)
         self.view.verticalHeader().setDefaultSectionSize(fm.height()+2)
+
+    def appPrefsChanged(self):
+        self._updateFontSize()
     

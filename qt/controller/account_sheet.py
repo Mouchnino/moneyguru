@@ -98,6 +98,7 @@ class AccountSheet(TreeModel):
         self.columns = Columns(self.model.columns, self.COLUMNS, view.header())
         self.accountSheetDelegate = AccountSheetDelegate(self)
         self.view.setItemDelegate(self.accountSheetDelegate)
+        self._updateFontSize()
         
         self.view.selectionModel().selectionChanged[(QItemSelection, QItemSelection)].connect(self.selectionChanged)
         self.view.collapsed.connect(self.nodeCollapsed)
@@ -123,6 +124,12 @@ class AccountSheet(TreeModel):
         modelIndex = self.findIndex(selectedPath)
         self.view.setCurrentIndex(modelIndex)
     
+    def _updateFontSize(self):
+        from ..app import APP_INSTANCE
+        font = self.view.font()
+        font.setPointSize(APP_INSTANCE.prefs.tableFontSize)
+        self.view.setFont(font)
+
     #--- Data Model methods
     def columnCount(self, parent):
         return self.model.columns.columns_count()
@@ -245,10 +252,8 @@ class AccountSheet(TreeModel):
         return Qt.MoveAction
     
     #--- Events
-    def appPrefsChanged(self, prefs):
-        font = self.view.font()
-        font.setPointSize(prefs.tableFontSize)
-        self.view.setFont(font)
+    def appPrefsChanged(self):
+        self._updateFontSize()
 
     def selectionChanged(self, selected, deselected):
         newNodes = [modelIndex.internalPointer().ref for modelIndex in self.view.selectionModel().selectedRows()]
