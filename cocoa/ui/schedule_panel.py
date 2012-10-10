@@ -42,6 +42,7 @@ nextTabButton = Button(result, "", action=Action(tabView, 'selectNextTabViewItem
 
 owner.checknoField = checknoField
 owner.descriptionField = descriptionField
+owner.payeeField = payeeField
 owner.notesField = notesField
 owner.repeatEveryDescLabel = everyDescLabel
 owner.repeatEveryField = everyField
