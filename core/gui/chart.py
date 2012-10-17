@@ -34,7 +34,8 @@ class Chart(ViewChild):
         raise NotImplementedError()
     
     def draw(self):
-        pass
+        if self.has_view():
+            self.draw_chart()
     
     #--- Public
     def set_view_size(self, width, height):

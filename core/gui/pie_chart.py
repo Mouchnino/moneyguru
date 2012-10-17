@@ -224,7 +224,7 @@ class PieChart(Chart):
             legend.compute_text_rect()
             self.view.draw_text(legend.text, legend.text_rect, FontID.Legend)
     
-    def draw(self):
+    def draw_chart(self):
         view_rect = Rect(0, 0, *self.view_size)
         title = self.title
         _, title_height = self.view.text_size(title, 1)

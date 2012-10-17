@@ -129,7 +129,7 @@ class Graph(Chart):
     def draw_graph_after_axis(self, context):
         pass
     
-    def draw(self):
+    def draw_chart(self):
         if not hasattr(self, 'xmax'): # we haven't computed yet
             return
         view_rect = Rect(0, 0, *self.view_size)
