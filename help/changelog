@@ -1,3 +1,7 @@
+=== 2.6.1 (2012-10-26)
+
+* Fixed a crash on quit where charts would try to draw themselves after having been freed.
+
 === 2.6.0 (2012-10-10)
 
 * Improved pie chart drawing. (#339)
