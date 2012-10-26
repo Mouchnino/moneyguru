@@ -56,8 +56,9 @@ def package_windows(dev):
         os.remove('installer_tmp.aip')
     
 
-def package_debian(source_pkg):
-    destpath = op.join('build', 'moneyguru-{0}'.format(MoneyGuru.VERSION))
+def package_debian(distribution):
+    version = '{}~{}'.format(MoneyGuru.VERSION, distribution)
+    destpath = op.join('build', 'moneyguru-{}'.format(version))
     if op.exists(destpath):
         shutil.rmtree(destpath)
     srcpath = op.join(destpath, 'src')
@@ -72,16 +73,15 @@ def package_debian(source_pkg):
     os.mkdir(op.join(destpath, 'modules'))
     copy_all(op.join('core', 'modules', '*.*'), op.join(destpath, 'modules'))
     build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
-        'moneyguru', from_version='1.8.0')
+        'moneyguru', from_version='1.8.0', distribution=distribution)
     shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
     shutil.copytree(op.join('build', 'locale'), op.join(srcpath, 'locale'))
     shutil.copy(op.join('images', 'logo_big.png'), srcpath)
     compileall.compile_dir(srcpath)
     os.chdir(destpath)
-    cmd = "dpkg-buildpackage"
-    if source_pkg:
-        cmd += " -S"
+    cmd = "dpkg-buildpackage -S"
     os.system(cmd)
+    os.chdir('../..')
 
 def main():
     args = parse_args()
@@ -95,7 +95,8 @@ def main():
         if ISWINDOWS:
             package_windows(dev)
         elif ISLINUX:
-            package_debian(args.source_pkg)
+            for distribution in ['precise', 'quantal']:
+                package_debian(distribution)
         else:
             print("Qt packaging only works under Windows or Linux.")
 
