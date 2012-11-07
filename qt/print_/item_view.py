@@ -50,10 +50,10 @@ class ItemPrintDatasource:
         raise NotImplementedError()
     
     def splitCount(self, rowIndex):
-        return self.printViewModel.split_count_at_row(rowIndex)
+        raise NotImplementedError()
     
     def splitValues(self, rowIndex, splitIndex):
-        return self.printViewModel.split_values(rowIndex, splitIndex)
+        raise NotImplementedError()
     
     def data(self, rowIndex, colIndex, role):
         """Returns model data for the index at the *printable* (rowIndex, colIndex) cell."""
@@ -89,6 +89,12 @@ class TablePrintDatasource(ItemPrintDatasource):
     def rowCount(self):
         return self.table.rowCount(QModelIndex())
     
+    def splitCount(self, rowIndex):
+        return self.printViewModel.split_count_at_row(rowIndex)
+    
+    def splitValues(self, rowIndex, splitIndex):
+        return self.printViewModel.split_values(rowIndex, splitIndex)
+    
     def data(self, rowIndex, colIndex, role):
         index = self.table.index(rowIndex, self.columns[colIndex].logical_index)
         return self.table.data(index, role)
@@ -123,6 +129,12 @@ class TreePrintDatasource(ItemPrintDatasource):
     
     def rowCount(self):
         return len(self.rows)
+    
+    def splitCount(self, rowIndex):
+        return 0
+    
+    def splitValues(self, rowIndex, splitIndex):
+        return None
     
     def data(self, rowIndex, colIndex, role):
         index = self._getIndex(rowIndex, colIndex)
