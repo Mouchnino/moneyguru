@@ -55,14 +55,19 @@ class Transaction:
     def affected_accounts(self):
         return set(s.account for s in self.splits if s.account is not None)
     
-    def balance(self, strong_split=None):
+    def balance(self, strong_split=None, keep_two_splits=False):
         # strong_split is the split that was last edited.
+        # keep_two_splits is a flag that, if enabled and that a strong_split is defined, causes the
+        # balance process to set the weak split to the invert value of the strong one so that we
+        # don't end up with a third unassigned split.
         
-        # For the special case where there is 2 splits on the same "side" and a strong split, we
-        # reverse the weak split
+        # When the flag is false and for the special case where there is 2 splits on the same
+        # "side" and a strong split, we reverse the weak split.
         if len(self.splits) == 2 and strong_split is not None:
             weak_split = self.splits[0] if self.splits[0] is not strong_split else self.splits[1]
-            if (weak_split.amount > 0) == (strong_split.amount > 0): # on the same side
+            if keep_two_splits:
+                weak_split.amount = -strong_split.amount
+            elif (weak_split.amount > 0) == (strong_split.amount > 0): # on the same side
                 weak_split.amount *= -1
         splits_with_amount = [s for s in self.splits if s.amount]
         if splits_with_amount and not allsame(s.amount.currency for s in splits_with_amount):

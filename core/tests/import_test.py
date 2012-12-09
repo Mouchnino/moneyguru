@@ -353,45 +353,54 @@ class TestTwoEntriesInRangeSaveThenLoad:
         app.etable.save_edits()
         eq_(app.etable[0].description, 'first')
     
+#---
+def app_transfer_between_two_referenced_accounts():
+    app = TestApp()
+    app.doc.date_range = MonthRange(date(2008, 2, 1))
+    importall(app, testdata.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
+    app.add_account('Account 4') # Add it as an asset
+    app.show_account('Account 1')
+    app.etable.select([0])
+    row = app.etable[0]
+    row.transfer = 'Account 4'
+    # We change it from 42 so that the next matched improt has to change the amount. We can thus
+    # test that bound amount modification works correctly.
+    row.debit = '43'
+    app.etable.save_edits()
+    app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references3.moneyguru')) # Contains Account 4
+    # The entry from Account 4 doesn't match yet because they don't have the same reference, but
+    # it will be fixed after the import
+    app.iwin.selected_target_account_index = 3 # Account 4
+    app.itable.bind(0, 1)
+    app.iwin.import_selected_pane()
+    # The 2 entries are now linked in the same txn.
+    return app
 
-class TestTransferBetweenTwoReferencedAccounts:
-    def do_setup(self):
-        app = TestApp()
-        app.doc.date_range = MonthRange(date(2008, 2, 1))
-        importall(app, testdata.filepath('moneyguru', 'with_references1.moneyguru')) # Contains Account 1
-        app.add_account('Account 4') # Add it as an asset
-        app.show_nwview()
-        app.bsheet.selected = app.bsheet.assets[0]
-        app.show_account()
-        app.etable.select([0])
-        row = app.etable[0]
-        row.transfer = 'Account 4'
-        app.etable.save_edits()
-        app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references3.moneyguru')) # Contains Account 4
-        # The entry from Account 4 doesn't match yet because they don't have the same reference, but
-        # it will be fixed after the import
-        app.iwin.selected_target_account_index = 3 # Account 4
-        app.itable.bind(0, 1)
-        app.iwin.import_selected_pane()
-        # The 2 entries are now linked in the same txn.
-        return app
-    
-    @with_app(do_setup)
-    def test_first_side_matches(self, app):
-        # When importing entries from Account 1, these entries are matched correctly
-        app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references1.moneyguru'))
-        # All entries should be matched
-        eq_(len(app.itable), 2) # 2 entries means they all match
-    
-    @with_app(do_setup)
-    def test_second_side_matches(self, app):
-        # When importing entries from Account 3, these entries are matched correctly
-        app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references3.moneyguru'))
-        # target account should be correct, and all entries should be matched
-        eq_(app.iwin.selected_target_account_index, 3) # Account 4
-        eq_(len(app.itable), 1) # 1 entry means they all match
-    
+@with_app(app_transfer_between_two_referenced_accounts)
+def test_first_side_matches(app):
+    # When importing entries from Account 1, these entries are matched correctly
+    app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references1.moneyguru'))
+    # All entries should be matched
+    eq_(len(app.itable), 2) # 2 entries means they all match
 
+@with_app(app_transfer_between_two_referenced_accounts)
+def test_second_side_matches(app):
+    # When importing entries from Account 3, these entries are matched correctly
+    app.doc.parse_file_for_import(testdata.filepath('moneyguru', 'with_references3.moneyguru'))
+    # target account should be correct, and all entries should be matched
+    eq_(app.iwin.selected_target_account_index, 3) # Account 4
+    eq_(len(app.itable), 1) # 1 entry means they all match
+
+@with_app(app_transfer_between_two_referenced_accounts)
+def test_bound_amount_correctly_imported(app):
+    # The bound transaction correctly has its amount imported. Previously, we would set the split's
+    # amount but we would never balance the txn. Ref #351.
+    app.show_account('Account 1')
+    eq_(app.etable[0].credit, 'CAD 42.00')
+    app.show_account('Account 4')
+    eq_(app.etable[0].debit, 'CAD 42.00')
+
+#---
 class TestImportFileWithMultipleTransferReferences:
     def do_setup(self):
         app = TestApp()
