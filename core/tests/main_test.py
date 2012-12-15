@@ -1083,9 +1083,13 @@ class TestThreeEntriesInTheSameExpenseAccount:
     def test_xaxis_on_month_range(self, app):
         # The xaxis min/max follow the date range overflows
         start = date(2008, 1, 1)
+        app.doc.first_weekday = 0
+        # The month of Jan 2008 has a monday on the 31st of december and another on the 4th of
+        # january. All of this is 5 weeks (35 days)
         app.doc.date_range = MonthRange(start)
-        eq_(app.bargraph.xmin, date(2007, 12, 31).toordinal() - start.toordinal())
-        eq_(app.bargraph.xmax, date(2008, 2, 4).toordinal() - start.toordinal())
+        eq_(app.bargraph.xmin, 0)
+        # We add +1 to the xaxis' max date
+        eq_(app.bargraph.xmax, 35+1)
     
 
 class TestFourEntriesInRange:

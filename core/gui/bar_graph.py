@@ -23,15 +23,8 @@ class BrushID:
 
 class BarGraph(Graph):
     # BarGraph's data point is (float x1, float x2, float past_value, float future_value).
-    #--- Virtual
-    def _currency(self):
-        return None
-    
-    def _get_cash_flow(self, date_range):
-        return 0
-    
-    #--- Override
-    def compute_data(self):
+    #--- Private
+    def _bar_periods(self):
         def monthly_period(start_date):
             return MonthRange(start_date)
         
@@ -45,20 +38,28 @@ class BarGraph(Graph):
             period_end = period_start + timedelta(6)
             return DateRange(period_start, period_end)
         
-        TODAY = date.today()
         date_range = self.document.date_range
-        self._data = []
-        self._min_date = date_range.start
-        self._max_date = date_range.end
         period_getter = monthly_period if date_range.days >= 100 else weekly_period
         current_date = date_range.start
         while current_date <= date_range.end:
             period = period_getter(current_date)
             if isinstance(date_range, YearToDateRange): # we don't overflow in YTD
-                period.end = min(period.end, self._max_date)
-            self._min_date = min(period.start, self._min_date)
-            self._max_date = max(period.end + timedelta(1), self._max_date)
+                period.end = min(period.end, date_range.end)
+            yield period
             current_date = period.end + timedelta(1)
+    
+    #--- Virtual
+    def _currency(self):
+        return None
+    
+    def _get_cash_flow(self, date_range):
+        return 0
+    
+    #--- Override
+    def compute_data(self):
+        TODAY = date.today()
+        self._data = []
+        for period in self._bar_periods():
             if TODAY in period:
                 past_amount = float(self._get_cash_flow(period.past))
                 future_amount = float(self._get_cash_flow(period.future))
@@ -78,9 +79,13 @@ class BarGraph(Graph):
                 self._data.append((left + padding, right - padding, past_amount, future_amount))
     
     def compute_x_axis(self):
-        Graph.compute_x_axis(self)
-        self.xmin = self._offset_xpos(self._min_date.toordinal())
-        self.xmax = self._offset_xpos(self._max_date.toordinal())
+        date_range = self.document.date_range
+        min_date = date_range.start
+        max_date = date_range.end
+        for period in self._bar_periods():
+            min_date = min(period.start, min_date)
+            max_date = max(period.end + timedelta(1), max_date)
+        Graph.compute_x_axis(self, min_date=min_date, max_date=max_date)
     
     def yrange(self):
         if self._data:

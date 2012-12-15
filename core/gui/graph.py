@@ -61,10 +61,20 @@ class Graph(Chart):
         return xpos - self._xoffset
     
     #--- Public    
-    def compute_x_axis(self):
+    def compute_x_axis(self, min_date=None, max_date=None):
+        # By default, xmin and xmax are determined by date range's start and end, but you can
+        # override that by specifying min_date and max_date.
         date_range = self.document.date_range
-        self.xmin = self._offset_xpos(date_range.start.toordinal())
-        self.xmax = self._offset_xpos(date_range.end.toordinal() + 1)
+        if min_date is None:
+            min_date = date_range.start
+        if max_date is None:
+            max_date = date_range.end
+        # Our X data is based on ordinal date values, which can be quite big. On Qt, we get some
+        # weird overflow problem when translating our painter by this large offset. Therefore, it's
+        # better to offset this X value in the model.
+        self._xoffset = min_date.toordinal()
+        self.xmin = self._offset_xpos(min_date.toordinal())
+        self.xmax = self._offset_xpos(max_date.toordinal() + 1)
         tick = date_range.start
         self.xtickmarks = [self._offset_xpos(tick.toordinal())]
         self.xlabels = []
@@ -115,12 +125,12 @@ class Graph(Chart):
         self.ylabels = [dict(text=str(x), pos=x) for x in self.ytickmarks]
 
     def compute(self):
-        # Our X data is based on ordinal date values, which can be quite big. On Qt, we get some
-        # weird overflow problem when translating our painter by this large offset. Therefore, it's
-        # better to offset this X value in the model.
-        self._xoffset = self.document.date_range.start.toordinal()
-        self.compute_data()
+        # The order in which we compute axis and data is important. We start with the xaxis because
+        # this is what will give us our xoffset, which is then used in compute_data() to offset
+        # our data points. Then, we compute data before the yaxis because we need the data to know
+        # how big our yaxis is.
         self.compute_x_axis()
+        self.compute_data()
         self.compute_y_axis()
     
     def draw_graph(self, context):
