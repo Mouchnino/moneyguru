@@ -328,7 +328,8 @@ def test_transfer_space_in_account_names():
     eq_(len(loader.transactions), 1) # the transactions hasn't been doubled.
     
 def test_export_to_qif(tmpdir):
-    # When there's a transfer between 2 assets, only put an entry in one of the accounts
+    # When there's a transfer between 2 assets, export all entries (otherwise some apps will import
+    # the QIF wrongly)
     app = TestApp()
     app.add_account('first')
     app.add_account('second')

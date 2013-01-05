@@ -14,7 +14,6 @@ def save(filename, accounts, daterange=None):
         return '%1.2f' % amount.value if amount else '0.00'
     
     accounts = [a for a in accounts if a.is_balance_sheet_account()]
-    txns_seen = set()
     lines = []
     for account in accounts:
         qif_account_type = 'Oth L' if account.type == AccountType.Liability else 'Bank'
@@ -28,9 +27,6 @@ def save(filename, accounts, daterange=None):
         if daterange is not None:
             entries = [e for e in entries if e.date in daterange]
         for entry in entries:
-            if entry.transaction in txns_seen:
-                continue
-            txns_seen.add(entry.transaction)
             lines.append('D%s' % format_date(entry.date, 'MM/dd/yyyy'))
             lines.append('T%s' % format_amount_for_qif(entry.amount))
             if entry.description:
