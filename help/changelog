@@ -1,3 +1,10 @@
+=== 2.6.2 (2013-01-06)
+
+* Fixed a bug causing transaction imbalance after import. (#351)
+* Fixed glitch in bar graph drawing. (#352)
+* Fixed a bug in QIF exports. (#353)
+* Fixed a crash on print. [Linux, Windows] (#349)
+
 === 2.6.1 (2012-10-26)
 
 * Fixed a crash on quit where charts would try to draw themselves after having been freed.
