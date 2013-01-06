@@ -21,8 +21,6 @@ from hscommon.build import (copy_packages, build_debian_changelog, copy_qt_plugi
 def parse_args():
     parser = ArgumentParser()
     setup_package_argparser(parser)
-    parser.add_argument('--source', action='store_true', dest='source_pkg',
-        help="Build only a source debian package (Linux only).")
     return parser.parse_args()
 
 def package_windows(dev):
