@@ -1,0 +1,149 @@
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: utf-8\n"
+
+#: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
+#: core/gui/cashculator_account_table.py:21
+#: core/gui/export_account_table.py:18 core/gui/income_statement.py:17
+#: core/gui/split_table.py:17
+msgid "Account"
+msgstr "Cuenta"
+
+#: core/gui/balance_sheet.py:22 core/gui/income_statement.py:18
+msgid "Account #"
+msgstr "N.º cuenta"
+
+#: core/gui/balance_sheet.py:23
+msgid "End"
+msgstr "Fin"
+
+#: core/gui/balance_sheet.py:24
+msgid "Start"
+msgstr "Inicio"
+
+#: core/gui/balance_sheet.py:25 core/gui/income_statement.py:21
+msgid "Change"
+msgstr "Variación"
+
+#: core/gui/balance_sheet.py:26 core/gui/income_statement.py:22
+msgid "Change %"
+msgstr "% Variación"
+
+#: core/gui/balance_sheet.py:27 core/gui/income_statement.py:23
+msgid "Budgeted"
+msgstr "Presupuestado"
+
+#: core/gui/budget_table.py:21 core/gui/schedule_table.py:21
+msgid "Start Date"
+msgstr "Fecha inicial"
+
+#: core/gui/budget_table.py:22 core/gui/schedule_table.py:22
+msgid "Stop Date"
+msgstr "Fecha final"
+
+#: core/gui/budget_table.py:23 core/gui/schedule_table.py:23
+msgid "Repeat Type"
+msgstr "Repetir:"
+
+#: core/gui/budget_table.py:24 core/gui/schedule_table.py:24
+msgid "Interval"
+msgstr "Intervalo"
+
+#: core/gui/budget_table.py:26
+msgid "Target"
+msgstr "Destino"
+
+#: core/gui/budget_table.py:27 core/gui/import_table.py:21
+#: core/gui/import_table.py:28 core/gui/schedule_table.py:30
+#: core/gui/transaction_table.py:32
+msgid "Amount"
+msgstr "Importe"
+
+#: core/gui/cashculator_account_table.py:22
+msgid "Recurring"
+msgstr "Periódico"
+
+#: core/gui/entry_table.py:36 core/gui/general_ledger_table.py:37
+#: core/gui/import_table.py:19 core/gui/import_table.py:23
+#: core/gui/transaction_table.py:26
+msgid "Date"
+msgstr "Fecha"
+
+#: core/gui/entry_table.py:37 core/gui/general_ledger_table.py:38
+msgid "Reconciliation Date"
+msgstr "Fecha de conciliación"
+
+#: core/gui/entry_table.py:38 core/gui/general_ledger_table.py:39
+#: core/gui/import_table.py:26 core/gui/schedule_table.py:25
+#: core/gui/transaction_table.py:27
+msgid "Check #"
+msgstr "N.º referencia"
+
+#: core/gui/entry_table.py:39 core/gui/general_ledger_table.py:40
+#: core/gui/import_table.py:20 core/gui/import_table.py:24
+#: core/gui/schedule_table.py:26 core/gui/transaction_table.py:28
+msgid "Description"
+msgstr "Descripción"
+
+#: core/gui/entry_table.py:40 core/gui/general_ledger_table.py:41
+#: core/gui/import_table.py:25 core/gui/schedule_table.py:27
+#: core/gui/transaction_table.py:29
+msgid "Payee"
+msgstr "Beneficiario"
+
+#: core/gui/entry_table.py:41 core/gui/general_ledger_table.py:42
+#: core/gui/import_table.py:27
+msgid "Transfer"
+msgstr "Transferencia"
+
+#: core/gui/entry_table.py:42
+msgid "Increase"
+msgstr "Incremento"
+
+#: core/gui/entry_table.py:43
+msgid "Decrease"
+msgstr "Disminución"
+
+#: core/gui/entry_table.py:44 core/gui/general_ledger_table.py:43
+#: core/gui/split_table.py:19
+msgid "Debit"
+msgstr "Debe"
+
+#: core/gui/entry_table.py:45 core/gui/general_ledger_table.py:44
+#: core/gui/split_table.py:20
+msgid "Credit"
+msgstr "Haber"
+
+#: core/gui/entry_table.py:46 core/gui/general_ledger_table.py:45
+msgid "Balance"
+msgstr "Saldo"
+
+#: core/gui/export_account_table.py:19
+msgid "Export"
+msgstr "Exportar"
+
+#: core/gui/income_statement.py:19
+msgid "Current"
+msgstr "Actual"
+
+#: core/gui/income_statement.py:20
+msgid "Last"
+msgstr "Anterior"
+
+#: core/gui/schedule_table.py:28 core/gui/transaction_table.py:30
+msgid "From"
+msgstr "De"
+
+#: core/gui/schedule_table.py:29 core/gui/transaction_table.py:31
+msgid "To"
+msgstr "A"
+
+#: core/gui/split_table.py:18
+msgid "Memo"
+msgstr "Nota"
+
+#: core/gui/transaction_table.py:33
+msgid "Modification Time"
+msgstr "Última modificación"
+
