@@ -18,7 +18,7 @@ from argparse import ArgumentParser
 from setuptools import setup, Extension
 
 from hscommon import sphinxgen
-from hscommon.plat import ISOSX
+from hscommon.plat import ISOSX, ISLINUX
 from hscommon.build import (print_and_do, copy_packages, move_all, copy, hardlink, filereplace,
     add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless, OSXAppStructure,
     build_cocoa_ext, copy_embeddable_python_dylib, collect_stdlib_dependencies)
@@ -187,6 +187,15 @@ def build_localizations(ui):
     if op.exists(locale_dest):
         shutil.rmtree(locale_dest)
     shutil.copytree('locale', locale_dest, ignore=shutil.ignore_patterns('*.po', '*.pot'))
+    if ui == 'qt' and not ISLINUX:
+        print("Copying qt_*.qm files into the 'locale' folder")
+        from PyQt4.QtCore import QLibraryInfo
+        trfolder = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+        for lang in loc.get_langs('locale'):
+            qmname = 'qt_%s.qm' % lang
+            src = op.join(trfolder, qmname)
+            if op.exists(src):
+                copy(src, op.join('build', 'locale', qmname))
 
 def build_updatepot():
     if ISOSX:
