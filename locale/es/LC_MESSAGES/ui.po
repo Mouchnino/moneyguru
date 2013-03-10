@@ -1,6 +1,7 @@
-#
+# 
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: utf-8\n"
 
 #: qt/controller/account/filter_bar.py:18 qt/controller/export_panel.py:48
@@ -78,7 +79,9 @@ msgstr "Reasignar cuenta"
 msgid ""
 "You're about to delete a non-empty account. Select an account to re-assign "
 "its transactions to."
-msgstr "Está a punto de eliminar una cuenta que no está vacía. Seleccione una cuenta a la que reasignar las operaciones."
+msgstr ""
+"Está a punto de eliminar una cuenta que no está vacía. Seleccione una cuenta"
+" a la que reasignar las operaciones."
 
 #: qt/controller/account_reassign_panel.py:57
 #: qt/controller/import_/csv_options.py:94
@@ -305,7 +308,10 @@ msgid ""
 "Specify which CSV columns correspond to which transaction fields. You must "
 "also uncheck the \"Import\" column for lines that don't represent a "
 "transaction (header, footer, comments)."
-msgstr "Indique qué columnas se corresponden con cada campo. Debe desmarcar la columna de \"Importar\" para las líneas que no contengan información válida (encabezados, pies de página, comentarios)."
+msgstr ""
+"Indique qué columnas se corresponden con cada campo. Debe desmarcar la "
+"columna de \"Importar\" para las líneas que no contengan información válida "
+"(encabezados, pies de página, comentarios)."
 
 #: qt/controller/import_/csv_options.py:50
 #: cocoa/en.lproj/Localizable.strings:0
@@ -753,13 +759,17 @@ msgstr "Alcance de la modificación"
 #: qt/controller/schedule_scope_dialog.py:34
 msgid ""
 "Do you want this change to affect all future occurrences of this schedule?"
-msgstr "¿Desea aplicar esta modificación a las ocurrencias futuras de esta programación?"
+msgstr ""
+"¿Desea aplicar esta modificación a las ocurrencias futuras de esta "
+"programación?"
 
 #: qt/controller/schedule_scope_dialog.py:41
 msgid ""
 "You can force global scope (in other words, changing all future occurrences)"
 " by holding Shift when you perform the change."
-msgstr "Puede forzar la aplicación a nivel global (cambiar todas las ocurrencias) manteniendo pulsado la tecla Mayúsculas (Shift) al hacer el cambio."
+msgstr ""
+"Puede forzar la aplicación a nivel global (cambiar todas las ocurrencias) "
+"manteniendo pulsado la tecla Mayúsculas (Shift) al hacer el cambio."
 
 #: qt/controller/schedule_scope_dialog.py:50
 msgid "All future occurrences"
@@ -896,7 +906,9 @@ msgstr "Descripción"
 msgid ""
 "Do you want this change to affect all future occurrences of this "
 "transaction?"
-msgstr "¿Desea aplicar esta modificación a las ocurrencias futuras de esta operación?"
+msgstr ""
+"¿Desea aplicar esta modificación a las ocurrencias futuras de esta "
+"operación?"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Document"
@@ -1040,7 +1052,9 @@ msgstr "Marcador para el menú de intervalo de tiempo"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Please read instructions in the Forecast section of the help file."
-msgstr "Por favor lea las instrucciones en la sección Previsiones del fichero de ayuda."
+msgstr ""
+"Por favor lea las instrucciones en la sección Previsiones del fichero de "
+"ayuda."
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Previous Date Range"
@@ -1126,7 +1140,9 @@ msgstr "Destino"
 msgid ""
 "This is your first time running moneyGuru. Do you want to open the example "
 "file?"
-msgstr "Esta es la primera vez que abres moneyGuru. ¿Te gustaría abrir un archivo de ejemplo?"
+msgstr ""
+"Esta es la primera vez que abres moneyGuru. ¿Te gustaría abrir un archivo de"
+" ejemplo?"
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "To"
@@ -1168,7 +1184,9 @@ msgstr "Año en curso"
 msgid ""
 "You can force global scope (in other words, changing all future occurences) "
 "by holding ⇧ when you perform the change."
-msgstr "Puede forzar la aplicación a nivel global (cambiar todas las ocurrencias) manteniendo pulsado la tecla ⇧ al hacer el cambio."
+msgstr ""
+"Puede forzar la aplicación a nivel global (cambiar todas las ocurrencias) "
+"manteniendo pulsado la tecla ⇧ al hacer el cambio."
 
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "You can navigate tabs with ⌘⌥→ and ⌘⌥←"
@@ -1177,3 +1195,7 @@ msgstr "Puede cambiar de pestaña con ⌘⌥→ y ⌘⌥←"
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Zoom"
 msgstr "Ampliar"
+
+#: qt/controller/preferences_panel.py:47
+msgid "Date format:"
+msgstr ""

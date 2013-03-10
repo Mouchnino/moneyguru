@@ -1178,3 +1178,7 @@ msgstr ""
 #: cocoa/en.lproj/Localizable.strings:0
 msgid "Zoom"
 msgstr ""
+
+#: qt/controller/preferences_panel.py:47
+msgid "Date format:"
+msgstr ""

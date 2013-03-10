@@ -1186,3 +1186,7 @@ msgstr ""
 #: qt/controller/import_/window.py:60 cocoa/en.lproj/Localizable.strings:0
 msgid "Fix"
 msgstr ""
+
+#: qt/controller/preferences_panel.py:47
+msgid "Date format:"
+msgstr ""

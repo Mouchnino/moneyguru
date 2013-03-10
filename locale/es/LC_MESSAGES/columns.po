@@ -1,6 +1,7 @@
-
+# 
 msgid ""
-msgstr "Content-Type: text/plain; charset=utf-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: utf-8\n"
 
 #: core/gui/balance_sheet.py:21 core/gui/budget_table.py:25
@@ -146,4 +147,3 @@ msgstr "Nota"
 #: core/gui/transaction_table.py:33
 msgid "Modification Time"
 msgstr "Última modificación"
-
