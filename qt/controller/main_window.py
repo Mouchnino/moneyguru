@@ -16,7 +16,7 @@ from PyQt4.QtGui import (QMainWindow, QPrintDialog, QMessageBox, QIcon, QPixmap,
 
 from qtlib.recent import Recent
 from qtlib.search_edit import SearchEdit
-from qtlib.util import horizontalSpacer, setAccelKeys, getAppData
+from qtlib.util import horizontalSpacer, setAccelKeys, getAppData, escapeamp
 from hscommon.trans import trget
 from hscommon.plat import ISLINUX
 from core.const import PaneType, PaneArea
@@ -190,7 +190,7 @@ class MainWindow(QMainWindow):
         self.actionShowNetWorth = QAction(tr("Net Worth"), self)
         self.actionShowNetWorth.setShortcut("Ctrl+1")
         self.actionShowNetWorth.setIcon(QIcon(QPixmap(':/balance_sheet_48')))
-        self.actionShowProfitLoss = QAction(tr("Profit & Loss"), self)
+        self.actionShowProfitLoss = QAction(escapeamp(tr("Profit & Loss")), self)
         self.actionShowProfitLoss.setShortcut("Ctrl+2")
         self.actionShowProfitLoss.setIcon(QIcon(QPixmap(':/income_statement_48')))
         self.actionShowTransactions = QAction(tr("Transactions"), self)
@@ -631,7 +631,7 @@ class MainWindow(QMainWindow):
             self.tabBar.addTab('')
         for i in range(self.model.pane_count):
             pane_label = self.model.pane_label(i)
-            pane_label = pane_label.replace('&', '&&')
+            pane_label = escapeamp(pane_label)
             self.tabBar.setTabText(i, pane_label)
             pane_type = self.model.pane_type(i)
             pane_view = self.model.pane_view(i)
