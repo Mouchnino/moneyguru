@@ -1198,4 +1198,4 @@ msgstr "Ampliar"
 
 #: qt/controller/preferences_panel.py:47
 msgid "Date format:"
-msgstr ""
+msgstr "Formato de fecha:"

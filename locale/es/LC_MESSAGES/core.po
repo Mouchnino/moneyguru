@@ -168,8 +168,9 @@ msgid ""
 "Base Cashculator database not present. You must run and quit Cashculator at "
 "least once before using the export feature."
 msgstr ""
-"No se encuentra la base de datos principal de Cashculator. Debes ejecutar y "
-"cerrar Cashcullator al menos una vez antes de usar la función de exportar."
+"No se encuentra la base de datos principal de Cashculator. Debe ejecutar y "
+"cerrar Cashculator al menos una vez antes de poder usar la función de "
+"exportar."
 
 #: core/gui/csv_options.py:21
 msgid "Date"
@@ -461,7 +462,7 @@ msgstr ""
 
 #: core/loader/csv.py:150
 msgid "The Date and Amount columns must be set."
-msgstr "Las columnas Fecha e Importe deben ser asignadas."
+msgstr "Debe asignar también las columnas de Fecha e Importe."
 
 #: core/model/date.py:154
 msgid "Q{0} {1}"
@@ -530,12 +531,3 @@ msgstr ""
 #: core/gui/account_pie_chart.py:85
 msgid "Income & Expenses"
 msgstr ""
-
-#~ msgid "Assets"
-#~ msgstr "Activos"
-
-#~ msgid "Liabilities"
-#~ msgstr "Pasivos"
-
-#~ msgid "Expenses"
-#~ msgstr "Gastos"
