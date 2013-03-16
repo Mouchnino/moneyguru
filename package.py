@@ -12,6 +12,7 @@ import compileall
 import shutil
 import json
 from argparse import ArgumentParser
+import platform
 
 from core.app import Application as MoneyGuru
 from hscommon.plat import ISWINDOWS, ISLINUX
@@ -27,6 +28,7 @@ def package_windows(dev):
     if op.exists('dist'):
         shutil.rmtree('dist')
     
+    is64bit = platform.architecture()[0] == '64bit'
     cmd = 'cxfreeze --base-name Win32GUI --target-name "moneyGuru.exe" --icon images\\main_icon.ico run.py'
     print_and_do(cmd)
     
@@ -36,10 +38,11 @@ def package_windows(dev):
         plugin_names = ['accessible', 'codecs', 'iconengines', 'imageformats']
         copy_qt_plugins(plugin_names, plugin_dest)
         
-        # Compress with UPX 
-        libs = [name for name in os.listdir('dist') if op.splitext(name)[1] in ('.pyd', '.dll', '.exe')]
-        for lib in libs:
-            print_and_do("upx --best \"dist\\{0}\"".format(lib))
+        # Compress with UPX
+        if not is64bit: # UPX doesn't work on 64 bit
+            libs = [name for name in os.listdir('dist') if op.splitext(name)[1] in ('.pyd', '.dll', '.exe')]
+            for lib in libs:
+                print_and_do("upx --best \"dist\\{0}\"".format(lib))
     
     shutil.copytree('build\\help', 'dist\\help')
     shutil.copytree('build\\locale', 'dist\\locale')
@@ -48,7 +51,8 @@ def package_windows(dev):
     if not dev:
         # AdvancedInstaller.com has to be in your PATH
         # this is so we don'a have to re-commit installer.aip at every version change
-        shutil.copy('qt\\installer.aip', 'installer_tmp.aip')
+        installer_file = 'qt\\installer64.aip' if is64bit else 'qt\\installer.aip'
+        shutil.copy(installer_file, 'installer_tmp.aip')
         print_and_do('AdvancedInstaller.com /edit installer_tmp.aip /SetVersion %s' % MoneyGuru.VERSION)
         print_and_do('AdvancedInstaller.com /build installer_tmp.aip -force')
         os.remove('installer_tmp.aip')

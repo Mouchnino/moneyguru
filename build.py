@@ -14,11 +14,12 @@ import json
 import glob
 import compileall
 from argparse import ArgumentParser
+import platform
 
 from setuptools import setup, Extension
 
 from hscommon import sphinxgen
-from hscommon.plat import ISOSX, ISLINUX
+from hscommon.plat import ISOSX, ISLINUX, ISWINDOWS
 from hscommon.build import (print_and_do, copy_packages, move_all, copy, hardlink, filereplace,
     add_to_pythonpath, copy_sysconfig_files_for_embed, build_cocoalib_xibless, OSXAppStructure,
     build_cocoa_ext, copy_embeddable_python_dylib, collect_stdlib_dependencies)
@@ -235,6 +236,16 @@ def build_mergepot():
 
 def build_ext():
     print("Building C extensions")
+    if ISWINDOWS and platform.architecture()[0] == '64bit':
+        print("""Detecting a 64bit Windows here. You might have problems compiling. If you do, do this:
+1. Install the Windows SDK.
+2. Start the Windows SDK's console.
+3. Then run:
+setenv /x64 /release
+set DISTUTILS_USE_SDK=1
+set MSSdk=1
+4. Try the build command again.
+        """)
     exts = []
     exts.append(Extension('_amount', [op.join('core', 'modules', 'amount.c')]))
     setup(
