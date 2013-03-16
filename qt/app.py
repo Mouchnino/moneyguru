@@ -56,7 +56,7 @@ class MoneyGuru(ApplicationBase):
         self.importWindow = ImportWindow(self.mainWindow, doc=self.doc)
         self.csvOptionsWindow = CSVOptionsWindow(self.mainWindow, doc=self.doc)
         self.preferencesPanel = PreferencesPanel(self.mainWindow, app=self)
-        self.aboutBox = AboutBox(self.mainWindow, self)
+        self.aboutBox = AboutBox(self.mainWindow, self, withreg=False)
         if sys.argv[1:] and op.exists(sys.argv[1]):
             self.doc.open(sys.argv[1])
         elif self.prefs.recentDocuments:
@@ -68,10 +68,6 @@ class MoneyGuru(ApplicationBase):
         self.prefsChanged.emit()
     
     #--- Public
-    def askForRegCode(self):
-        reg = Registration(self.model)
-        reg.ask_for_code()
-    
     def showAboutBox(self):
         self.aboutBox.show()
     
@@ -87,7 +83,6 @@ class MoneyGuru(ApplicationBase):
     
     #--- Event Handling
     def applicationFinishedLaunching(self):
-        self.model.initial_registration_setup()
         self.prefs.restoreGeometry('mainWindowGeometry', self.mainWindow)
         self.prefs.restoreGeometry('importWindowGeometry', self.importWindow)
         self.mainWindow.show()
@@ -130,9 +125,4 @@ class MoneyGuru(ApplicationBase):
     def reveal_path(self, path):
         url = QUrl.fromLocalFile(str(path))
         QDesktopServices.openUrl(url)
-    
-    def setup_as_registered(self):
-        self.mainWindow.actionRegister.setVisible(False)
-        self.aboutBox.registerButton.hide()
-        self.aboutBox.registeredEmailLabel.setText(self.model.registration_email)
     

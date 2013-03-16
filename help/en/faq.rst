@@ -9,10 +9,6 @@ Frequently Asked Questions
 
     Rather than having reports which you have to configure (or find out which pre-configured report is the right one), your important financial data (net worth, profit) is constantly up-to-date and "in your face". This allows you to constantly make informed decision rather than doing so periodically. moneyGuru also has a very efficient :doc:`navigation <basics>` and :doc:`editing <editing>` system, a strong support for :doc:`currencies <currencies>` and a system based on double-entry bookkeeping.
 
-.. topic:: What are the demo limitations of moneyGuru?
-
-    None, moneyGuru is `Fairware <http://open.hardcoded.net/about/>`__.
-
 .. topic:: How to I specify the currency of an amount?
 
     Just write down the currency ISO code in front of it or after it, like "42 eur" or "pln 42".

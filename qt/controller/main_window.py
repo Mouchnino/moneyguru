@@ -230,7 +230,6 @@ class MainWindow(QMainWindow):
         self.actionSave.setShortcut("Ctrl+S")
         self.actionSaveAs = QAction(tr("Save As..."), self)
         self.actionSaveAs.setShortcut("Ctrl+Shift+S")
-        self.actionRegister = QAction(tr("Register moneyGuru"), self)
         self.actionAbout = QAction(tr("About moneyGuru"), self)
         self.actionToggleReconciliationMode = QAction(tr("Toggle Reconciliation Mode"), self)
         self.actionToggleReconciliationMode.setShortcut("Ctrl+Shift+R")
@@ -313,7 +312,6 @@ class MainWindow(QMainWindow):
         self.menuEdit.addAction(self.actionUndo)
         self.menuEdit.addAction(self.actionRedo)
         self.menuHelp.addAction(self.actionShowHelp)
-        self.menuHelp.addAction(self.actionRegister)
         self.menuHelp.addAction(self.actionCheckForUpdate)
         self.menuHelp.addAction(self.actionOpenDebugLog)
         self.menuHelp.addAction(self.actionAbout)
@@ -394,7 +392,6 @@ class MainWindow(QMainWindow):
         self.actionToggleAccountExclusion.triggered.connect(self.toggleAccountExclusionTriggered)
         self.actionPrint.triggered.connect(self._print)
         self.actionShowHelp.triggered.connect(self.app.showHelp)
-        self.actionRegister.triggered.connect(self.registerTriggered)
         self.actionCheckForUpdate.triggered.connect(self.checkForUpdateTriggered)
         self.actionAbout.triggered.connect(self.aboutTriggered)
         self.actionOpenDebugLog.triggered.connect(self.openDebugLogTriggered)
@@ -589,9 +586,6 @@ class MainWindow(QMainWindow):
         if action is not None:
             index = action.data()
             self.model.toggle_column_menu_item(index)
-    
-    def registerTriggered(self):
-        self.app.askForRegCode()
     
     def checkForUpdateTriggered(self):
         QProcess.execute('updater.exe', ['/checknow'])

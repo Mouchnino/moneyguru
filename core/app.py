@@ -19,7 +19,6 @@ import importlib
 
 from hscommon.currency import USD
 from hscommon.notify import Broadcaster
-from hscommon.reg import RegistrableApplication
 from hscommon import io
 from hscommon.util import nonone
 from hscommon.trans import tr
@@ -39,8 +38,12 @@ class PreferenceNames:
 
 SavedCustomRange = namedtuple('SavedCustomRange', 'name start end')
 
-class Application(Broadcaster, RegistrableApplication):
+class Application(Broadcaster):
     #--- View interface
+    # get_default(key_name)
+    # set_default(key_name, value)
+    # show_message(msg)
+    # open_url(url)
     # reveal_path(path)
     #
     
@@ -48,12 +51,11 @@ class Application(Broadcaster, RegistrableApplication):
     PROMPT_NAME = APP_NAME
     NAME = APP_NAME
     VERSION = '2.6.2'
-    DEMO_LIMITATION = tr("will show this dialog on startup")
     
     def __init__(self, view, date_format='dd/MM/yyyy', decimal_sep='.', grouping_sep='', 
         default_currency=USD, cache_path=None, appdata_path=None, plugin_model_path=None):
         Broadcaster.__init__(self)
-        RegistrableApplication.__init__(self, view=view, appid=2)
+        self.view = view
         self.cache_path = cache_path
         # cache_path is required, but for tests, we don't want to bother specifying it. When 
         # cache_path is kept as None, the path of the currency db will be ':memory:'
