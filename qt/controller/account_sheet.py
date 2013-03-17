@@ -122,6 +122,7 @@ class AccountSheet(TreeModel):
         if selectedPath is None:
             return
         modelIndex = self.findIndex(selectedPath)
+        self.view.clearSelection()
         self.view.setCurrentIndex(modelIndex)
     
     def _updateFontSize(self):
