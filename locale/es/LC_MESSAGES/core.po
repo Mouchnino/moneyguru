@@ -1,8 +1,15 @@
 # 
+# Translators:
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
+"Project-Id-Version: moneyGuru\n"
+"PO-Revision-Date: 2013-03-17 12:01+0000\n"
+"Last-Translator: Enrique González Paredes <egparedes@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/moneyguru/language/es/)\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: utf-8\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: core/app.py:51
 msgid "will show this dialog on startup"
@@ -116,6 +123,14 @@ msgstr "Ingreso"
 msgid "Expense"
 msgstr "Gasto"
 
+#: core/gui/account_pie_chart.py:64
+msgid "Assets & Liabilities"
+msgstr "Activos y pasivos"
+
+#: core/gui/account_pie_chart.py:85
+msgid "Income & Expenses"
+msgstr "Ingresos y gastos"
+
 #: core/gui/account_reassign_panel.py:26
 msgid "No Account"
 msgstr "Ninguna cuenta"
@@ -124,9 +139,7 @@ msgstr "Ninguna cuenta"
 msgid ""
 "{account_name}\n"
 "Entries from {start_date} to {end_date}"
-msgstr ""
-"{account_name}\n"
-"Entradas desde {start_date} hasta {end_date}"
+msgstr "{account_name}\nEntradas desde {start_date} hasta {end_date}"
 
 #: core/gui/account_view.py:56
 msgid "{0} out of {1} selected. Increase: {2} Decrease: {3}"
@@ -150,8 +163,7 @@ msgstr "Ninguno"
 
 #: core/gui/budget_panel.py:76
 msgid "Income/Expense accounts must be created before budgets can be set."
-msgstr ""
-"Deben crearse cuentas de ingresos/gastos antes de definir presupuestos."
+msgstr "Deben crearse cuentas de ingresos/gastos antes de definir presupuestos."
 
 #: core/gui/budget_view.py:16
 msgid "Budgets from {start_date} to {end_date}"
@@ -159,18 +171,13 @@ msgstr "Presupuestos desde {start_date} hasta {end_date}"
 
 #: core/gui/cashculator_view.py:30
 msgid "Exported database not present. Click on Export Accounts first."
-msgstr ""
-"No se encuentra ninguna base de datos exportada. Haz click primero en la "
-"opción de Exportar cuentas."
+msgstr "No se encuentra ninguna base de datos exportada. Haz click primero en la opción de Exportar cuentas."
 
 #: core/gui/cashculator_view.py:31
 msgid ""
 "Base Cashculator database not present. You must run and quit Cashculator at "
 "least once before using the export feature."
-msgstr ""
-"No se encuentra la base de datos principal de Cashculator. Debe ejecutar y "
-"cerrar Cashculator al menos una vez antes de poder usar la función de "
-"exportar."
+msgstr "No se encuentra la base de datos principal de Cashculator. Debe ejecutar y cerrar Cashculator al menos una vez antes de poder usar la función de exportar."
 
 #: core/gui/csv_options.py:21
 msgid "Date"
@@ -451,14 +458,12 @@ msgstr "{0} de {1} seleccionados. Importe: {2}"
 
 #: core/loader/csv.py:118
 msgid "The Date column has been set on a column that doesn't contain dates."
-msgstr ""
-"La columna Fecha ha sido asignada a una columna que no contiene fechas."
+msgstr "La columna Fecha ha sido asignada a una columna que no contiene fechas."
 
 #: core/loader/csv.py:131
 msgid ""
 "The Amount column has been set on a column that doesn't contain amounts."
-msgstr ""
-"La columna Importe ha sido asignada a una columna que no contiene importes."
+msgstr "La columna Importe ha sido asignada a una columna que no contiene importes."
 
 #: core/loader/csv.py:150
 msgid "The Date and Amount columns must be set."
@@ -523,11 +528,3 @@ msgstr "Cada %s %s del mes"
 #: core/model/recurrence.py:138
 msgid "Every last %s of the month"
 msgstr "Cada último %s del mes"
-
-#: core/gui/account_pie_chart.py:64
-msgid "Assets & Liabilities"
-msgstr ""
-
-#: core/gui/account_pie_chart.py:85
-msgid "Income & Expenses"
-msgstr ""
