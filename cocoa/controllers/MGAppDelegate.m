@@ -11,7 +11,6 @@ http://www.hardcoded.net/licenses/bsd_license
 #import "MGDocument.h"
 #import "HSPyUtil.h"
 #import "Utils.h"
-#import "HSFairwareReminder.h"
 #import "Dialogs.h"
 #import "ValueTransformers.h"
 #import "MGDocumentController.h"
@@ -46,7 +45,7 @@ http://www.hardcoded.net/licenses/bsd_license
 {
     self = [super init];
     model = [[PyMoneyGuruApp alloc] init];
-    [model bindCallback:createCallback(@"FairwareView", self)];
+    [model bindCallback:createCallback(@"BaseAppView", self)];
     self.updater = [SUUpdater sharedUpdater];
     self.updater.delegate = self;
     return self;
@@ -155,7 +154,6 @@ http://www.hardcoded.net/licenses/bsd_license
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [model initialRegistrationSetup];
     MGDocumentController *dc = [NSDocumentController sharedDocumentController];
     BOOL isFirstRun = [[self model] isFirstRun];
     if (isFirstRun) {
@@ -208,21 +206,6 @@ http://www.hardcoded.net/licenses/bsd_license
 }
 
 /* model --> view */
-- (void)setupAsRegistered
-{
-    // Nothing to do.
-}
-
-- (void)showFairwareNagWithPrompt:(NSString *)prompt
-{
-    [HSFairwareReminder showFairwareNagWithApp:[self model] prompt:prompt];
-}
-
-- (void)showDemoNagWithPrompt:(NSString *)prompt
-{
-    [HSFairwareReminder showDemoNagWithApp:[self model] prompt:prompt];
-}
-
 - (void)showMessage:(NSString *)msg
 {
     [Dialogs showMessage:msg];

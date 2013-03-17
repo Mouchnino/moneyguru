@@ -10,7 +10,7 @@ from objp.util import pyref, dontwrap, nsrect, nssize, nspoint
 
 from cocoa import install_exception_hook, proxy, install_cocoa_logger
 from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
-    OutlineView, PySelectableList, PyFairware)
+    OutlineView, PySelectableList, PyBaseApp)
 from hscommon.currency import Currency, USD
 from hscommon.path import Path
 from hscommon.util import nonone
@@ -34,7 +34,7 @@ from core.model.date import clean_format
 # Force to collect modules normally missing by the dependencies collector.
 import xml.etree.ElementTree
 
-class PyMoneyGuruApp(PyFairware):
+class PyMoneyGuruApp(PyBaseApp):
     def __init__(self):
         LOGGING_LEVEL = logging.DEBUG if proxy.prefValue_('DebugMode') else logging.WARNING
         logging.basicConfig(level=LOGGING_LEVEL, format='%(levelname)s %(message)s')
@@ -62,7 +62,7 @@ class PyMoneyGuruApp(PyFairware):
         model = Application(self, date_format=date_format, decimal_sep=decimal_sep, 
             grouping_sep=grouping_sep, default_currency=system_currency, cache_path=cache_path,
             appdata_path=appdata_path, plugin_model_path=plugin_model_path)
-        PyFairware.__init__(self, model)
+        PyBaseApp.__init__(self, model)
     
     #--- Public
     def isFirstRun(self) -> bool:

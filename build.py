@@ -100,7 +100,7 @@ def build_cocoa(dev):
     print("Building localizations")
     build_localizations('cocoa')
     print("Building xibless UIs")
-    build_cocoalib_xibless()
+    build_cocoalib_xibless(withfairware=False)
     build_xibless()
     print("Building Python extensions")
     build_cocoa_proxy_module()
@@ -272,7 +272,7 @@ def build_cocoa_bridging_interfaces():
     add_to_pythonpath('cocoa')
     add_to_pythonpath('cocoalib')
     from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, TableView, PyColumns,
-        ColumnsView, PyOutline, PySelectableList, SelectableListView, PyFairware, FairwareView)
+        ColumnsView, PyOutline, PySelectableList, SelectableListView, PyBaseApp, BaseAppView)
     # This createPool() business is a bit hacky, but upon importing mg_cocoa, we call
     # install_gettext_trans_under_cocoa() which uses proxy functions (and thus need an active
     # autorelease pool). If we don't do that, we get leak warnings.
@@ -293,7 +293,7 @@ def build_cocoa_bridging_interfaces():
         MainWindowView, PyDocument, DocumentView, PyMoneyGuruApp)
     from mg_cocoa import PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint
     allclasses = [PyGUIObject, PyTextField, PyTable, PyColumns, PyOutline, PySelectableList,
-        PyFairware, PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget,
+        PyBaseApp, PyPanel, PyBaseView, PyTableWithDate, PyCompletableEdit, PyDateWidget,
         PyCSVImportOptions, PyImportTable, PySplitTable, PyLookup, PyDateRangeSelector,
         PyImportWindow, PyFilterBar, PyReport, PyScheduleTable, PyBudgetTable,
         PyEntryTable, PyTransactionTable, PyGeneralLedgerTable, PyChart, PyAccountPanel,
@@ -306,7 +306,7 @@ def build_cocoa_bridging_interfaces():
     allclasses += [PyPrintView, PySplitPrint, PyTransactionPrint, PyEntryPrint]
     for class_ in allclasses:
         objp.o2p.generate_objc_code(class_, 'cocoa/autogen', inherit=True)
-    allclasses = [GUIObjectView, TableView, ColumnsView, SelectableListView, FairwareView, 
+    allclasses = [GUIObjectView, TableView, ColumnsView, SelectableListView, BaseAppView, 
         PanelView, CSVImportOptionsView, LookupView, DateRangeSelectorView, ImportWindowView,
         FilterBarView, ReportView, BudgetPanelView, ExportPanelView, PanelWithTransactionView,
         SchedulePanelView, BaseViewView, AccountViewView, MainWindowView,

@@ -47,8 +47,5 @@ http://www.hardcoded.net/licenses/bsd_license
 - (void)setCustomDateRangeName:(NSString *)aName atSlot:(NSInteger)aSlot;
 
 /* model --> view */
-- (void)setupAsRegistered;
-- (void)showFairwareNagWithPrompt:(NSString *)prompt;
-- (void)showDemoNagWithPrompt:(NSString *)prompt;
 - (void)showMessage:(NSString *)msg;
 @end
