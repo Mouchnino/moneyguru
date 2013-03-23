@@ -12,6 +12,16 @@ from ..const import PaneType
 from ..document import ScheduleScope
 from .base import TestApp, with_app
 
+#--- Pristine
+@with_app(TestApp)
+def test_schedule_with_eralier_stop_date(app):
+    # A schedule with a stop date that is earlier than its start date is never supposed to produce
+    # a spawn.
+    app.add_schedule(start_date='13/09/2008', description='foobar', stop_date='12/09/2008')
+    app.navigate_to_date(2008, 9, 13)
+    tview = app.show_tview()
+    eq_(tview.ttable.row_count, 0)
+
 #--- One transaction
 def app_one_transaction():
     app = TestApp()

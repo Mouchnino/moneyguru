@@ -50,6 +50,10 @@ class DateCounter:
         return self
     
     def __next__(self):
+        # It's possible for a DateCounter to be created with an end date smaller than its start
+        # date. In this case, simply never yield any date.
+        if self.base_date > self.end:
+            raise StopIteration()
         if self.current_date is None: # first date of the iteration is base_date
             self.current_date = self.base_date
             return self.current_date
