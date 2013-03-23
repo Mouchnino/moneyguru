@@ -1,3 +1,11 @@
+=== 2.6.3 (2013-03-23)
+
+* Fixed a selection glitch on New Account. (#358)
+* Fixed a schedule spawning bug. (#362)
+* Removed the fairware dialog ([More Info](http://www.hardcoded.net/articles/phasing-out-fairware)).
+* Added a 64-bit build for Windows.
+* Added Spanish localization by Enrique G. Paredes.
+
 === 2.6.2 (2013-01-06)
 
 * Fixed a bug causing transaction imbalance after import. (#351)
