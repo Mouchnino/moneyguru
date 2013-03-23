@@ -49,6 +49,12 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def clean():
+    TOCLEAN = ['build', 'dist', 'install']
+    for path in TOCLEAN:
+        if op.exists(path):
+            shutil.rmtree(path)
+
 def cocoa_compile_command():
     return '{0} waf configure && {0} waf'.format(sys.executable)
 
@@ -337,8 +343,7 @@ def main():
     if dev:
         print("Building in Dev mode")
     if args.clean:
-        if op.exists('build'):
-            shutil.rmtree('build')
+        clean()
     if not op.exists('build'):
         os.mkdir('build')
     if args.doc:
