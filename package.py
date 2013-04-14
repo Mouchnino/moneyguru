@@ -97,7 +97,7 @@ def package_arch():
     # than package_debian because there are more python packages available in Arch (so we don't
     # need to include them).
     print("Packaging for Arch")
-    srcpath = op.join('build', 'pdfmasher-arch')
+    srcpath = op.join('build', 'moneyguru-arch')
     copy_source_files(srcpath, ['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples', 'sgmllib'])
 
 def main():
