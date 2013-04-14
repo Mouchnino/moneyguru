@@ -8,6 +8,7 @@ syntax: glob
 *.dmg
 *.back.aip
 build
+env
 _build
 conf.json
 cocoa/Info.plist

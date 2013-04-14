@@ -63,18 +63,23 @@ def package_windows(dev):
         print_and_do('AdvancedInstaller.com /build installer_tmp.aip -force')
         os.remove('installer_tmp.aip')
     
+def copy_source_files(destpath, packages):
+    if op.exists(destpath):
+        shutil.rmtree(destpath)
+    os.makedirs(destpath)
+    shutil.copy('run.py', op.join(destpath, 'run.py'))
+    copy_packages(packages, destpath)
+    shutil.copytree(op.join('build', 'help'), op.join(destpath, 'help'))
+    shutil.copytree(op.join('build', 'locale'), op.join(destpath, 'locale'))
+    shutil.copy(op.join('images', 'logo_small.png'), destpath)
+    shutil.copy(op.join('images', 'logo_big.png'), destpath)
+    compileall.compile_dir(destpath)
 
 def package_debian(distribution):
     version = '{}~{}'.format(MoneyGuru.VERSION, distribution)
     destpath = op.join('build', 'moneyguru-{}'.format(version))
-    if op.exists(destpath):
-        shutil.rmtree(destpath)
     srcpath = op.join(destpath, 'src')
-    os.makedirs(srcpath)
-    shutil.copy('run.py', op.join(srcpath, 'run.py'))
-    copy_packages(['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples'], srcpath)
-    import sgmllib
-    shutil.copy(sgmllib.__file__, srcpath)
+    copy_source_files(srcpath, ['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples', 'sgmllib'])
     shutil.copytree('debian', op.join(destpath, 'debian'))
     move(op.join(destpath, 'debian', 'Makefile'), op.join(destpath, 'Makefile'))
     move(op.join(destpath, 'debian', 'build_modules.py'), op.join(destpath, 'build_modules.py'))
@@ -82,14 +87,18 @@ def package_debian(distribution):
     copy_all(op.join('core', 'modules', '*.*'), op.join(destpath, 'modules'))
     build_debian_changelog(op.join('help', 'changelog'), op.join(destpath, 'debian', 'changelog'),
         'moneyguru', from_version='1.8.0', distribution=distribution)
-    shutil.copytree(op.join('build', 'help'), op.join(srcpath, 'help'))
-    shutil.copytree(op.join('build', 'locale'), op.join(srcpath, 'locale'))
-    shutil.copy(op.join('images', 'logo_big.png'), srcpath)
-    compileall.compile_dir(srcpath)
     os.chdir(destpath)
     cmd = "dpkg-buildpackage -S"
     os.system(cmd)
     os.chdir('../..')
+
+def package_arch():
+    # For now, package_arch() will only copy the source files into build/. It copies less packages
+    # than package_debian because there are more python packages available in Arch (so we don't
+    # need to include them).
+    print("Packaging for Arch")
+    srcpath = op.join('build', 'pdfmasher-arch')
+    copy_source_files(srcpath, ['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples', 'sgmllib'])
 
 def main():
     args = parse_args()
@@ -103,8 +112,13 @@ def main():
         if ISWINDOWS:
             package_windows(dev)
         elif ISLINUX:
-            for distribution in ['precise', 'quantal']:
-                package_debian(distribution)
+            distname, _, _ = platform.dist()
+            if distname == 'arch':
+                package_arch()
+            else:
+                print("Packaging for Ubuntu")
+                for distribution in ['precise', 'quantal']:
+                    package_debian(distribution)
         else:
             print("Qt packaging only works under Windows or Linux.")
 
