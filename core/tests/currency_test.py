@@ -6,8 +6,6 @@
 # which should be included with this package. The terms are also available at 
 # http://www.hardcoded.net/licenses/bsd_license
 
-import time
-import xmlrpc.client
 from datetime import date
 import threading
 
@@ -18,18 +16,12 @@ from hscommon import io
 from ..app import Application
 from ..model import currency
 from ..model.account import AccountType
-from ..model.currency import RatesDB
 from ..model.date import MonthRange
-from .conftest import get_original_rates_db_ensure_rates
 from .base import ApplicationGUI, TestApp, with_app, compare_apps
-from .model.currency_test import FakeServer
+from .model.currency_test import set_ratedb_for_tests
 
 def pytest_funcarg__fake_server(request):
-    monkeypatch = request.getfuncargvalue('monkeypatch')
-    monkeypatch.setattr(RatesDB, 'ensure_rates', get_original_rates_db_ensure_rates())
-    monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
-    monkeypatch.setattr(Currency, 'rates_db', RatesDB(':memory:', False)) # async
-    monkeypatch.setattr(currency, 'initialize_db', lambda path: None)
+    set_ratedb_for_tests()
 
 #--- Pristine
 def test_cache_path_is_auto_created(fake_server, tmpdir):
@@ -86,33 +78,31 @@ def app_one_empty_account_eur():
     return app
 
 @with_app(app_one_empty_account_eur)
-def test_add_entry_with_foreign_amount(app, fake_server):
+def test_add_entry_with_foreign_amount(app):
     # Saving an entry triggers an ensure_rates.
-    log = []
-    FakeServer.hooklog(log)
+    db, log = set_ratedb_for_tests()
     app.add_entry('20/5/2008', increase='12 usd')
     # A request is made for both the amount that has just been written and the account of the entry
-    expected = set([
+    expected = {
         (date(2008, 5, 20), date.today(), 'USD'),
         (date(2008, 5, 20), date.today(), 'EUR'),
-    ])
+    }
     eq_(set(log), expected)
 
 @with_app(app_one_empty_account_eur)
-def test_add_transaction_with_foreign_amount(app, fake_server):
+def test_add_transaction_with_foreign_amount(app):
     # Saving an entry triggers an ensure_rates
-    log = []
-    FakeServer.hooklog(log)
+    db, log = set_ratedb_for_tests()
     app.show_tview()
     app.ttable.add()
     app.ttable.edited.date = '20/5/2008'
     app.ttable.edited.amount = '12 eur'
     app.ttable.save_edits()
     # A request is made for both the amount that has just been written and the account of the entry
-    expected = set([
+    expected = {
         (date(2008, 5, 20), date.today(), 'EUR'),
         (date(2008, 5, 20), date.today(), 'USD'),
-    ])
+    }
     eq_(set(log), expected)
 
 class TestCaseCADAssetAndUSDAsset:
@@ -306,15 +296,14 @@ def app_three_currencies_two_entries():
     return app
 
 @with_app(app_three_currencies_two_entries)
-def test_ensures_rates_multiple_currencies(app, fake_server):
+def test_ensures_rates_multiple_currencies(app):
     # Upon calling save and load, rates are asked for the 20-today range for both USD and EUR.
-    log = []
-    FakeServer.hooklog(log)
+    db, log = set_ratedb_for_tests()
     app.save_and_load()
-    expected = set([
+    expected = {
         (date(2008, 4, 20), date.today(), 'USD'), 
         (date(2008, 4, 20), date.today(), 'EUR'),
-    ])
+    }
     eq_(set(log), expected)
     # Now let's test that the rates are in the DB
     eq_(USD.value_in(CAD, date(2008, 4, 20)), 1.42)
@@ -324,20 +313,13 @@ def test_ensures_rates_multiple_currencies(app, fake_server):
     eq_(USD.value_in(CAD, date(2008, 4, 27)), 1.49)
 
 @with_app(app_three_currencies_two_entries)
-def test_ensures_rates_async(app, fake_server, monkeypatch):
+def test_ensures_rates_async(app, monkeypatch):
     # ensure_rates() executes asynchronously
     # I can't think of any graceful way to test something like that, so I assume that if I make
     # the mocked get_CAD_values() to sleep for a little while, the next line after it in the test will
     # be executed first. If this test starts to fail randomly, we'll have to think about a better
     # way to test that (or increase the sleep time).
-    old_func = FakeServer.get_CAD_values
-    def mock_get_CAD_values(self, start, end, currency):
-        time.sleep(0.05)
-        return old_func(self, start, end, currency)
-    
-    monkeypatch.setattr(FakeServer, 'get_CAD_values', mock_get_CAD_values)
-    rates_db = Currency.get_rates_db()
-    monkeypatch.setattr(rates_db, 'async', True) # Turn async on
+    rates_db, log = set_ratedb_for_tests(async=True, slow_down_provider=True)
     app.save_and_load()
     # This is a weird way to test that we don't have the rate yet. No need to import fallback 
     # rates just for that.
