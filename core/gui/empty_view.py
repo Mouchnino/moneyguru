@@ -16,7 +16,7 @@ class EmptyView(BaseView):
     
     def __init__(self, mainwindow):
         BaseView.__init__(self, mainwindow)
-        plugin_names = [p.NAME for p in self.mainwindow.app.plugins]
+        plugin_names = [p.NAME for p in self.mainwindow.app.plugins if p.IS_VIEW]
         self.plugin_list = GUISelectableList(plugin_names)
     
     #--- Public

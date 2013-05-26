@@ -10,7 +10,7 @@ from datetime import date
 import threading
 
 from hscommon.testutil import eq_, log_calls
-from hscommon.currency import Currency, USD, PLN, EUR, CAD, XPF
+from hscommon.currency import Currency, USD, EUR, CAD
 from hscommon import io
 
 from ..app import Application
@@ -19,6 +19,9 @@ from ..model.account import AccountType
 from ..model.date import MonthRange
 from .base import ApplicationGUI, TestApp, with_app, compare_apps
 from .model.currency_test import set_ratedb_for_tests
+
+PLN = Currency(code='PLN')
+XPF = Currency(code='XPF')
 
 def pytest_funcarg__fake_server(request):
     set_ratedb_for_tests()

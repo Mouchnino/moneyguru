@@ -11,7 +11,7 @@ import socket
 import xmlrpc.client
 from datetime import date, datetime
 
-from hscommon.currency import Currency, RatesDB
+from hscommon.currency import Currency, RatesDB, BUILTIN_CURRENCY_CODES, CurrencyNotSupportedException
 
 CURRENCY_SERVER = 'http://currency.hardcoded.net/'
 
@@ -20,6 +20,8 @@ def xmlrpcdate2normaldate(d):
     return date(t.tm_year, t.tm_mon, t.tm_mday)
 
 def default_currency_rate_provider(currency, start_date, end_date):
+    if currency not in BUILTIN_CURRENCY_CODES:
+        raise CurrencyNotSupportedException()
     server = xmlrpc.client.ServerProxy(CURRENCY_SERVER)
     try:
         # dates passed to xmlrpclib *have* to be xmlrpclib.DateTime instances since 2.6

@@ -8,9 +8,15 @@
 
 from pytest import raises
 from hscommon.testutil import eq_
-from hscommon.currency import CAD, EUR, PLN, USD, CZK, TND, JPY, BHD
+from hscommon.currency import Currency, CAD, EUR, USD
 
 from ...model.amount import format_amount, parse_amount, Amount
+
+PLN = Currency(code='PLN')
+CZK = Currency(code='CZK')
+TND = Currency(code='TND')
+JPY = Currency(code='JPY')
+BHD = Currency(code='BHD')
 
 #--- Amount
 def test_auto_quantize():

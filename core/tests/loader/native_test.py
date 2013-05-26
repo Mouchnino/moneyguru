@@ -11,13 +11,15 @@ from datetime import date
 
 from pytest import raises
 from hscommon.testutil import eq_
-from hscommon.currency import USD, PLN
+from hscommon.currency import Currency, USD
 
 from ..base import testdata
 from ...exception import FileFormatError
 from ...loader import native
 from ...model.account import AccountType
 from ...model.amount import Amount
+
+PLN = Currency(code='PLN')
 
 def pytest_funcarg__loader(request):
     return native.Loader(USD)

@@ -11,13 +11,15 @@ from datetime import date
 from pytest import raises
 from hscommon.testutil import eq_
 from hscommon import io as hsio
-from hscommon.currency import PLN, CAD
+from hscommon.currency import Currency, CAD
 
 from .base import ApplicationGUI, TestApp, with_app, testdata
 from ..app import Application
 from ..exception import FileFormatError
 from ..loader.csv import CsvField
 from ..model.date import MonthRange, YearRange
+
+PLN = Currency(code='PLN')
 
 def importall(app, filename):
     app.doc.parse_file_for_import(filename)

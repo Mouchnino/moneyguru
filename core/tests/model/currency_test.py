@@ -99,7 +99,7 @@ def test_no_internet(monkeypatch):
     monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
     FakeServer.ERROR_TO_RAISE = gaierror
     try:
-        default_currency_rate_provider(USD, date(2008, 5, 20), date(2008, 5, 20))
+        default_currency_rate_provider('USD', date(2008, 5, 20), date(2008, 5, 20))
     except gaierror:
         assert False
 
@@ -111,7 +111,7 @@ def test_connection_timeout(monkeypatch):
     monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
     FakeServer.ERROR_TO_RAISE = error
     try:
-        default_currency_rate_provider(USD, date(2008, 5, 20), date(2008, 5, 20))
+        default_currency_rate_provider('USD', date(2008, 5, 20), date(2008, 5, 20))
     except error:
         assert False
 
@@ -122,7 +122,7 @@ def test_xmlrpc_error(monkeypatch):
     monkeypatch.setattr(xmlrpc.client, 'ServerProxy', FakeServer)
     FakeServer.ERROR_TO_RAISE = xmlrpc.client.Error
     try:
-        default_currency_rate_provider(USD, date(2008, 5, 20), date(2008, 5, 20))
+        default_currency_rate_provider('USD', date(2008, 5, 20), date(2008, 5, 20))
     except xmlrpc.client.Error:
         assert False
 

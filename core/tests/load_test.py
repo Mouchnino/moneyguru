@@ -9,12 +9,14 @@
 from datetime import date
 
 from hscommon.testutil import eq_
-from hscommon.currency import PLN, CAD
+from hscommon.currency import Currency, CAD
 
 from ..document import ScheduleScope
 from ..model.account import AccountType
 from ..model.date import MonthRange
 from .base import compare_apps, TestApp, with_app, testdata
+
+PLN = Currency(code='PLN')
 
 #--- Pristine
 def test_dont_save_invalid_xml_characters(tmpdir):

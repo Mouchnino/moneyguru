@@ -17,7 +17,7 @@ from collections import namedtuple
 import re
 import importlib
 
-from hscommon.currency import USD
+from hscommon.currency import Currency, USD
 from hscommon.notify import Broadcaster
 from hscommon import io
 from hscommon.util import nonone
@@ -27,7 +27,7 @@ from .const import DATE_FORMAT_FOR_PREFERENCES
 from .model import currency
 from .model.amount import parse_amount, format_amount
 from .model.date import parse_date, format_date
-from .plugin import Plugin
+from .plugin import Plugin, CurrencyProviderPlugin
 
 class PreferenceNames:
     HadFirstLaunch = 'HadFirstLaunch'
@@ -81,6 +81,7 @@ class Application(Broadcaster):
         self.saved_custom_ranges = [None] * 3
         self._load_custom_ranges()
         self._load_plugins(plugin_model_path)
+        self._hook_currency_plugins()
         self._update_autosave_timer()
     
     #--- Private
@@ -133,6 +134,11 @@ class Application(Broadcaster):
                 except TypeError: # not a class, we don't care and ignore
                     pass
         del sys.path[0]
+    
+    def _hook_currency_plugins(self):
+        currency_plugins = [p for p in self.plugins if issubclass(p, CurrencyProviderPlugin)]
+        for p in currency_plugins:
+            Currency.get_rates_db().register_rate_provider(p().wrapped_get_currency_rates)
     
     def _save_custom_ranges(self):
         custom_ranges = []
