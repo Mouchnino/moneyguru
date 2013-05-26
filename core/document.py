@@ -10,6 +10,8 @@ import datetime
 import time
 import uuid
 import logging
+import os
+import os.path as op
 
 from hscommon.currency import Currency
 from hscommon.notify import Repeater
@@ -120,16 +122,16 @@ class Document(Repeater, GUIObject):
         # exactly as the user is commiting a change. In these cases, the autosaved file might be a
         # save of the data in a quite weird state. I think this risk is acceptable. The alternative
         # is to put locks everywhere, which would complexify the application.
-        existing_names = [name for name in io.listdir(self.app.cache_path) if name.startswith('autosave')]
+        existing_names = [name for name in os.listdir(self.app.cache_path) if name.startswith('autosave')]
         existing_names.sort()
         timestamp = int(time.time())
         autosave_name = 'autosave{0}.moneyguru'.format(timestamp)
         while autosave_name in existing_names:
             timestamp += 1
             autosave_name = 'autosave{0}.moneyguru'.format(timestamp)
-        self.save_to_xml(str(self.app.cache_path + autosave_name), autosave=True)
+        self.save_to_xml(op.join(self.app.cache_path, autosave_name), autosave=True)
         if len(existing_names) >= AUTOSAVE_BUFFER_COUNT:
-            io.remove(self.app.cache_path + existing_names[0])
+            io.remove(op.join(self.app.cache_path, existing_names[0]))
     
     def _change_transaction(self, transaction, date=NOEDIT, description=NOEDIT, payee=NOEDIT, 
             checkno=NOEDIT, from_=NOEDIT, to=NOEDIT, amount=NOEDIT, currency=NOEDIT, 

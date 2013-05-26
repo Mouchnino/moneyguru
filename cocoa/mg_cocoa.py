@@ -12,7 +12,6 @@ from cocoa import install_exception_hook, proxy, install_cocoa_logger
 from cocoa.inter import (PyGUIObject, GUIObjectView, PyTextField, PyTable, PyColumns, PyOutline,
     OutlineView, PySelectableList, PyBaseApp)
 from hscommon.currency import Currency, USD
-from hscommon.path import Path
 from hscommon.util import nonone
 
 # Set translation func. This has to be set before core modules are initialized
@@ -41,8 +40,7 @@ class PyMoneyGuruApp(PyBaseApp):
         install_exception_hook()
         install_cocoa_logger()
         logging.debug('started in debug mode')
-        std_caches_path = Path(proxy.getCachePath())
-        cache_path = std_caches_path + 'moneyGuru'
+        cache_path = op.join(proxy.getCachePath(), 'moneyGuru')
         appdata_path = op.join(proxy.getAppdataPath(), 'moneyGuru')
         plugin_model_path = op.join(proxy.getResourcePath(), 'plugin_examples')
         currency_code = nonone(proxy.systemCurrency(), 'USD')

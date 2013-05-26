@@ -178,7 +178,7 @@ class TestOneEmptyAccountRangeOnOctober2007:
     def test_autosave(self, app, tmpdir):
         # Testing the interval between autosaves would require some complicated mocking. We're just
         # going to cheat here and call 'must_autosave' directly.
-        cache_path = Path(str(tmpdir))
+        cache_path = str(tmpdir)
         app.app.cache_path = cache_path
         app.doc.must_autosave()
         eq_(len(io.listdir(cache_path)), 1)

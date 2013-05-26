@@ -8,6 +8,7 @@
 
 from datetime import date
 import threading
+import os.path as op
 
 from hscommon.testutil import eq_, log_calls
 from hscommon.currency import Currency, USD, EUR, CAD
@@ -48,7 +49,7 @@ def test_cache_path_is_not_none(fake_server, monkeypatch, tmpdir):
     monkeypatch.setattr(currency, 'initialize_db', log_calls(currency.initialize_db))
     app = Application(ApplicationGUI(), cache_path=cache_path)
     expected = [
-        {'path': cache_path + 'currency.db'}
+        {'path': op.join(cache_path, 'currency.db')}
     ]
     eq_(currency.initialize_db.calls, expected)
 

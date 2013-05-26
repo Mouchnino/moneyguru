@@ -62,7 +62,7 @@ class Application(Broadcaster):
         if cache_path:
             if not io.exists(cache_path):
                 io.makedirs(cache_path)
-            db_path = cache_path + 'currency.db'
+            db_path = op.join(cache_path, 'currency.db')
         else:
             db_path = ':memory:'
         self.appdata_path = appdata_path
