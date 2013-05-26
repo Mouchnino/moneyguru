@@ -28,8 +28,8 @@ re_grouping_sep = re.compile(r"(?<=\d)[.\s\xA0,'](?=\d{3})")
 # A dot or comma followed by digits followed by the end of the string.
 # currencies with 2 decimal places
 re_decimal_sep_2 = re.compile(r"[,.](?=\d{1,2}$)")
-# currencies with 3 decimal places
-re_decimal_sep_3 = re.compile(r"[,.](?=\d{1,3}$)")
+# currencies with 3 or more decimal places
+re_decimal_sep_x = re.compile(r"[,.](?=\d{1,10}$)")
 # A valid amount, once it has been pre-processed
 re_amount = re.compile(r"\d+\.\d+|\.\d+|\d+")
 
@@ -86,8 +86,8 @@ def parse_amount_single(string, exponent, auto_decimal_place):
     # Now, we have a string that might have thousand separators and might or might not have
     # a decimal separator, which might be either "," or ".". We'll first find our decimal sep
     # and replace it with a placeholder char, find all thousand seps, replace them with nothing.
-    if exponent == 3:
-        string = re_decimal_sep_3.sub('|', string)
+    if exponent >= 3:
+        string = re_decimal_sep_x.sub('|', string)
     elif exponent == 2:
         string = re_decimal_sep_2.sub('|', string)
     else:
