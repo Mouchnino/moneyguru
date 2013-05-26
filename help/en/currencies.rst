@@ -42,6 +42,13 @@ Currency Rules
 * Net worth and profits are calculated in the native currency.
 * A transaction involving more than one currency always balances.
 
+Custom Currencies
+-----------------
+
+Since v2.7.0, moneyGuru supports custom currencies through :doc:`plugins <plugins>`. You can define
+new currencies and implement a custom exchange rate fetcher. If you want to do that, you should
+start by looking at the bundled ``yahoo_currency_provider`` example plugin.
+
 Supported Currencies
 --------------------
 

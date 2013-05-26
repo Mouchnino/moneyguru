@@ -42,6 +42,8 @@ Regole sulle valute
 * Il Patrimonio Netto e il Guadagno sono sempre calcolati nella valuta nativa.
 * Una transazione tra più valute è sempre bilanciata per definizione.
 
+.. todo:: Add "Custom Currencies" paragraph
+
 Valute supportate
 -----------------
 

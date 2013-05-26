@@ -41,6 +41,8 @@ Allgemeine Regeln zu der Verwendung von Währungen
 * Eigenkapital sowie Profit & Verlust werden immer in der Hauptwährung berechnet und angezeigt
 * Eine Transaktion, die Teiltransaktionen mit unterschiedlichen Währungen beinhaltet, ist immer ausgeglichen
 
+.. todo:: Add "Custom Currencies" paragraph
+
 Unterstützte Währungen
 ----------------------
 

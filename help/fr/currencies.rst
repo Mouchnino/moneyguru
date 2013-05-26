@@ -34,6 +34,8 @@ Les règles en bref
 * La valeur nette et les profits sont calculés en devise native.
 * Une transaction impliquant plus qu'une devise balance toujours.
 
+.. todo:: Add "Custom Currencies" paragraph
+
 Devises supportées
 ------------------
 

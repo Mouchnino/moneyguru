@@ -41,6 +41,8 @@ Pravidla pro měny
 * Čisté jmění a zisky se počítají ve vlastní měně.
 * Transakce, které obsahují více než jednu měnu jsou vždy vyrovnané.
 
+.. todo:: Add "Custom Currencies" paragraph
+
 Podporované měny
 --------------------
 
