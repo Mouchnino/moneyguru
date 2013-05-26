@@ -68,7 +68,8 @@ def copy_source_files(destpath, packages):
         shutil.rmtree(destpath)
     os.makedirs(destpath)
     shutil.copy('run.py', op.join(destpath, 'run.py'))
-    copy_packages(packages, destpath)
+    # It's source files we're copying, we don't want to copy .so files
+    copy_packages(packages, destpath, extra_ignores=['*.so'])
     shutil.copytree(op.join('build', 'help'), op.join(destpath, 'help'))
     shutil.copytree(op.join('build', 'locale'), op.join(destpath, 'locale'))
     shutil.copy(op.join('images', 'logo_small.png'), destpath)
