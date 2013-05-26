@@ -1,3 +1,10 @@
+=== 2.7.0 (2013-05-26)
+
+* Added support for custom currencies. (#33)
+* Fixed amount parsing bug with currencies with many decimals.
+* Fixed cache folder bug causing cached files to be misplaced. [Linux, Windows]
+* Dropped 32-bit support on Mac OS X.
+
 === 2.6.3 (2013-03-23)
 
 * Fixed a selection glitch on New Account. (#358)
