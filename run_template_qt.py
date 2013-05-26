@@ -23,6 +23,10 @@ from qtlib.preferences import adjust_after_deserialization
 import qt.mg_rc
 from qt.plat import BASE_PATH
 
+# We import this module below to force cx_freeze to include it because the currency plugins
+# need it.
+import urllib.request
+
 def main(argv):
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon(QPixmap(":/logo_small")))
