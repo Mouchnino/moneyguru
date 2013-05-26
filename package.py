@@ -100,11 +100,21 @@ def package_arch():
     srcpath = op.join('build', 'moneyguru-arch')
     copy_source_files(srcpath, ['qt', 'hscommon', 'core', 'qtlib', 'plugin_examples', 'sgmllib'])
 
+def package_source_tgz():
+    app_version = MoneyGuru.VERSION
+    name = 'moneyguru-src-{}.tar.gz'.format(app_version)
+    dest = op.join('build', name)
+    print_and_do('hg archive -t tgz -S {}'.format(dest))
+
 def main():
     args = parse_args()
     conf = json.load(open('conf.json'))
     ui = conf['ui']
     dev = conf['dev']
+    if args.src_pkg:
+        print("Creating source package for moneyGuru")
+        package_source_tgz()
+        return
     print("Packaging moneyGuru with UI {0}".format(ui))
     if ui == 'cocoa':
         package_cocoa_app_in_dmg('build/moneyGuru.app', '.', args)
