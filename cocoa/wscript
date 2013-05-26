@@ -26,10 +26,10 @@ def configure(conf):
         os.symlink('../build/Python', versioned_dylib_path)
     # The rest is standard WAF code that you can find the the python and macapp demos.
     conf.load('compiler_c python')
-    conf.check_python_version((3,2,0))
+    conf.check_python_version((3,3,0))
     conf.check_python_headers()
     conf.env.FRAMEWORK_COCOA = 'Cocoa'
-    conf.env.ARCH_COCOA = ['i386', 'x86_64']
+    conf.env.ARCH_COCOA = ['x86_64']
     conf.env.MACOSX_DEPLOYMENT_TARGET = '10.6'
     # Add cocoalib dir to the framework search path so we can find Sparkle.
     conf.env.CFLAGS = ['-F'+op.abspath('../cocoalib'), '-F'+op.abspath('../psmtabbarcontrol')]
@@ -56,7 +56,7 @@ def build(ctx):
         if path:
             project_folders.append(path)
     project_folders.append(ctx.srcnode.find_dir('..').find_dir('ambuttonbar'))
-    project_src = sum([folder.ant_glob('*.m' % folder) for folder in project_folders], [])
+    project_src = sum([folder.ant_glob('*.m') for folder in project_folders], [])
     
     # Compile
     ctx.program(
