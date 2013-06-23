@@ -1,0 +1,25 @@
+//
+//  PSMUnifiedTabStyle.h
+//  --------------------
+//
+//  Created by Keith Blount on 30/04/2006.
+//  Copyright 2006 Keith Blount. All rights reserved.
+//  Copyright 2011 Hardcoded Software (http://www.hardcoded.net)
+//
+
+#import <Cocoa/Cocoa.h>
+#import "PSMTabStyle.h"
+
+@interface PSMUnifiedTabStyle : NSObject <PSMTabStyle>
+{
+    NSImage *unifiedCloseButton;
+    NSImage *unifiedCloseButtonDown;
+    NSImage *unifiedCloseButtonOver;
+    NSImage *_addTabButtonImage;
+    NSImage *_addTabButtonPressedImage;
+    NSImage *_addTabButtonRolloverImage;
+	
+    CGFloat leftMargin;
+}
+- (void)setLeftMarginForTabBarControl:(CGFloat)margin;
+@end
