@@ -1,13 +1,5 @@
 # How to build moneyGuru from source
 
-## Submodule checkout
-
-The first thing to do after a fresh clone from git is to ensure that your submodules are checkout
-out, that that is done with:
-
-    $ git submodule init
-    $ git submodule update
-
 ## Prerequisites installation
 
 Then, you have to make sure that your system has to "non-pip-installable" prerequisites installed:
@@ -32,11 +24,25 @@ Then, in moneyGuru's source folder, create a virtual environment and activate it
     $ virtualenv --system-site-packages env
     $ source env/bin/activate
 
+(`--system-site-packages` is only required for PyQt and cx_Freeze, so it's not needed on Mac OS X)
+
 Then, you can install pip requirements in your virtualenv:
 
     $ pip install -r requirements-[osx|win].txt
     
 ([osx|win] depends, of course, on your platform. On other platforms, just use requirements.txt).
+
+## Alternative: pyvenv
+
+If you're on Python 3.3+, you can use the built-in `pyvenv` instead of `virtualenv`. `pyvenv` is
+pretty much the same thing as `virtualenv`, except that it doesn't install distribute and pip, so it
+has to be installed manually:
+
+    $ pyvenv --system-site-packages env
+    $ source env/bin/activate
+    $ curl -O http://python-distribute.org/distribute_setup.py
+    $ python distribute_setup.py
+    $ easy_install pip
 
 ## Actual building and running
 
