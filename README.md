@@ -1,12 +1,35 @@
+# moneyGuru
+
+This package contains the source for moneyGuru. Its documentation is
+[available online][documentation]. Here's how this source tree is organised:
+
+* core: Contains the core logic code for moneyGuru. It's Python code.
+* cocoa: UI code for the Cocoa toolkit. It's Objective-C code.
+* qt: UI code for the Qt toolkit. It's written in Python and uses PyQt.
+* images: Images used by the different UI codebases.
+* debian: Skeleton files required to create a .deb package.
+* help: Help document, written for Sphinx.
+* locale: .po files for localisation.
+
+There are also other sub-folder that comes from external repositories and are part of this repo as
+git subtrees:
+
+* hscommon: A collection of helpers used across HS applications.
+* cocoalib: A collection of helpers used across Cocoa UI codebases of HS applications.
+* qtlib: A collection of helpers used across Qt UI codebases of HS applications.
+* ambuttonbar: Cocoa library to display filter buttons.
+* psmtabbarcontrol: Cocoa library for tabs.
+
 # How to build moneyGuru from source
 
 ## Prerequisites installation
 
-Then, you have to make sure that your system has to "non-pip-installable" prerequisites installed:
+Then, you have to make sure that your system has its "non-pip-installable" prerequisites installed:
 
-* All systems: Python 3.2+
+* All systems: [Python 3.2+][python] and [distribute][distribute]
 * Mac OS X: The last XCode to have the 10.6 SDK included.
-* Windows: Visual Studio 2008, PyQt 4.7+, cx_Freeze and Advanced Installer
+* Windows: Visual Studio 2008, [PyQt 4.7+][pyqt], [cx_Freeze][cxfreeze] and
+  [Advanced Installer][advinst] (you only need the last two if you want to create an installer)
 
 On Ubuntu, the apt-get command to install all pre-requisites is:
 
@@ -59,5 +82,13 @@ You can also package moneyGuru into an installable package with:
 # Further documentation
 
 There's a more complete development documention in 'devdoc'. This documentation has to be built
-using Sphinx (http://sphinx.pocoo.org/). There's also an online version of this documentation at
-http://www.hardcoded.net/docs/moneyguru/.
+using [Sphinx][sphinx]. This documentation is also [available online][devdocs].
+
+[documentation]: http://www.hardcoded.net/moneyguru/help/en/
+[python]: http://www.python.org/
+[distribute]: https://pypi.python.org/pypi/distribute
+[pyqt]: http://www.riverbankcomputing.com
+[cxfreeze]: http://cx-freeze.sourceforge.net/
+[advinst]: http://www.advancedinstaller.com
+[sphinx]: http://sphinx.pocoo.org/
+[devdocs]: http://www.hardcoded.net/docs/moneyguru/
