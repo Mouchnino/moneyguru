@@ -8,7 +8,7 @@ from urllib.request import urlopen
 
 # To create a currency provider plugin, one must subclass CurrencyProviderPlugin. You can see more
 # details about how to subclass it in plugins.py. It's accessible online at:
-# https://bitbucket.org/hsoft/moneyguru/src/tip/core/plugin.py
+# https://github.com/hsoft/moneyguru/blob/master/core/plugin.py
 class YahooProviderPlugin(CurrencyProviderPlugin):
     NAME = 'Yahoo currency rates fetcher'
     

@@ -42,3 +42,7 @@ Les fichiers CSV ont souvent des entêtes et des commentaires de fin de fichiers
 Des fois, les fichiers sont si bizarres qu'il est difficile de déterminer le séparateur de champs. Si les données sont toutes prises dans la même colonne, identifiez le séparateur correct, entrez le dans "Séparateur" puis appuyez sur "Rescanner".
 
 moneyGuru a la capacité de retenir vos configuration pour une importation ultérieure. Quand vous avez fini de configurer la fenêtre, sauvegardez la configuration. Vous pourrez la ramener lors de votre prochaine importation.
+
+.. |import_window| image:: image/import_window.png
+.. |import_match_table| image:: image/import_match_table.png
+.. |import_csv_options| image:: image/import_csv_options.png

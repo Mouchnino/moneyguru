@@ -159,3 +159,9 @@ What You See Is What You Print (Kinda)
 In moneyGuru, you can print whatever is currently shown in any of the four views. You want to report a transaction listing for last year? Just set the current date range to last year, go to the Transactions view, and press |cmd|\ P. moneyGuru automatically sizes the columns according to their content (columns with longer data are larger), trying to fit the most data in the page.
 
 .. _double-entry accounting: http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system
+.. |basics_show_account_arrow| image:: image/basics_show_account_arrow.png
+.. |basics_account_out| image:: image/basics_account_out.png
+.. |basics_date_range| image:: image/basics_date_range.png
+.. |basics_net_worth| image:: image/basics_net_worth.png
+.. |basics_transactions| image:: image/basics_transactions.png
+.. |basics_account| image:: image/basics_account.png

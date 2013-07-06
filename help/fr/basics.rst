@@ -130,3 +130,10 @@ Impression
 ----------
 
 Dans moneyGuru, vous pouvez imprimer n'importe quelle vue. Vous voulez la liste de vos transactions de l'an passé? Ouvrez la bonne vue, ajustez l'intervalle, et appuyez sur |cmd|\ P. Voilà.
+
+.. |basics_show_account_arrow| image:: image/basics_show_account_arrow.png
+.. |basics_account_out| image:: image/basics_account_out.png
+.. |basics_date_range| image:: image/basics_date_range.png
+.. |basics_net_worth| image:: image/basics_net_worth.png
+.. |basics_transactions| image:: image/basics_transactions.png
+.. |basics_account| image:: image/basics_account.png

@@ -37,4 +37,9 @@ F.A.Q.
 
 .. topic:: Ich habe eine Frage, die hier noch nicht beantwortet ist. Was kann ich tun?
 
-    Der einfachste Weg ist der Besuch der `Get Satisfaction Supportseite <http://getsatisfaction.com/hardcodedsoftware>`__. Möglicherweise ist die Frage dort bereits beantwortet, Sie können dort auch Anregungen und Wünsche deponieren. Es ist weiters möglich, sich in englischer Sprache per eMail an support@hardcoded.net zu wenden.
+    There's a `moneyGuru forum`_ which can probably help you. If it's a bug report or feature
+    request you have, you should head to `moneyGuru's issue tracker on GitHub`_.
+
+.. _moneyGuru forum: http://forum.hardcoded.net/
+.. _moneyGuru's issue tracker on GitHub: https://github.com/hsoft/moneyguru/issues
+.. |basics_account_in| image:: image/basics_account_in.png

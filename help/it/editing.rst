@@ -93,3 +93,11 @@ moneyGuru ha un sistema di auto-completamento e auto-riempimento molto avanzato.
 L'auto-riempimento consente di riempire i campi vuoti dopo che si esce con una Tabulazione da un campo auto-completabile. Per esempio, se il Beneficiario è la prima colonna auto-completabile, digitando un beneficiario già esistente farà sì che i campi successivi siano riempiti con i valori dell'ultima transazione relativa a quel beneficiario.
 
 In Mac OS X è possibile ottenere una lista di ricerca per qualsiasi campo auto-completabile. Se devi inserire un beneficiario che sai **di sicuro** di avere in una qualche transazione, ma di cui non ricordi come inizia, basta premere |cmd|\ L e una finestra di ricerca comparirà, elencando tutti i beneficiari. Il campo di ricerca permette di effettuare una ricerca fuzzy (ovvero non serve sapere le prime lettere, ma solo alcune lettere) che evidenzierà all'inizio della lista i beneficiari più rilevanti.
+
+.. |edition_buttons| image:: image/edition_buttons.png
+.. |edition_account_panel| image:: image/edition_account_panel.png
+.. |edition_transaction_panel| image:: image/edition_transaction_panel.png
+.. |edition_three_way_split| image:: image/edition_three_way_split.png
+.. |edition_mass_edition_panel| image:: image/edition_mass_edition_panel.png
+.. |backward_16| image:: image/backward_16.png
+.. |forward_16| image:: image/forward_16.png

@@ -35,4 +35,10 @@ Foire aux questions
 
 .. topic:: J'ai une autre question.
 
-    Vous pouvez toujours envoyer un courriel à support@hardcoded.net ou vous pouvez aller sur le `forum de support <http://getsatisfaction.com/hardcodedsoftware>`__.
+    Il y a le `forum de moneyGuru`_ qui peut probablement vous aider. Si c'est un bug que vous
+    voulez signaler ou une demande de fonctionnalité, il vaut mieux directement utiliser le
+    `"issue tracker" de moneyGuru sur GitHub`_.
+
+.. _forum de moneyGuru: http://forum.hardcoded.net/
+.. _"issue tracker" de moneyGuru sur GitHub: https://github.com/hsoft/moneyguru/issues
+.. |basics_account_in| image:: image/basics_account_in.png

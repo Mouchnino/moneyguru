@@ -135,3 +135,9 @@ Ciò che vedi, è ciò che stampi (circa)
 In moneyGuru è possibile stampare qualsiasi cosa sia mostrata in una delle quattro viste. Vuoi un rapporto che elenca le transazioni dell'anno scorso? Basta selezionare l'intervallo di date, andare nella vista Transazioni, e premere |cmd|\ P. moneyGuru ridimensiona automaticamente le colonne in base al loro contenuto, provando a riempire il più possibile la pagina.
 
 .. _partita doppia: http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system
+.. |basics_show_account_arrow| image:: image/basics_show_account_arrow.png
+.. |basics_account_out| image:: image/basics_account_out.png
+.. |basics_date_range| image:: image/basics_date_range.png
+.. |basics_net_worth| image:: image/basics_net_worth.png
+.. |basics_transactions| image:: image/basics_transactions.png
+.. |basics_account| image:: image/basics_account.png

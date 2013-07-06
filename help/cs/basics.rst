@@ -132,3 +132,9 @@ Co Vidíte To Vytisknete (víceméně)
 moneyGuru vám umožní vytisknout cokoli právě vidíte v kterémkoli ze čtyř pohledů. Přejete si vytisknout seznam transakcí za minulý rok? Nastavte časové rozmezí na minulý rok, přepněte se do pohledu Transakce a stiskněte |cmd|\ P. moneyGuru automaticky přizpůsobí šířku sloupců jejich obsahu (sloupce s delšími údaji budou širší) a pokusí se rozvrhnout údaje tak, aby se vešly na papír.
 
 .. _podvojného účetnictví: http://en.wikipedia.org/wiki/Double-entry_bookkeeping_system
+.. |basics_show_account_arrow| image:: image/basics_show_account_arrow.png
+.. |basics_account_out| image:: image/basics_account_out.png
+.. |basics_date_range| image:: image/basics_date_range.png
+.. |basics_net_worth| image:: image/basics_net_worth.png
+.. |basics_transactions| image:: image/basics_transactions.png
+.. |basics_account| image:: image/basics_account.png

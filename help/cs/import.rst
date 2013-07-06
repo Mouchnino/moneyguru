@@ -48,3 +48,7 @@ Někdy jsou CSV soubory natolik podivné, že moneyGuru nedokáže správně ur�
 moneyGuru si při ukončení ukládá informace o sloupcích a řádcích záhlaví. Pokud pravidelně importujete více typů CSV, můžete použít Rozvržení. Každé rozvržení ukládá vlastní konfiguraci sloupců a záhlaví.
 
 V okně voleb CSV Je také možné přímo určit cílový účet. Funkce je stejná jako když určíte cílový účet později v okně Import. Pokud ale cíl určíte v okně s volbami pro CSV, uloží se do rozvržení.
+
+.. |import_window| image:: image/import_window.png
+.. |import_match_table| image:: image/import_match_table.png
+.. |import_csv_options| image:: image/import_csv_options.png

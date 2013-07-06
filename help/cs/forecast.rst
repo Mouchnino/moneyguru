@@ -67,3 +67,5 @@ moneyGuru umí s Cashculatorem spolupracovat a usnadnit vám tak export "reáln�
 8. Po ukončení moneyGuru se Cashculator vrátí do normálního režimu (ke své standardní databázi).
 
 **Integrace s Cashculatorem prozatím funguje pouze jednosměrně (export).** Caschulator funguje jinak než moneyGuru. Export dat do něj není nijak složitý, ale když se z něj mají importovat rozpočty zpátky do moneyGuru, není to tak lehké. V Cashculatoru lze vyplnit pole "Plán" mnoha různými způsoby. Není žádný jednoznačný postup, jak je automaticky konvertovat do rozpočtů a plánů.
+
+.. |clock| image:: image/clock.png

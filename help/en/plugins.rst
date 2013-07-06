@@ -29,17 +29,17 @@ Excel/Numbers) work with those tables.
 Creating a plugin
 -----------------
 
-Other than `a small convenience API <http://bitbucket.org/hsoft/moneyguru/src/tip/core/plugin.py>`_,
+Other than `a small convenience API <https://github.com/hsoft/moneyguru/blob/master/core/plugin.py>`__,
 there's no "plugin" API, you're coding straight on top of moneyGuru's code. Developer documention
 for moneyGuru's code is unfortunately not very extensive, but I've created a few well commented
 plugin examples and I think that they're your best starting point.
 
 So, to create a plugin, I'd suggest that you take one of the examples (they're automatically copied
 in your plugin folder. You can also find the latest version of these examples
-`on Bitbucket <http://bitbucket.org/hsoft/moneyguru/src/tip/plugin_examples>`_), duplicate it and
+`on Github <https://github.com/hsoft/moneyguru/tree/master/plugin_examples>`__), duplicate it and
 try to wade your way through with example comments. There's a
-`developer documentation <http://www.hardcoded.net/docs/moneyguru>`_ but it's far from complete.
-Looking at moneyGuru's `source code <http://bitbucket.org/hsoft/moneyguru>`_ is also a good way
+:doc:`developer documentation <developer/index>` but it's far from complete.
+Looking at moneyGuru's `source code <https://github.com/hsoft/moneyguru>`_ is also a good way
 to learn how to work with it, but understanding it can be quite an undertaking.
 
 I'm very interested in knowing about plugin development efforts so don't hesitate to

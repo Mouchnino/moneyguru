@@ -90,3 +90,11 @@ In moneyGuru gibt es Funktionen zur Autovervollständigung beziehungsweise zu Au
 Es gibt auch Felder, die die Funktion "Autoausfüllen" auslösen, wie zum Beispiel "Empfänger". Sobald Sie hier einen Wert eingeben, für den bereits andere Transaktionen existieren, wird moneyGuru Ihnen die restlichen Felder automatisch mit den Belegungen der letzten Transaktion füllen.
 
 In der Mac OS X Version können Sie auch die Funktion "Kandidatenlisten" nützen. Sollten Sie sich in einem Feld (beispielsweise "Empfänger") befinden, und wissen nicht genau, wie genau Sie den gewünschten Empfänger bei der letzten Transaktion eingegeben haben, so geben Sie einfach einen Wortteil ein, von dem Sie wissen, dass er auf alle Fälle vorkommt. Sollten Sie dann |cmd|\ L drücken, erscheint eine Kandidatenliste mit allen Möglichkeiten, die den eingegebenen Wortteil enthalten.
+
+.. |edition_buttons| image:: image/edition_buttons.png
+.. |edition_account_panel| image:: image/edition_account_panel.png
+.. |edition_transaction_panel| image:: image/edition_transaction_panel.png
+.. |edition_three_way_split| image:: image/edition_three_way_split.png
+.. |edition_mass_edition_panel| image:: image/edition_mass_edition_panel.png
+.. |backward_16| image:: image/backward_16.png
+.. |forward_16| image:: image/forward_16.png

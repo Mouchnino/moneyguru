@@ -71,3 +71,5 @@ moneyGuru si integra con Cashculator per consentire di esportare facilmente i da
 
 
 **Per il momento, l'integrazione con Cashculator funziona in una sola direzione (esportazione).** Il modo in cui Cashculator funziona è molto diverso da quello di moneyGuru. Esportare i dati non è molto complicato, ma quando si tratta di reimportare le previsioni in moneyGuru le cose si fanno più complicate. Ci sono molti modi in cui si possono riempire le celle "Piano" in Cashculator e non c'è un modo ovvio di convertirli automaticamente in previsioni e pianificazioni.
+
+.. |clock| image:: image/clock.png

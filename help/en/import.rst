@@ -69,3 +69,7 @@ Sometimes, CSV files are so weird that moneyGuru won't be able to correctly dete
 moneyGuru remembers about columns and header lines between running sessions. If you have more than one type of CSV to regularly import, you can use the Layouts. Each layout store its own column/header configuration.
 
 It's also possible to specify a target account directly in the CSV options window. This achieves the same thing as specifying the target account later, in the Import window, except that if you specify it in the CSV options window, it will be saved in the layout.
+
+.. |import_window| image:: image/import_window.png
+.. |import_match_table| image:: image/import_match_table.png
+.. |import_csv_options| image:: image/import_csv_options.png

@@ -67,3 +67,5 @@ moneyGuru integrates with Cashculator to make it easy for you to export "Actual"
 8. Cashculator will be reverted to normal mode (its regular database) when you quit moneyGuru.
 
 **For now, the Cashculator integration only works one way (export).** The way Cashculator works is very different from the way moneyGuru works. Exporting data isn't so complicated, but when comes the time to import back budgets in moneyGuru, things get a little trickier. There're lots of ways you can fill "Plan" cells out in Cashculator and there's no obvious ways to automatically convert that into budgets and schedules.
+
+.. |clock| image:: image/clock.png

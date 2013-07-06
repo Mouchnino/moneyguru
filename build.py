@@ -163,14 +163,18 @@ def build_help(dev):
         print("Generating devdocs")
         print_and_do('sphinx-build devdoc devdoc_html')
     print("Generating Help")
-    platform = 'osx' if ISOSX else 'win'
+    current_platform = 'osx' if ISOSX else 'win'
     current_path = op.abspath('.')
     confpath = op.join(current_path, 'help', 'conf.tmpl')
     help_basepath = op.join(current_path, 'help', 'en')
     help_destpath = op.join(current_path, 'build', 'help')
     changelog_path = op.join(current_path, 'help', 'changelog')
+    image_src = op.join(current_path, 'help', 'image_{}'.format(current_platform))
+    image_dst = op.join(current_path, 'help', 'en', 'image')
+    if not op.exists(image_dst):
+        os.symlink(image_src, image_dst)
     tixurl = "https://hardcoded.lighthouseapp.com/projects/31473-moneyguru/tickets/{0}"
-    confrepl = {'platform': platform}
+    confrepl = {'platform': current_platform}
     sphinxgen.gen(help_basepath, help_destpath, changelog_path, tixurl, confrepl, confpath)
 
 def build_base_localizations():

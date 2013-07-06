@@ -86,3 +86,11 @@ moneyGuru obsahuje pokročilé funkce automatického dokončování a vyplňová
 Automatické vyplňování samo vyplní prázdná políčka poté, co tabelátorem vyplníte pole s aktivním automatickým dokončováním. Řekněme, že Příjemce je prvním sloupcem, kde lze automaticky dokončit zápis. Zapíšete-li existujícího příjemce, všechna další pole se automaticky naplní hodnotami z poslední transakce s tímto příjemcem.
 
 V Mac OS X je možné pro každé pole s automatickým dokončováním vytvořit seznam pro vyhledání. Potřebujete zapsat příjemce, o kterém **víte**, že ho někde v transakcích máte, ale nepamatujete si jak začíná jeho jméno? Stiskněte |cmd|\ L a objeví se prohledávací dialog se seznamem všech příjemců. Můžete zde vyhledávat i na základě části názvu příjemce (část může být kdekoli v názvu). Nejpravděpodobnější příjemci se objeví na vrcholu seznamu.
+
+.. |edition_buttons| image:: image/edition_buttons.png
+.. |edition_account_panel| image:: image/edition_account_panel.png
+.. |edition_transaction_panel| image:: image/edition_transaction_panel.png
+.. |edition_three_way_split| image:: image/edition_three_way_split.png
+.. |edition_mass_edition_panel| image:: image/edition_mass_edition_panel.png
+.. |backward_16| image:: image/backward_16.png
+.. |forward_16| image:: image/forward_16.png

@@ -48,3 +48,7 @@ In seltenen Fällen kann es vorkommen, dass moneyGuru beim Import der Datei nich
 moneyGuru merkt sich die Zuordnung der Felder zu den Spalten sowie die Position der Kopf- und Fußzeilen, auch über einen Neustart hinweg. Sollten Sie mehr als eine CSV Dateivariante importieren wollen, können Sie die Layout Funktionalität nützen. Jedes Layout speichert die Konfiguration der Felder beziehungsweise der Kopf- und Fußzeilen.
 
 Weiters ist es möglich, das Zielkonto gleich hier mit anzugeben. Das gewählte Zielkonto wird in den eigentlichen Importdialog mit übernommen, sollten Sie jedoch die Konfiguration in einem Layout speichern, so wird hier das Zielkonto ebenfalls mit dem Layout mitgespeichert.
+
+.. |import_window| image:: image/import_window.png
+.. |import_match_table| image:: image/import_match_table.png
+.. |import_csv_options| image:: image/import_csv_options.png

@@ -90,3 +90,11 @@ moneyGuru has advanced auto-completion and autofill capabilities. As soon as you
 The autofill feature will automatically fill empty fields after you tab out of an auto-completable field. For example, if Payee is the first auto-completable column, typing an existing payee will make all subsequent fields automatically filled with values from the last transaction containing that payee.
 
 Under Mac OS X, it's possible to summon a lookup list for any auto-completable field. You need to type a payee that you **know** you have somewhere in your transaction, but don't remember what it starts with? Press |cmd|\ L and a lookup dialog will appear, listing all your payees. The search field allows you to run a fuzzy search (which means that you don't have to type the beginning of your payee, just a few letters that are in it) that will make most relevant payees come first in the list.
+
+.. |edition_buttons| image:: image/edition_buttons.png
+.. |edition_account_panel| image:: image/edition_account_panel.png
+.. |edition_transaction_panel| image:: image/edition_transaction_panel.png
+.. |edition_three_way_split| image:: image/edition_three_way_split.png
+.. |edition_mass_edition_panel| image:: image/edition_mass_edition_panel.png
+.. |backward_16| image:: image/backward_16.png
+.. |forward_16| image:: image/forward_16.png

@@ -48,3 +48,7 @@ A volte i file CSV sono così strani che moneyGuru non riesce a capire correttam
 moneyGuru si ricorda delle colonne e delle intestazioni da una sessione di esecuzione e l'altra, perciò se si hanno più tipi di file CSV da importare frequentemente, si possono utilizzare diverse Disposizioni, ognuna delle quali memorizza la propria configurazione di colonne e intestazioni.
 
 Si può anche specificare un conto destinazione direttamente nella finestra delle opzioni CSV. Si ottiene lo stesso risultato specificandolo in seguito, nella finestra di importazione, eccetto per il fatto che se lo si specifica qui, verrà memorizzato nella Disposizione.
+
+.. |import_window| image:: image/import_window.png
+.. |import_match_table| image:: image/import_match_table.png
+.. |import_csv_options| image:: image/import_csv_options.png

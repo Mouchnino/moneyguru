@@ -59,3 +59,5 @@ moneyGuru peut exporter vos données vers Cashculator afin de vous permettre de 
 8. Cashculator retournera en mode normal (avec sa base de donnée régulière) lorsque vous quitterez moneyGuru.
 
 **Pour tout de suite, seule la fonctionnalité d'exportation est disponible.** La façon de fonctionner de Cashculator est très différente de celle de moneyGuru. Pour l'exportation de donnée, ça va encore, mais pour une importation automatique de budgets à partir des données de Cashculator, les choses se corsent. Il y a plusieurs façon de remplir les cellules "Plan" dans Cashculator et il n'est pas évident de définir une procédure d'importation claire.
+
+.. |clock| image:: image/clock.png

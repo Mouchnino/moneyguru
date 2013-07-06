@@ -30,5 +30,6 @@ Contents:
    forecast
    plugins
    faq
+   developer/index
    changelog
    credits
